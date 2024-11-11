@@ -20,28 +20,42 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ArtLoadManager.h" />
+    <ClInclude Include="Character.h" />
     <ClInclude Include="CollisionManager.h" />
+    <ClInclude Include="Command.h" />
+    <ClInclude Include="Dialog.h" />
     <ClInclude Include="DoubleBufferManager.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameObjectManager.h" />
+    <ClInclude Include="HandlerManager.h" />
+    <ClInclude Include="JumpMap.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="MapManager.h" />
     <ClInclude Include="PhysicsManager.h" />
+    <ClInclude Include="PuzzleMap.h" />
     <ClInclude Include="RenderManager.h" />
     <ClInclude Include="RenderStruct.h" />
+    <ClInclude Include="Scene.h" />
     <ClInclude Include="ScreenInfo.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ArtLoadManager.cpp" />
+    <ClCompile Include="Character.cpp" />
     <ClCompile Include="CollisionManager.cpp" />
+    <ClCompile Include="Command.cpp" />
+    <ClCompile Include="Dialog.cpp" />
     <ClCompile Include="DoubleBufferManager.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameObjectManager.cpp" />
+    <ClCompile Include="HandlerManager.cpp" />
+    <ClCompile Include="JumpMap.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="MapManager.cpp" />
     <ClCompile Include="PhysicsManager.cpp" />
+    <ClCompile Include="PuzzleMap.cpp" />
     <ClCompile Include="RenderManager.cpp" />
+    <ClCompile Include="Scene.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

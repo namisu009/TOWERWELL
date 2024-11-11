@@ -3,6 +3,7 @@
 
 Map* RenderManager::m_map = nullptr;
 vector<GameObject*> RenderManager::renderQueue;
+Dialog * RenderManager::renderLog = NULL;
 
 void RenderManager::addObject(GameObject* object) {
     renderQueue.push_back(object); // 렌더링할 객체 추가
@@ -12,13 +13,21 @@ void RenderManager::removeObject(GameObject* object) {
     renderQueue.erase(std::remove(renderQueue.begin(), renderQueue.end(), object), renderQueue.end()); // 객체 제거
 }
 
+void RenderManager::setRenderDialog(Dialog* dialog) {
+    renderLog = dialog;
+}
+
+void RenderManager::ClearRenderDialog() {
+    renderLog = NULL;
+}
+
 void RenderManager::renderMap() {
     //DoubleBufferManager::ScreenClear();
 
     RenderArray& renderArray = m_map->getRenderArray();
 
     int init_x = cmdWidth / 2 - renderArray.width / 2;
-    int init_y = cmdHeight - renderArray.height + 1;
+    int init_y = cmdHeight - renderArray.height - 1;
 
     COORD pos = { 0, 0 };
 
@@ -56,7 +65,7 @@ void RenderManager::clearObject() {
                 if (pos.X < 0 || pos.X >= width) continue;
                 if (pos.Y < 0 || pos.Y >= height) continue;
 
-                char buf[2] = { m_map->getRenderArray().ASCIIArtArr[pos.Y + 1][pos.X], '\0'};
+                char buf[2] = { m_map->getRenderArray().ASCIIArtArr[pos.Y][pos.X], '\0'};
                 DoubleBufferManager::ScreenprintAtPosition(pos.X, pos.Y, buf); //현재 화면이 캐릭터가 그려질 곳이 아니라면 맵 그리기
             }
         }
@@ -91,7 +100,37 @@ void RenderManager::renderObject() {
             }
         }
     }
+}
 
+void RenderManager::renderDialog() {
+    if (renderLog == NULL)
+        return;
+
+    const auto& art = renderLog->getRenderArray(); // ASCII 아트 가져오기
+    int renderLog_x = renderLog->getX(); // X 좌표 가져오기
+    int renderLog_y = renderLog->getY(); // Y 좌표 가져오기
+
+    COORD pos = { 0, 0 };
+    pos.X = renderLog_x;
+    pos.Y = renderLog_y;
+
+    // 객체의 ASCII 아트를 특정 위치에 렌더링
+    for (int y = 0; y < art.height; y++)
+    {
+        pos.Y = renderLog_y + y;
+        for (int x = 0; x < art.width; x++)
+        {
+            pos.X = renderLog_x + x;
+            char buf[2] = { art.ASCIIArtArr[y][x], '\0' };
+            DoubleBufferManager::ScreenprintAtPosition(pos.X, pos.Y, buf); //현재 화면이 캐릭터가 그려질 곳이 아니라면 맵 그리기
+        }
+    }
+}
+
+void RenderManager::render() {
+    renderMap();
+    renderObject();
+    renderDialog();
     DoubleBufferManager::ScreenFlipping();
 }
 

@@ -2,11 +2,13 @@
 #define _PHYSICSMANAGER_H_
 
 #include "GameObject.h"
+#include "Character.h"
 #include "CollisionManager.h"
+
 
 class PhysicsManager {
 public:
-    static void applyGravity(GameObject* object, Map* map) {
+    static void applyGravity(Character* object, Map* map) {
         const float gravity = 2.0f; // 중력의 세기
 
     

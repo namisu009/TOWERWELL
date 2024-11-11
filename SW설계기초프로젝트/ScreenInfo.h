@@ -1,6 +1,8 @@
 #ifndef _SCREENINFO_H
 #define _SCREENINFO_H
 
+#include <windows.h>
+
 const int cmdWidth = 480;
 const int cmdHeight = 169;
 

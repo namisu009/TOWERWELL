@@ -10,6 +10,7 @@
 #include <vector>
 #include "Map.h"
 #include "GameObject.h"
+#include "Dialog.h"
 #include "ScreenInfo.h"
 #include "DoubleBufferManager.h"
 
@@ -19,14 +20,22 @@ class RenderManager {
 private:
     static Map* m_map; //Áö±Ý ±×·Á¾ßÇÒ ¸Ê
     static vector<GameObject*> renderQueue; // ·»´õ¸µÇÒ °´Ã¼ ¸®½ºÆ®
+    static Dialog * renderLog;
 
 public:
 
     static void addObject(GameObject* object); // ·»´õ¸µÇÒ °´Ã¼ Ãß°¡
     static void removeObject(GameObject* object); // ·»´õ¸µÇÒ °´Ã¼ Á¦°Å
+
+    static void setRenderDialog(Dialog* dialog);
+    static void ClearRenderDialog();
+
     static void renderMap();
     static void renderObject(); // ¸ðµç °´Ã¼ ·»´õ¸µ
+    static void renderDialog(); // ´ëÈ­Ã¢ ·»´õ¸µ
     static void clearObject(); //È­¸é¿¡¼­ °´Ã¼ Áö¿ì±â (¸Ê ±×¸®±â)
+
+    static  void render();
     static void clear(); // ·»´õ¸µ Å¥ ÃÊ±âÈ­
     static void ScreenInit(); //È­¸éÃÊ±âÈ­
     static void setRenderMap(Map* map);
