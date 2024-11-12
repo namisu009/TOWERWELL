@@ -43,10 +43,27 @@ enum PuzzleMapInfo
 	PUZZLE_OBJ_05,
 };
 
+enum MapType {
+	TYPE_JUMP,
+	TYPE_PUZZLE,
+};
+
 enum GameObjectType {
 	TYPE_CHARACTER,
 	TYPE_DIALOG,
 };
+
+enum PuzzleType {
+	TYPE_READ_PUZZLE,
+	TYPE_ITEM_PUZZLE,
+	TYPE_NUMBER_PUZZLE,
+};
+
+enum ActionType {
+	ACTION_JUMP,
+	ACTION_DASH,
+};
+
 
 const int DIALOG_X = cmdWidth / 2;
 const int DIALOG_Y = cmdHeight;

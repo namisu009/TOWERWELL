@@ -11,10 +11,6 @@ public:
     static bool checkMapCollision(GameObject object, Map map);
     static bool checkFloorCollision(GameObject object, Map map);
     static bool checkWallCollision(GameObject object, Map map);
-    static void applyCollision(GameObject* object, Map* map) {
-        
-
-    }
 };
 
 

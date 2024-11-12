@@ -5,6 +5,9 @@
 class JumpMap : public Map
 {
 public:
+	JumpMap() {
+		setType(TYPE_JUMP);
+	}
 	bool isTrap(int x, int y) {
 		ScreenArray myScreen = getScreenArray();
 		if (myScreen.MapInfo[y + 1][x] == JUMP_TRAP) return true;

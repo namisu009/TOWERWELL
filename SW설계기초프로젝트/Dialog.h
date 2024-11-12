@@ -5,7 +5,9 @@
 class Dialog : public GameObject
 {
 public:
+	Dialog(string _id) : GameObject(_id) {
 
+	}
 };
 
 #endif

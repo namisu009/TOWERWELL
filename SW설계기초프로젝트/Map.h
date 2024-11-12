@@ -24,6 +24,8 @@ private:
     int init_x;
     int init_y;
 
+    int type;
+
     ArtLoadManager* artLoadManager;
 public:
     Map() {
@@ -40,7 +42,7 @@ public:
 
     void initializeFromScreen(const char* filename)// 스크린 초기화 (스크린 파일 따로 존재)
     {
-        artLoadManager->ScreenArrayLoad(&screenArray, filename);
+        artLoadManager->ScreenArrayLoad(type, &screenArray, filename);
         width = screenArray.width;
         height = screenArray.height;
         init_x = screenArray.init_x;
@@ -73,7 +75,13 @@ public:
     int getWidth() { return width; }
     int getHeight() { return height; }
 
-    void display() const;// 맵 출력 //Render << 연동
+    int getType() {
+        return type;
+    }
+
+    void setType(int _type) {
+        type = _type;
+    }
 };
 
 #endif

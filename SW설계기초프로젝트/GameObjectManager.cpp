@@ -1,3 +1,3 @@
 #include "GameObjectManager.h"
 
-unordered_map<const char *, GameObject*> GameObjectManager::objects;
+unordered_map<string, GameObject*> GameObjectManager::objects;

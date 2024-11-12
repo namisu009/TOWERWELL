@@ -2,39 +2,38 @@
 #define _GAMEOBJECT_H
 
 #include<vector>
+#include <string>
+
 #include "RenderStruct.h"
 #include "ArtLoadManager.h"
+
+using namespace std;
 
 class GameObject
 {
 private:
-	RenderArray renderArray;
+	RenderArray* renderArray;
+	string id;
 	int type;
-	int width; 
+	int width;
 	int height;
 	float x, y;
 	float dx, dy;
 
 public:
 	ArtLoadManager* artLoadManager;
-	GameObject() { 
-		width = 0; height = 0; x = 0; y = 0; dx = 0; dy = 0; artLoadManager = artLoadManager->GetInstance();
+	GameObject(string _id) {
+		id = _id; renderArray = new RenderArray(); width = 0; height = 0; x = 0; y = 0; dx = 0; dy = 0; artLoadManager = artLoadManager->GetInstance();
 	}
-	void initializeFromASCII(const char* filename)
+	virtual void initializeFromASCII(const char* filename)
 	{
-		if (type == TYPE_DIALOG) {
-			artLoadManager->DialogRenderArrayLoad(&renderArray, filename);
-			setWidth(renderArray.width);
-			setHeight(renderArray.height);
-			SetStartPosition(DIALOG_X, DIALOG_Y);
-		}
-		else {
-			artLoadManager->RenderArrayLoad(&renderArray, filename);
-			setWidth(renderArray.width);
-			setHeight(renderArray.height);
-		}
+		artLoadManager->RenderArrayLoad(renderArray, filename);
+		setWidth(renderArray->width);
+		setHeight(renderArray->height);
+		SetStartPosition(DIALOG_X, DIALOG_Y);
 	}
-	RenderArray& getRenderArray() { return renderArray; }
+
+	RenderArray* getRenderArray() { return renderArray; }
 	int getX() { return x; };
 	int getY() { return y; };
 	int getDx() { return dx; };
@@ -44,6 +43,15 @@ public:
 	int getHeight() { return height; };
 
 	int getType() { return type; }
+
+	string getId() { return id; }
+
+	void setRenderArray(RenderArray* _renderArray) {
+		renderArray = _renderArray;
+	}
+
+	void setX(float _x) { x = _x; };
+	void setY(float _y) { y = _y; };
 
 	void setDx(float _dx) { dx = _dx; }
 	void setDy(float _dy) { dy = _dy; }

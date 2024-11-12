@@ -14,21 +14,21 @@ public:
 	void addCommand(Command command) {
 		commands.push(command);
 	}
-	
+
 	int getCmdSize() {
 		return commands.size();
 	}
 
 	Command popCommand() {
-		Command cmd =  commands.front();
+		Command cmd = commands.front();
 		commands.pop();
 		return cmd;
 	}
 
 	void display() {
-		while (getCmdSize() != 0)
-		{
+		while (!commands.empty()) {
 			Command cmd = popCommand();
+
 			if (cmd.getType() == TYPE_CHARACTER) {
 				cmd.getAction()();
 				Sleep(24);
@@ -43,8 +43,7 @@ public:
 			}
 
 			RenderManager::render();
-			RenderManager::setRenderDialog(NULL);
-
+			RenderManager::setRenderDialog(nullptr);
 		}
 	}
 };

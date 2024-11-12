@@ -55,10 +55,10 @@ void RenderManager::clearObject() {
 
         int width = m_map->getRenderArray().width;
         int height = m_map->getRenderArray().height;
-        for (int y = -abs(dy); y <= art.height + abs(dy); y++)
+        for (int y = -abs(dy); y <= art->height + abs(dy); y++)
         {
             pos.Y = object_y + y;
-            for (int x = -abs(dx); x <= art.width + abs(dx); x++)
+            for (int x = -abs(dx); x <= art->width + abs(dx); x++)
             {
                 pos.X = object_x + x;
 
@@ -86,15 +86,15 @@ void RenderManager::renderObject() {
         pos.Y = object_y;
 
         // 객체의 ASCII 아트를 특정 위치에 렌더링
-        for (int y = 0; y < art.height; y++)
+        for (int y = 0; y < art->height; y++)
         {
             pos.Y = object_y + y;
-            for (int x = 0; x < art.width; x++)
+            for (int x = 0; x < art->width; x++)
             {
                 pos.X = object_x + x;
-                char buf[2] = { art.ASCIIArtArr[y][x], '\0' };
+                char buf[2] = { art->ASCIIArtArr[y][x], '\0' };
 
-                if (art.drawornotArr[y][x] == 1)
+                if (art->drawornotArr[y][x] == 1)
                     DoubleBufferManager::ScreenprintAtPosition(pos.X, pos.Y, buf); //현재 화면이 캐릭터가 그려질 곳이 아니라면 맵 그리기
              
             }
@@ -115,19 +115,20 @@ void RenderManager::renderDialog() {
     pos.Y = renderLog_y;
 
     // 객체의 ASCII 아트를 특정 위치에 렌더링
-    for (int y = 0; y < art.height; y++)
+    for (int y = 0; y < art->height; y++)
     {
         pos.Y = renderLog_y + y;
-        for (int x = 0; x < art.width; x++)
+        for (int x = 0; x < art->width; x++)
         {
             pos.X = renderLog_x + x;
-            char buf[2] = { art.ASCIIArtArr[y][x], '\0' };
+            char buf[2] = { art->ASCIIArtArr[y][x], '\0' };
             DoubleBufferManager::ScreenprintAtPosition(pos.X, pos.Y, buf); //현재 화면이 캐릭터가 그려질 곳이 아니라면 맵 그리기
         }
     }
 }
 
 void RenderManager::render() {
+    //clearObject();
     renderMap();
     renderObject();
     renderDialog();

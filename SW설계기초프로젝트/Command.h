@@ -20,19 +20,15 @@ public:
 		object = _object;
 		type = object->getType();
 	}
-	
 	void setAction(const function<void()>& action) {
 		cmd = action;
 	}
-
 	int getType() {
 		return type;
 	}
-
 	function<void()> getAction() {
 		return cmd;
 	}
-
 	GameObject* getObject() {
 		return object;
 	}

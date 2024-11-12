@@ -9,18 +9,20 @@ using namespace std;
 class MapManager
 {
 private:
-	static unordered_map<int, Map> maps;
+	static unordered_map<string, Map> maps;
 
 public:
-	static void createMap(int id, const char* filename) {
+	static void createMap(string id, int type, const char* filename1, const char* filename2) {
 		Map map;
-		map.initializeFromASCII(filename);
+		map.setType(type);
+		map.initializeFromASCII(filename1);
+		map.initializeFromScreen(filename2);
 		addMap(id, map);
 	}
-	static void addMap(int id, Map map) { //¸ã Ãß°¡
+	static void addMap(string id, Map map) { //¸ã Ãß°¡
 		maps.insert({ id, map });
 	}
-	static Map* getMap(int id) {
+	static Map* getMap(string id) {
 		return &maps[id];
 	}
 };
