@@ -8,28 +8,30 @@
 
 using namespace std;
 
-class EventDispatcher {
-private:
-    unordered_map<string, vector<function<void()>>> listeners;
+enum EventType {
+    PUZZLE_SOLVED,
+    STAGE_COMPLETED,
+    MOVE_MAP,
+};
 
+class EventDispatcher {
 public:
-    // 특정 이벤트에 리스너 추가
-    void subscribe(const string& event, const function<void()>& listener) {
-        listeners[event].push_back(listener);
+    using EventCallback = std::function<void()>;
+
+    void subscribe(EventType eventType, EventCallback callback) {
+        listeners[eventType].push_back(callback);
     }
 
-    // 특정 이벤트 발생 시 모든 리스너 호출
-    void dispatch(const string& event) {
-        if (listeners.find(event) != listeners.end()) {
-            for (const auto& listener : listeners[event]) {
-                listener();
+    void dispatch(EventType eventType) {
+        if (listeners.count(eventType)) {
+            for (auto& callback : listeners[eventType]) {
+                callback();
             }
         }
     }
 
-    void unsubscribe(const string& event) {
-        listeners.erase(event);
-    }
+private:
+    std::unordered_map<EventType, std::vector<EventCallback>> listeners;
 };
 
 #endif

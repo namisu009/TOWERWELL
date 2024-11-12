@@ -20,6 +20,7 @@ public:
 		addMap(id, map);
 	}
 	static void addMap(string id, Map map) { //¸ã Ãß°¡
+		map.setMapId(id);
 		maps.insert({ id, map });
 	}
 	static Map* getMap(string id) {

@@ -21,8 +21,13 @@ private:
     static Map* m_map; //지금 그려야할 맵
     static vector<GameObject*> renderQueue; // 렌더링할 객체 리스트
     static Dialog * renderLog;
+    static EventDispatcher* eventDispatcher;
 
 public:
+    // EventDispatcher 설정
+    static void setEventDispatcher(EventDispatcher* dispatcher) {
+        eventDispatcher = dispatcher;
+    }
 
     static void addObject(GameObject* object); // 렌더링할 객체 추가
     static void removeObject(GameObject* object); // 렌더링할 객체 제거
@@ -35,7 +40,9 @@ public:
     static void renderDialog(); // 대화창 렌더링
     static void clearObject(); //화면에서 객체 지우기 (맵 그리기)
 
-    static  void render();
+    static void renderClear();
+
+    static void render();
     static void clear(); // 렌더링 큐 초기화
     static void ScreenInit(); //화면초기화
     static void setRenderMap(Map* map);

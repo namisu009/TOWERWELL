@@ -22,6 +22,7 @@
 #include "MapManager.h"
 
 #include "PhysicsManager.h"
+#include "StageManager.h"
 
 using namespace std;
 
@@ -41,25 +42,48 @@ class GameManager
 
     EventDispatcher eventDispatcher;
     HandlerManager handlerManager;
+
     Character* playerCharacter;
     Character* sisterCharacter;
 
-    int offset = 15;
+    StageManager stageManager;
+
+    int offset = 18;
+    int threadTime = 32;
 
     std::unordered_map<std::pair<int, int>, ActionType, pair_hash> actionPositions;
     Map* currentMap;
 
+    int currentStageId = 0;
+
 public:
     GameManager() : isRunning(true), playerCharacter(nullptr), sisterCharacter(nullptr), currentMap(nullptr) {
         HandlerManager::setEventDispatcher(&eventDispatcher);
+        RenderManager::setEventDispatcher(&eventDispatcher);
+
+        eventDispatcher.subscribe(MOVE_MAP, [this]() { 
+            setMap(StageManager::getCurrentStage()->getCurrentMap());
+        });
     }
 
     void initialize() {
+        for (int i = 0; i < 4; i++) {
+            StageManager::addStage(i);
+        }
+
         // 맵 초기화
-        MapManager::createMap("S1_JP_MAP_01", TYPE_JUMP, "src\\S1_JUMP_MAP_01.png", "src\\S1_JUMP_MAP_INFO_01.png");
         MapManager::createMap("S1_PZ_MAP_01", TYPE_PUZZLE, "src\\S1_PUZZLE_MAP_01.png", "src\\S1_PUZZLE_MAP_INFO_01.png");
-        currentMap = (PuzzleMap*)(MapManager::getMap("S1_PZ_MAP_01"));
+        MapManager::createMap("S1_JP_MAP_01", TYPE_JUMP, "src\\S1_JUMP_MAP_01.png", "src\\S1_JUMP_MAP_INFO_01.png");
+        MapManager::getMap("S1_PZ_MAP_01")->setDoorId(MAP_EXIT, "S1_JP_MAP_01");
+        
+        
         //currentMap = (JumpMap*)(MapManager::getMap("S1_JP_MAP_01"));
+
+        StageManager::addMap(0, MapManager::getMap("S1_PZ_MAP_01"));
+        StageManager::addMap(1, MapManager::getMap("S1_JP_MAP_01"));
+
+
+        currentMap = StageManager::getCurrentStage()->getCurrentMap();
 
         // 렌더링 초기화
         RenderManager::ScreenInit();
@@ -73,25 +97,22 @@ public:
         playerCharacter->setAnimation("IDLE", 1, "src\\hero_idle_02.png");
         playerCharacter->setAnimation("RIGHT", "src\\hero_right_01.png", "src\\hero_right_02.png");
         playerCharacter->setAnimation("LEFT", "src\\hero_left_01.png", "src\\hero_left_02.png");
-        playerCharacter->SetStartPosition(currentMap->getInitX(), currentMap->getInitY());
 
         GameObjectManager::createObejct("Character", "Sister", "src\\sister_idle_01.png");
         sisterCharacter = GameObjectManager::getCharacter("Sister");
-            
         sisterCharacter->setAnimation("IDLE", 1, "src\\sister_idle_02.png");
         sisterCharacter->setAnimation("RIGHT", "src\\sister_right_01.png", "src\\sister_right_02.png");
         sisterCharacter->setAnimation("LEFT", "src\\sister_left_01.png", "src\\sister_left_02.png");
-        sisterCharacter->SetStartPosition(currentMap->getInitX() - 18, currentMap->getInitY());
         sisterCharacter->setJumpStrength(13.5f);
 
         GameObjectManager::createObejct("Dialog", "SC1_DL_01", "src\\dialog1.png");
         GameObjectManager::createObejct("Dialog", "SC1_DL_02", "src\\dialog2.png");
         GameObjectManager::createObejct("Dialog", "SC1_DL_03", "src\\dialog3.png");
 
+        setMap(currentMap);
+
         RenderManager::addObject(sisterCharacter);
         RenderManager::addObject(playerCharacter);
-
-        setMap(currentMap);
 
         // 초기 화면 렌더링
         RenderManager::renderObject();
@@ -168,11 +189,18 @@ public:
         currentMap = _map;
 
         if (currentMap->getType() == TYPE_PUZZLE) {
-            HandlerManager::getPuzzleMapHandle(playerCharacter, (PuzzleMap*)currentMap);
+            HandlerManager::getPuzzleMapHandle(playerCharacter, StageManager::getCurrentStage(), (PuzzleMap*)currentMap);
         }
         else if (currentMap->getType() == TYPE_JUMP) {
             HandlerManager::getJumpMapHandle(playerCharacter, (JumpMap*)currentMap);
         }
+
+        RenderManager::setRenderMap(currentMap);
+        RenderManager::renderMap();
+
+        playerCharacter->SetStartPosition(currentMap->getInitX(), currentMap->getInitY());
+        sisterCharacter->SetStartPosition(currentMap->getInitX() - 18, currentMap->getInitY());
+
     }
 
     // 물리 연산 루프
@@ -197,10 +225,14 @@ public:
             }
             if (GetAsyncKeyState(VK_SPACE) & 0x8000) {
                 HandlerManager::processInput(VK_SPACE);
+
                 if (currentMap->getType() == TYPE_JUMP)
                     actionPositions[{playerCharacter->getFootX(), playerCharacter->getFootY()}] = ACTION_DASH;
                 
                 flag = 1;
+            }
+            if (GetAsyncKeyState(0x46) & 0x8000) {
+                HandlerManager::processInput(0x46);
             }
 
             playerCharacter->dashState();
@@ -222,7 +254,7 @@ public:
             playerCharacter->move();
             updateSisterPosition();
 
-            std::this_thread::sleep_for(std::chrono::milliseconds(60));
+            std::this_thread::sleep_for(std::chrono::milliseconds(threadTime));
         }
     }
 
@@ -283,7 +315,7 @@ public:
             }
         }
 
-        
+
     }
     // 충돌 발생 시 위치 조정 함수
     void adjustPositionForCollision(Character* character) {
@@ -297,13 +329,13 @@ public:
         else if (character->getDy() > 0)
             character->setDy(character->getDy() - 1);
     }
-
+    //블록단위로 나누어서
 
     // 렌더링 루프
     void renderLoop() {
         while (isRunning) {
             RenderManager::render();
-            std::this_thread::sleep_for(std::chrono::milliseconds(60)); // 약 60 FPS
+            std::this_thread::sleep_for(std::chrono::milliseconds(threadTime)); // 약 threadTime FPS
         }
     }
 

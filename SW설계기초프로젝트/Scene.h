@@ -33,6 +33,7 @@ public:
 	void display() {
 		while (!commands.empty()) {
 			Command cmd = popCommand();
+			RenderManager::renderClear();
 			RenderManager::renderMap();
 			RenderManager::renderObject();
 			//RenderManager::renderDialog();
@@ -49,7 +50,7 @@ public:
 				
 				clearInputBuffer(); // 대화 시작 전 입력 버퍼 클리어
 				int key = _getch();
-				while (key != 27) { // 스페이스바를 누를 때까지 기다림
+				while (key != VK_SPACE) { // 스페이스바를 누를 때까지 기다림
 					key = _getch();
 				}
 			}

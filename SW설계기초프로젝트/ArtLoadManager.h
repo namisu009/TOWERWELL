@@ -33,11 +33,13 @@ public:
         Array->width = width;
         Array->height = height;
 
-        Array->ASCIIArtArr = (char**)malloc(sizeof(char*) * height);
-        Array->drawornotArr = (int**)malloc(sizeof(int*) * height);
+        Array->ASCIIArtArr =  new char*[height];
+        Array->drawornotArr =  new int* [height];
         for (int y = 0; y < height; y++) {
-            Array->ASCIIArtArr[y] = (char*)malloc(sizeof(char) * width);
-            Array->drawornotArr[y] = (int*)malloc(sizeof(int) * width);
+            Array->ASCIIArtArr[y] = new char[width];
+            Array->drawornotArr[y] = new int[width];
+            memset(Array->ASCIIArtArr[y], '\0', width * sizeof(char));
+            memset(Array->drawornotArr[y], 0, width * sizeof(int));
         }
 
         for (int y = 0; y < height; y++) {
@@ -52,39 +54,14 @@ public:
                 else if (f1.val[0] == 150) Array->ASCIIArtArr[y][x] = '-';
                 else if (f1.val[0] == 200) Array->ASCIIArtArr[y][x] = '~';
                 else if (f1.val[0] == 250) Array->ASCIIArtArr[y][x] = '.';
-                
+
 
                 if (f1.val[0] == 0 && f1.val[1] >= 250 && f1.val[2] == 0) Array->drawornotArr[y][x] = 0;
                 else Array->drawornotArr[y][x] = 1;
             }
         }
-	}
-
-    void DialogRenderArrayLoad(RenderArray* Array, const char* fileName) {
-        IplImage* img = cvLoadImage(fileName);
-        CvSize imgSize = cvGetSize(img);
-
-        int width = imgSize.width;
-        int height = imgSize.height;
-
-        Array->width = width;
-        Array->height = height;
-
-        Array->ASCIIArtArr = (char**)malloc(sizeof(char*) * height);
-        Array->drawornotArr = (int**)malloc(sizeof(int*) * height);
-        for (int y = 0; y < height; y++) {
-            Array->ASCIIArtArr[y] = (char*)malloc(sizeof(char) * width);
-            Array->drawornotArr[y] = (int*)malloc(sizeof(int) * width);
-        }
-
-        for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++) {
-                CvScalar f1 = cvGet2D(img, y, x);
-                Array->ASCIIArtArr[y][x] = ' ';
-                if (f1.val[0] <= 128 && f1.val[1] <= 128  && f1.val[2] <= 128) Array->ASCIIArtArr[y][x] = '*';
-            }
-        }
     }
+
 
     void ScreenArrayLoad(int type, ScreenArray* Array, const char* fileName) {
         IplImage* img = cvLoadImage(fileName);
@@ -96,9 +73,9 @@ public:
         Array->width = width;
         Array->height = height;
 
-        Array->MapInfo = (int**)malloc(sizeof(int*) * height);
+        Array->MapInfo = new int* [height];;
         for (int y = 0; y < height; y++) {
-            Array->MapInfo[y] = (int*)malloc(sizeof(int) * width);
+            Array->MapInfo[y] = new int[width];
         }
 
         for (int y = 0; y < height; y++) {
@@ -116,7 +93,11 @@ public:
                     Array->init_x = x;
                     Array->init_y = y;
                 }else if (f1.val[0] == 0 && f1.val[1] == 255 && f1.val[2] == 255)
-                    Array->MapInfo[y][x] = MAP_DOOR;
+                    Array->MapInfo[y][x] = MAP_EXIT;
+                else if (f1.val[0] == 0 && f1.val[1] == 255 && f1.val[2] == 255)
+                    Array->MapInfo[y][x] = MAP_DOOR_01;
+                else if (f1.val[0] == 0 && f1.val[1] == 255 && f1.val[2] == 255)
+                    Array->MapInfo[y][x] = MAP_DOOR_02;
                 else 
                     Array->MapInfo[y][x] = 0;
                 
@@ -129,9 +110,9 @@ public:
                         Array->MapInfo[y][x] = JUMP_TRAP;
                 }
                 else if (type == TYPE_PUZZLE) {
-                    if (f1.val[0] == 0 && f1.val[1] == 255 && f1.val[2] == 255)
+                    if (f1.val[0] == 255 && f1.val[1] == 0 && f1.val[2] == 0)
                         Array->MapInfo[y][x] = PUZZLE_OBJ_01;
-                    else if (f1.val[0] == 255 && f1.val[1] == 0 && f1.val[2] == 0)
+                    else if (f1.val[0] == 255 && f1.val[1] == 255 && f1.val[2] == 0)
                         Array->MapInfo[y][x] = PUZZLE_OBJ_02;
                 }
             }

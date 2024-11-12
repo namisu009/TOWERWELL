@@ -4,8 +4,10 @@
 
 #include<vector>
 #include<unordered_map>
+#include<string>
 
 #include "RenderStruct.h"
+#include "EventDispatcher.h"
 #include "ArtLoadManager.h"
 
 using namespace std;
@@ -17,6 +19,8 @@ private:
     RenderArray renderArray;
     ScreenArray screenArray;
 
+    string mapId;
+
     int width;// 맵 너비
     int height;// 맵 높이
 
@@ -26,7 +30,10 @@ private:
 
     int type;
 
+    unordered_map<int, string> DoorMapping;
+
     ArtLoadManager* artLoadManager;
+    EventDispatcher* eventDispatcher;
 public:
     Map() {
         artLoadManager = artLoadManager->GetInstance();
@@ -49,24 +56,48 @@ public:
         init_y = screenArray.init_y;
     }
 
+    void setEventDispatcher(EventDispatcher* dispatcher) {
+        eventDispatcher = dispatcher;
+    }
+
+    void setMapId(string id) {
+        mapId = id;
+    }
+
     bool isExitDoor(int x, int y) const {
         if (screenArray.MapInfo[y + 1][x] == MAP_EXIT) return true;
         return false;
     }
 
+    bool isDoor(int x, int y) const {
+        if (screenArray.MapInfo[y + 1][x] == MAP_DOOR_01 || screenArray.MapInfo[y + 1][x] == MAP_DOOR_02) return true;
+        return false;
+    }
+
     bool isBackGround(int x, int y) const {
-        if (screenArray.MapInfo[y + 1][x] == MAP_BACKGROUND) return true; //배경일 땐 3
+        if (screenArray.MapInfo[y + 1][x] == MAP_BACKGROUND) return true; 
         return false;
     }
 
     bool isWall(int x, int y) const {
-        if (screenArray.MapInfo[y + 1][x] == MAP_WALL) return true; //벽일 땐 2 // 벽이 아닌 모든 요소들은 사용자가 통과 가능
+        if (screenArray.MapInfo[y + 1][x] == MAP_WALL) return true; 
         return false;
     }
 
     bool isFloor(int x, int y) const {
-        if (screenArray.MapInfo[y + 1][x] == MAP_FLOOR) return true; //바닥일 때 1
+        if (screenArray.MapInfo[y + 1][x] == MAP_FLOOR) return true; 
         return false;
+    }
+
+    void setDoorId(int colorId, string doorId) { 
+        DoorMapping[colorId] = doorId;
+    }
+
+    virtual string getDoorId(int x, int y) {
+        if (!isDoor(x, y))
+            return ""; // Map Z
+        else
+            return DoorMapping[screenArray.MapInfo[y][x]]; //Map Id return
     }
 
     int getInitX() { return init_x; }
@@ -77,6 +108,14 @@ public:
 
     int getType() {
         return type;
+    }
+    
+    unordered_map <int, string> getDoorMapping() {
+        return DoorMapping;
+    }
+
+    string getMapId() {
+        return mapId;
     }
 
     void setType(int _type) {

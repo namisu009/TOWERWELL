@@ -7,6 +7,7 @@
 #include "Scene.h"
 #include "Command.h"
 #include "PuzzleMap.h"
+#include "Stage.h"
 #include "JumpMap.h"
 #include "EventDispatcher.h"
 #include "GameObjectManager.h"
@@ -35,7 +36,7 @@ public:
         }
     }
 
-    static void getPuzzleMapHandle(Character* object, PuzzleMap* map) {
+    static void getPuzzleMapHandle(Character* object, Stage* stage, Map* map) {
      
         clearKeyMap();
 
@@ -53,9 +54,13 @@ public:
             object->jump();
         });
 
-        bindInput(VK_SPACE, [object, map]() {
+        bindInput(0x46, [object, stage, map]() {
             ScreenArray myScreen = map->getScreenArray();
-            int in = myScreen.MapInfo[object->getFootY() - object->getHeight() / 2][object->getFootX()];
+
+            int init_x = object->getFootX();
+            int init_y = object->getFootY() - object->getHeight() / 2;
+            
+            int in = myScreen.MapInfo[init_y][init_x];
             if (in == PUZZLE_OBJ_01 || in == PUZZLE_OBJ_02)
             {
                 Scene newScene;
@@ -67,6 +72,10 @@ public:
                 newScene.addCommand(newCmd);
 
                 newScene.display();
+            }
+            
+            if (map->getDoorId(init_x, init_y) != "") {
+                stage->onMoveMap(init_x, init_y);
             }
         });
 

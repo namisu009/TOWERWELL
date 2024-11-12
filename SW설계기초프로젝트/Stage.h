@@ -2,28 +2,69 @@
 #define _STAGE_H
 
 #include <unordered_map>
+
+#include "EventDispatcher.h"
 #include "Puzzle.h"
 #include "Map.h"
+#include "Scene.h"
+
 using namespace std;
 
 class Stage {
 private:
     int stageId; // 스테이지 ID
-    Map* map;// 해당 스테이지의 맵
+    string currentMapId;
+    unordered_map<string, Map*> maps;// 해당 스테이지의 맵
+    unordered_map<string, Scene*> scenes;// 해당 스테이지의 씬들
     bool isCleared; // 스테이지 클리어 여부 //퍼즐이 다 풀렸을 때
-    bool playedScene; //해당 스테이지의 씬이 이미 보여졌는지
-    //EventDispatcher& eventDispatcher; // 이벤트 디스패처 참조
+
+    EventDispatcher* eventDispatcher; // 이벤트 디스패처 참조
 
 public:
-    Stage(int id, string sceneId, string mapid); // 생성자  EventDispatcher& dispatcher
-    void addPuzzle(Puzzle* puzzle); // 퍼즐 추가
+    Stage() {
+        currentMapId = "";
+        isCleared = false;
+        eventDispatcher = new EventDispatcher();
+        eventDispatcher->subscribe(PUZZLE_SOLVED, [this]() { onPuzzleSolved(); });
+    }
+
+    /* 사용자 기능 */
+    Map* getCurrentMap() {
+        return maps[currentMapId];
+    }
+
+    void onMoveMap(int x, int y) { //맵이동
+        string key = maps[currentMapId]->getDoorId(x, y);
+        if (key != "")
+            currentMapId = key;
+
+        eventDispatcher->dispatch(MOVE_MAP);
+    }
+    /* 추가 기능*/
+
+    void addMap(Map* map) {
+        map->setEventDispatcher(eventDispatcher);
+        maps[map->getMapId()] = map;
+
+        if (currentMapId == "")
+            currentMapId = map->getMapId();
+    }
+
+    void addPuzzle(string MapId, Puzzle* puzzle) {
+
+    }
+
     bool getIsCleared() {
         return isCleared;
     }
+
     void playScene() {
         
     }
-    void onPuzzleSolved(); // 퍼즐 해결 이벤트 핸들링
+
+    void onPuzzleSolved() {
+
+    }
 };
 
 #endif

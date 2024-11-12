@@ -4,6 +4,7 @@
 Map* RenderManager::m_map = nullptr;
 vector<GameObject*> RenderManager::renderQueue;
 Dialog * RenderManager::renderLog = NULL;
+EventDispatcher* RenderManager::eventDispatcher;
 
 void RenderManager::addObject(GameObject* object) {
     renderQueue.push_back(object); // ∑ª¥ı∏µ«“ ∞¥√º √ﬂ∞°
@@ -27,14 +28,14 @@ void RenderManager::renderMap() {
     RenderArray& renderArray = m_map->getRenderArray();
 
     int init_x = cmdWidth / 2 - renderArray.width / 2;
-    int init_y = cmdHeight - renderArray.height - 1;
+    int init_y = cmdHeight - renderArray.height;
 
     COORD pos = { 0, 0 };
 
     for (int y = 0; y < renderArray.height; y++)
     {
         pos.Y = init_y + y;
-        DoubleBufferManager::ScreenPrint(0, pos.Y, m_map->getRenderArray().ASCIIArtArr[y]);
+        DoubleBufferManager::ScreenPrint(init_x, pos.Y, m_map->getRenderArray().ASCIIArtArr[y]);
     }
     //DoubleBufferManager::ScreenFlipping();
 }
@@ -123,7 +124,7 @@ void RenderManager::renderDialog() {
 }
 
 void RenderManager::render() {
-    //clearObject();
+    renderClear();
     renderMap();
     renderObject();
     renderDialog();
@@ -132,6 +133,10 @@ void RenderManager::render() {
 
 void RenderManager::clear() {
     renderQueue.clear(); // ∑ª¥ı∏µ ≈• √ ±‚»≠
+}
+
+void RenderManager::renderClear() {
+    DoubleBufferManager::ScreenClear();
 }
 
 void RenderManager::ScreenInit() {

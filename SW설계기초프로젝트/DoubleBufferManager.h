@@ -17,16 +17,16 @@ private:
 public:
     static void ScreenInit()
     {
-        COORD size = { 200, 200 };
+        COORD size = { cmdWidth + 10, cmdHeight + 10 };
         SetConsoleScreenBufferSize(hOutHandle, size);
 
-        system("mode con: cols=480 lines=169");
+        system("mode con: cols=480 lines=170");
 
         CONSOLE_CURSOR_INFO cci;
 
         COORD pos = { 0, 0 };
         DWORD dw;
-        FillConsoleOutputCharacter(hOutHandle, ' ', cmdWidth * cmdHeight, pos, &dw);
+        FillConsoleOutputCharacter(hOutHandle, ' ', cmdWidth * cmdHeight * cmdWidth, pos, &dw);
 
         //화면 버퍼 2개를 만든다.
         g_hScreen[0] = CreateConsoleScreenBuffer(GENERIC_READ | GENERIC_WRITE,
