@@ -68,19 +68,19 @@ public:
 
     void initialize() {
         for (int i = 0; i < 4; i++) {
-            StageManager::addStage(i);
+            StageManager::addStage(i, &eventDispatcher);
         }
 
         // 맵 초기화
         MapManager::createMap("S1_PZ_MAP_01", TYPE_PUZZLE, "src\\S1_PUZZLE_MAP_01.png", "src\\S1_PUZZLE_MAP_INFO_01.png");
         MapManager::createMap("S1_JP_MAP_01", TYPE_JUMP, "src\\S1_JUMP_MAP_01.png", "src\\S1_JUMP_MAP_INFO_01.png");
+
         MapManager::getMap("S1_PZ_MAP_01")->setDoorId(MAP_EXIT, "S1_JP_MAP_01");
+        MapManager::getMap("S1_JP_MAP_01")->setDoorId(MAP_EXIT, "S1_PZ_MAP_01");
         
-        
-        //currentMap = (JumpMap*)(MapManager::getMap("S1_JP_MAP_01"));
 
         StageManager::addMap(0, MapManager::getMap("S1_PZ_MAP_01"));
-        StageManager::addMap(1, MapManager::getMap("S1_JP_MAP_01"));
+        StageManager::addMap(0, MapManager::getMap("S1_JP_MAP_01"));
 
 
         currentMap = StageManager::getCurrentStage()->getCurrentMap();
@@ -103,7 +103,7 @@ public:
         sisterCharacter->setAnimation("IDLE", 1, "src\\sister_idle_02.png");
         sisterCharacter->setAnimation("RIGHT", "src\\sister_right_01.png", "src\\sister_right_02.png");
         sisterCharacter->setAnimation("LEFT", "src\\sister_left_01.png", "src\\sister_left_02.png");
-        sisterCharacter->setJumpStrength(13.5f);
+        //sisterCharacter->setJumpStrength(13.5f);
 
         GameObjectManager::createObejct("Dialog", "SC1_DL_01", "src\\dialog1.png");
         GameObjectManager::createObejct("Dialog", "SC1_DL_02", "src\\dialog2.png");
@@ -180,7 +180,7 @@ public:
         }
 
         newScene.display();
-
+    
         //테스트씬 끝
 
     }
@@ -192,7 +192,7 @@ public:
             HandlerManager::getPuzzleMapHandle(playerCharacter, StageManager::getCurrentStage(), (PuzzleMap*)currentMap);
         }
         else if (currentMap->getType() == TYPE_JUMP) {
-            HandlerManager::getJumpMapHandle(playerCharacter, (JumpMap*)currentMap);
+            HandlerManager::getJumpMapHandle(playerCharacter, StageManager::getCurrentStage(), (JumpMap*)currentMap);
         }
 
         RenderManager::setRenderMap(currentMap);
@@ -205,6 +205,9 @@ public:
 
     // 물리 연산 루프
     void physicsLoop() {
+        std::chrono::steady_clock::time_point lastJumpTime;
+        int jumpCooldown = 500;
+
         while (isRunning) {
             int flag = 0;
 
@@ -217,10 +220,23 @@ public:
                 flag = 1;
             }
             if (GetAsyncKeyState(VK_UP) & 0x8000) {
-                HandlerManager::processInput(VK_UP);
+                
+                
+                auto now = std::chrono::steady_clock::now();
+                int elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(now - lastJumpTime).count();
 
-                if(currentMap->getType() == TYPE_JUMP)
-                    actionPositions[{playerCharacter->getFootX(), playerCharacter->getFootY()}] = ACTION_JUMP;
+                if (elapsed >= jumpCooldown) {
+                    // 쿨타임이 지나면 점프
+                    HandlerManager::processInput(VK_UP);
+                    lastJumpTime = now;
+
+                    if (currentMap->getType() == TYPE_JUMP)
+                        actionPositions[{playerCharacter->getFootX(), playerCharacter->getFootY()}] = ACTION_JUMP;
+                }
+                else {
+                    // 쿨타임이 안 지나면 점프하지 않음
+                }
+
                 flag = 1;
             }
             if (GetAsyncKeyState(VK_SPACE) & 0x8000) {
@@ -244,11 +260,14 @@ public:
             // 충돌 처리 및 물리 연산
             while (CollisionManager::checkWallCollision(*playerCharacter, *currentMap)) {
                 adjustPositionForCollision(playerCharacter);
+
             }
             PhysicsManager::applyGravity(playerCharacter, currentMap);
 
             while (CollisionManager::checkFloorCollision(*playerCharacter, *currentMap)) {
                 adjustPositionForCollision(playerCharacter);
+
+
             }
 
             playerCharacter->move();
@@ -281,6 +300,7 @@ public:
 
         while (CollisionManager::checkWallCollision(*sisterCharacter, *currentMap)) {
             adjustPositionForCollision(sisterCharacter);
+
         }
         PhysicsManager::applyGravity(sisterCharacter, currentMap);
 
@@ -299,7 +319,7 @@ public:
 
             // x 좌표의 근사 비교를 수행 (tolerance는 5로 설정)
             if (abs(sisterX - actionX) < 3) {
-                sisterCharacter->setDx(playerCharacter->getX() - offset > sisterCharacter->getX() ? 4 : -4);
+                sisterCharacter->setDx(sisterCharacter->getDx() > 0 ? 10 : -10);
                 if (it->second == ACTION_JUMP) {
                     sisterCharacter->jump();
                 }

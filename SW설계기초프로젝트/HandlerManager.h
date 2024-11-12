@@ -74,6 +74,7 @@ public:
                 newScene.display();
             }
             
+            printf("");
             if (map->getDoorId(init_x, init_y) != "") {
                 stage->onMoveMap(init_x, init_y);
             }
@@ -83,7 +84,7 @@ public:
 
     }
 
-    static void getJumpMapHandle(Character* object, JumpMap* map) {
+    static void getJumpMapHandle(Character* object, Stage* stage, JumpMap* map) {
         
         clearKeyMap();
 
@@ -104,6 +105,16 @@ public:
         // ´ë½Ã
         bindInput(VK_SPACE, [object]() {
             object->dash();
+        });
+
+        bindInput(0x46, [object, stage, map]() {
+
+            int init_x = object->getFootX();
+            int init_y = object->getFootY() - object->getHeight() / 2;
+
+            if (map->getDoorId(init_x, init_y) != "") {
+                stage->onMoveMap(init_x, init_y);
+            }
         });
     }
 };

@@ -16,8 +16,8 @@ public:
     static void setCurrentStage(int id) {
         currentStageId = id;
     }
-    static void addStage(int id) {
-        Stage stage;
+    static void addStage(int id, EventDispatcher* eventDispatcher) {
+        Stage stage(eventDispatcher);
         stages[id] = stage;
     }
 

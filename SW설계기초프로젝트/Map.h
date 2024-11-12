@@ -94,7 +94,7 @@ public:
     }
 
     virtual string getDoorId(int x, int y) {
-        if (!isDoor(x, y))
+        if (!isDoor(x, y) && !isExitDoor(x, y))
             return ""; // Map Z
         else
             return DoorMapping[screenArray.MapInfo[y][x]]; //Map Id return

@@ -13,7 +13,7 @@ bool CollisionManager::checkMapCollision(GameObject object, Map map) {
 
     for (int y = 0; y < object.getHeight(); ++y) {
         for (int x = 0; x < object.getWidth(); ++x) {
-            if (object.getRenderArray()->drawornotArr[y][x] && (map.isWall(objectX + x, objectY + y) || map.isFloor(objectX + x, objectY + y))) {
+            if ((map.isWall(objectX + x, objectY + y) || map.isFloor(objectX + x, objectY + y))) {
                 return true; // 벽 또는 바닥에 충돌함
             }
         }
@@ -27,7 +27,7 @@ bool CollisionManager::checkWallCollision(GameObject object, Map map) {
 
     for (int y = 0; y < object.getHeight(); ++y) {
         for (int x = 0; x < object.getWidth(); ++x) {
-            if (object.getRenderArray()->drawornotArr[y][x] && map.isWall(objectX + x, objectY + y)) {
+            if (map.isWall(objectX + x, objectY + y)) {
                 return true;
             }
         }
@@ -42,7 +42,7 @@ bool CollisionManager::checkFloorCollision(GameObject object, Map map) {
 
     for (int y = 0; y < object.getHeight(); ++y) {
         for (int x = 0; x < object.getWidth(); ++x) {
-            if (object.getRenderArray()->drawornotArr[y][x] && map.isFloor(objectX + x, objectY + y)) {
+            if (map.isFloor(objectX + x, objectY + y)) {
                 return true;
             }
         }

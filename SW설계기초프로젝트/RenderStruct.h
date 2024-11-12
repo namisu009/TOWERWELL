@@ -65,7 +65,6 @@ enum ActionType {
 	ACTION_DASH,
 };
 
-
 const int DIALOG_X = cmdWidth / 2;
 const int DIALOG_Y = cmdHeight;
 

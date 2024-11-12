@@ -21,10 +21,11 @@ private:
     EventDispatcher* eventDispatcher; // 이벤트 디스패처 참조
 
 public:
-    Stage() {
+    Stage(){}
+    Stage(EventDispatcher* _eventDispatcher) {
         currentMapId = "";
         isCleared = false;
-        eventDispatcher = new EventDispatcher();
+        eventDispatcher = _eventDispatcher;
         eventDispatcher->subscribe(PUZZLE_SOLVED, [this]() { onPuzzleSolved(); });
     }
 
