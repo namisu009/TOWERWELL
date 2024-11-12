@@ -54,8 +54,8 @@ public:
 
     void initialize() {
         // 맵 초기화
-        MapManager::createMap("S1_JP_MAP_01", TYPE_JUMP, "c:\\ImageTemp\\S1_JUMP_MAP_01.png", "c:\\ImageTemp\\S1_JUMP_MAP_INFO_01.png");
-        MapManager::createMap("S1_PZ_MAP_01", TYPE_PUZZLE, "c:\\ImageTemp\\S1_PUZZLE_MAP_01.png", "c:\\ImageTemp\\S1_PUZZLE_MAP_INFO_01.png");
+        MapManager::createMap("S1_JP_MAP_01", TYPE_JUMP, "src\\S1_JUMP_MAP_01.png", "src\\S1_JUMP_MAP_INFO_01.png");
+        MapManager::createMap("S1_PZ_MAP_01", TYPE_PUZZLE, "src\\S1_PUZZLE_MAP_01.png", "src\\S1_PUZZLE_MAP_INFO_01.png");
         currentMap = (PuzzleMap*)(MapManager::getMap("S1_PZ_MAP_01"));
         currentMap = (JumpMap*)(MapManager::getMap("S1_JP_MAP_01"));
 
@@ -66,19 +66,19 @@ public:
         DoubleBufferManager::ScreenFlipping();
 
         // 캐릭터 생성 및 초기화
-        GameObjectManager::createObejct("Character", "Hero", "c:\\ImageTemp\\hero_idle_01.png");
+        GameObjectManager::createObejct("Character", "Hero", "src\\hero_idle_01.png");
         playerCharacter = GameObjectManager::getCharacter("Hero");
-        playerCharacter->setAnimation("IDLE", 1, "c:\\ImageTemp\\hero_idle_02.png");
-        playerCharacter->setAnimation("RIGHT", "c:\\ImageTemp\\hero_right_01.png", "c:\\ImageTemp\\hero_right_02.png");
-        playerCharacter->setAnimation("LEFT", "c:\\ImageTemp\\hero_left_01.png", "c:\\ImageTemp\\hero_left_02.png");
+        playerCharacter->setAnimation("IDLE", 1, "src\\hero_idle_02.png");
+        playerCharacter->setAnimation("RIGHT", "src\\hero_right_01.png", "src\\hero_right_02.png");
+        playerCharacter->setAnimation("LEFT", "src\\hero_left_01.png", "src\\hero_left_02.png");
         playerCharacter->SetStartPosition(currentMap->getInitX(), currentMap->getInitY());
 
-        GameObjectManager::createObejct("Character", "Sister", "c:\\ImageTemp\\sister_idle_01.png");
+        GameObjectManager::createObejct("Character", "Sister", "src\\sister_idle_01.png");
         sisterCharacter = GameObjectManager::getCharacter("Sister");
             
-        sisterCharacter->setAnimation("IDLE", 1, "c:\\ImageTemp\\sister_idle_02.png");
-        sisterCharacter->setAnimation("RIGHT", "c:\\ImageTemp\\sister_right_01.png", "c:\\ImageTemp\\sister_right_02.png");
-        sisterCharacter->setAnimation("LEFT", "c:\\ImageTemp\\sister_left_01.png", "c:\\ImageTemp\\sister_left_02.png");
+        sisterCharacter->setAnimation("IDLE", 1, "src\\sister_idle_02.png");
+        sisterCharacter->setAnimation("RIGHT", "src\\sister_right_01.png", "src\\sister_right_02.png");
+        sisterCharacter->setAnimation("LEFT", "src\\sister_left_01.png", "src\\sister_left_02.png");
         sisterCharacter->SetStartPosition(currentMap->getInitX() - 18, currentMap->getInitY());
         sisterCharacter->setJumpStrength(13.5f);
 
