@@ -15,6 +15,8 @@
 #include "EventDispatcher.h"
 #include "HandlerManager.h"
 #include "RenderManager.h"
+#include "Scene.h"
+#include "Command.h"
 
 #include "GameObjectManager.h"
 #include "MapManager.h"
@@ -82,6 +84,11 @@ public:
         sisterCharacter->SetStartPosition(currentMap->getInitX() - 18, currentMap->getInitY());
         sisterCharacter->setJumpStrength(13.5f);
 
+        GameObjectManager::createObejct("Dialog", "SC1_DL_01", "src\\dialog1.png");
+        GameObjectManager::createObejct("Dialog", "SC1_DL_02", "src\\dialog2.png");
+        GameObjectManager::createObejct("Dialog", "SC1_DL_03", "src\\dialog3.png");
+
+
         RenderManager::addObject(sisterCharacter);
         RenderManager::addObject(playerCharacter);
 
@@ -89,6 +96,73 @@ public:
 
         // 초기 화면 렌더링
         RenderManager::renderObject();
+
+        //테스트씬
+        Scene newScene;
+        vector<Command> newCmds;
+        Command newCmd;
+
+        newCmd.addObject(playerCharacter); // 대상 오브젝트 설정
+
+        for (int i = 0; i < 8; i++) {
+            newCmd.setAction((function<void()>) [this]() { playerCharacter->setDx(0); });
+            newCmds.push_back(newCmd);
+            newCmd.setAction((function<void()>) [this]() { playerCharacter->move(); });
+            newCmds.push_back(newCmd);
+        }
+
+        newCmd.setAction((function<void()>) [this]() { playerCharacter->setDx(-1); });
+        newCmds.push_back(newCmd);
+        for (int i = 0; i < 5; i++) {
+            newCmd.setAction((function<void()>) [this]() { playerCharacter->setDx(0); });
+            newCmds.push_back(newCmd);
+            newCmd.setAction((function<void()>) [this]() { playerCharacter->move(); });
+            newCmds.push_back(newCmd);
+        }
+
+        // 오른쪽으로 이동
+        newCmd.setAction((function<void()>) [this]() { playerCharacter->setDx(1); });
+        newCmds.push_back(newCmd);
+        for (int i = 0; i < 5; i++) {
+            newCmd.setAction((function<void()>) [this]() { playerCharacter->setDx(0); });
+            newCmds.push_back(newCmd);
+            newCmd.setAction((function<void()>) [this]() { playerCharacter->move(); });
+            newCmds.push_back(newCmd);
+        }
+
+        // 오른쪽으로 이동
+        for (int i = 0; i < 5; i++) {
+            newCmd.setAction((function<void()>) [this]() { playerCharacter->setDx(4); });
+            newCmds.push_back(newCmd);
+            newCmd.setAction((function<void()>) [this]() { playerCharacter->move(); });
+            newCmds.push_back(newCmd);
+        }
+
+        // 정지
+        for (int i = 0; i < 5; i++) {
+            newCmd.setAction((function<void()>) [this]() { playerCharacter->setDx(0); });
+            newCmds.push_back(newCmd);
+            newCmd.setAction((function<void()>) [this]() { playerCharacter->move(); });
+            newCmds.push_back(newCmd);
+        }
+
+        newCmd.addObject(GameObjectManager::getCharacter("SC1_DL_01"));
+        newCmds.push_back(newCmd);
+        newCmd.addObject(GameObjectManager::getCharacter("SC1_DL_02"));
+        newCmds.push_back(newCmd);
+        newCmd.addObject(GameObjectManager::getCharacter("SC1_DL_03"));
+        newCmds.push_back(newCmd);
+
+
+        // 모든 명령을 newScene에 추가
+        for (auto& cmd : newCmds) {
+            newScene.addCommand(cmd);
+        }
+
+        newScene.display();
+
+        //테스트씬 끝
+
     }
 
     void setMap(Map* _map) {
@@ -117,12 +191,12 @@ public:
             }
             if (GetAsyncKeyState(VK_UP) & 0x8000) {
                 HandlerManager::processInput(VK_UP);
-                actionPositions[{playerCharacter->getX(), playerCharacter->getY()}] = ACTION_JUMP;
+                actionPositions[{playerCharacter->getFootX(), playerCharacter->getFootY()}] = ACTION_JUMP;
                 flag = 1;
             }
             if (GetAsyncKeyState(VK_SPACE) & 0x8000) {
                 HandlerManager::processInput(VK_SPACE);
-                actionPositions[{playerCharacter->getX(), playerCharacter->getY()}] = ACTION_DASH;
+                actionPositions[{playerCharacter->getFootX(), playerCharacter->getFootY()}] = ACTION_DASH;
                 flag = 1;
             }
 
@@ -152,20 +226,20 @@ public:
     // 여동생이 플레이어 캐릭터를 따라가도록 위치 업데이트
     void updateSisterPosition() {
         // 예제: 여동생이 플레이어를 일정 거리 뒤따라 이동하게 함
-        int targetX = playerCharacter->getX() - offset;
-        int targetY = playerCharacter->getY();
+        int targetLeft = playerCharacter->getFootX() - offset;
+        int targetRight = playerCharacter->getFootX() + offset;
 
-        if (abs(sisterCharacter->getX() - targetX) > 2) { // 2보다 크면 이동
-            if (sisterCharacter->getX() < targetX) {
-                sisterCharacter->setDx(2);  // 오른쪽으로 이동
-            }
-            else if (sisterCharacter->getX() > targetX) {
-                sisterCharacter->setDx(-2); // 왼쪽으로 이동
-            }
+        // 여동생이 플레이어의 범위 안에 있는지 확인
+        if (sisterCharacter->getFootX() < targetLeft) {
+            sisterCharacter->setDx(2);  // 플레이어 왼쪽에 있을 때 오른쪽으로 이동
+        }
+        else if (sisterCharacter->getFootX() > targetRight) {
+            sisterCharacter->setDx(-2); // 플레이어 오른쪽에 있을 때 왼쪽으로 이동
         }
         else {
-            sisterCharacter->setDx(0);  // 목표 위치에 도달하면 이동 멈춤
+            sisterCharacter->setDx(0);  // 범위 내에 있을 때 멈춤
         }
+
 
         handleSisterActions();
         sisterCharacter->dashState();
@@ -184,12 +258,12 @@ public:
 
     void handleSisterActions() {
         auto sisterPos = std::make_pair(sisterCharacter->getX(), sisterCharacter->getY());
-        int sisterX = sisterCharacter->getX();
+        int sisterX = sisterCharacter->getFootX();
         for (auto it = actionPositions.begin(); it != actionPositions.end();) {
             int actionX = it->first.first;
 
             // x 좌표의 근사 비교를 수행 (tolerance는 5로 설정)
-            if (abs(sisterX - actionX) < 2) {
+            if (abs(sisterX - actionX) < 3) {
                 sisterCharacter->setDx(playerCharacter->getX() - offset > sisterCharacter->getX() ? 4 : -4);
                 if (it->second == ACTION_JUMP) {
                     sisterCharacter->jump();

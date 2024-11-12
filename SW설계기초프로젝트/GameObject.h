@@ -81,6 +81,10 @@ public:
 		return y + height; // 발바닥 위치는 현재 Y 위치 + 캐릭터 높이
 	}
 
+	int getFootX() {
+		return x + width / 2; // 발바닥 위치는 현재 x 위치 + 캐릭터 길이 절반
+	}
+
 };
 
 #endif
