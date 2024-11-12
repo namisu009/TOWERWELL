@@ -118,12 +118,7 @@ void RenderManager::renderDialog() {
     for (int y = 0; y < art->height; y++)
     {
         pos.Y = renderLog_y + y;
-        for (int x = 0; x < art->width; x++)
-        {
-            pos.X = renderLog_x + x;
-            char buf[2] = { art->ASCIIArtArr[y][x], '\0' };
-            DoubleBufferManager::ScreenprintAtPosition(pos.X, pos.Y, buf); //현재 화면이 캐릭터가 그려질 곳이 아니라면 맵 그리기
-        }
+        DoubleBufferManager::ScreenPrint(renderLog_x, pos.Y, art->ASCIIArtArr[y]);
     }
 }
 

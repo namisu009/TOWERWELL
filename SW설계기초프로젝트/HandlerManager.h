@@ -4,9 +4,12 @@
 #include <functional>
 
 #include "Map.h"
+#include "Scene.h"
+#include "Command.h"
 #include "PuzzleMap.h"
 #include "JumpMap.h"
 #include "EventDispatcher.h"
+#include "GameObjectManager.h"
 
 using namespace std;
 
@@ -48,6 +51,23 @@ public:
         // 점프
         bindInput(VK_UP, [object]() {
             object->jump();
+        });
+
+        bindInput(VK_SPACE, [object, map]() {
+            ScreenArray myScreen = map->getScreenArray();
+            int in = myScreen.MapInfo[object->getFootY() - object->getHeight() / 2][object->getFootX()];
+            if (in == PUZZLE_OBJ_01 || in == PUZZLE_OBJ_02)
+            {
+                Scene newScene;
+                Command newCmd;
+
+                GameObjectManager::createObejct("Dialog", "SC3_PZ_01", "src\\SC3_PZ_01.png");
+
+                newCmd.addObject(GameObjectManager::getCharacter("SC3_PZ_01"));
+                newScene.addCommand(newCmd);
+
+                newScene.display();
+            }
         });
 
         // 퍼즐 아이디 가져오기

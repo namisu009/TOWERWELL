@@ -59,7 +59,7 @@ public:
         MapManager::createMap("S1_JP_MAP_01", TYPE_JUMP, "src\\S1_JUMP_MAP_01.png", "src\\S1_JUMP_MAP_INFO_01.png");
         MapManager::createMap("S1_PZ_MAP_01", TYPE_PUZZLE, "src\\S1_PUZZLE_MAP_01.png", "src\\S1_PUZZLE_MAP_INFO_01.png");
         currentMap = (PuzzleMap*)(MapManager::getMap("S1_PZ_MAP_01"));
-        currentMap = (JumpMap*)(MapManager::getMap("S1_JP_MAP_01"));
+        //currentMap = (JumpMap*)(MapManager::getMap("S1_JP_MAP_01"));
 
         // 렌더링 초기화
         RenderManager::ScreenInit();
@@ -87,7 +87,6 @@ public:
         GameObjectManager::createObejct("Dialog", "SC1_DL_01", "src\\dialog1.png");
         GameObjectManager::createObejct("Dialog", "SC1_DL_02", "src\\dialog2.png");
         GameObjectManager::createObejct("Dialog", "SC1_DL_03", "src\\dialog3.png");
-
 
         RenderManager::addObject(sisterCharacter);
         RenderManager::addObject(playerCharacter);
@@ -191,12 +190,16 @@ public:
             }
             if (GetAsyncKeyState(VK_UP) & 0x8000) {
                 HandlerManager::processInput(VK_UP);
-                actionPositions[{playerCharacter->getFootX(), playerCharacter->getFootY()}] = ACTION_JUMP;
+
+                if(currentMap->getType() == TYPE_JUMP)
+                    actionPositions[{playerCharacter->getFootX(), playerCharacter->getFootY()}] = ACTION_JUMP;
                 flag = 1;
             }
             if (GetAsyncKeyState(VK_SPACE) & 0x8000) {
                 HandlerManager::processInput(VK_SPACE);
-                actionPositions[{playerCharacter->getFootX(), playerCharacter->getFootY()}] = ACTION_DASH;
+                if (currentMap->getType() == TYPE_JUMP)
+                    actionPositions[{playerCharacter->getFootX(), playerCharacter->getFootY()}] = ACTION_DASH;
+                
                 flag = 1;
             }
 

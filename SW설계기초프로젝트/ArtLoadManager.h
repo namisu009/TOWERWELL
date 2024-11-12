@@ -129,13 +129,10 @@ public:
                         Array->MapInfo[y][x] = JUMP_TRAP;
                 }
                 else if (type == TYPE_PUZZLE) {
-                    if (type == TYPE_JUMP)
-                    {
-                        if (f1.val[0] == 255 && f1.val[1] == 255 && f1.val[2] == 0)
-                            Array->MapInfo[y][x] = PUZZLE_OBJ_01;
-                        else if (f1.val[0] == 255 && f1.val[1] == 0 && f1.val[2] == 0)
-                            Array->MapInfo[y][x] = PUZZLE_OBJ_02;
-                    }
+                    if (f1.val[0] == 0 && f1.val[1] == 255 && f1.val[2] == 255)
+                        Array->MapInfo[y][x] = PUZZLE_OBJ_01;
+                    else if (f1.val[0] == 255 && f1.val[1] == 0 && f1.val[2] == 0)
+                        Array->MapInfo[y][x] = PUZZLE_OBJ_02;
                 }
             }
         }
