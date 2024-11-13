@@ -53,7 +53,7 @@ class GameManager
 
     StageManager stageManager;
 
-    int offset = 18;
+    int offset = 16;
     int threadTime = 32;
 
     std::unordered_map<std::pair<int, int>, playerAction, pair_hash> actionPositions;
@@ -79,14 +79,11 @@ public:
         // 맵 초기화
         MapManager::createMap("S1_PZ_MAP_01", TYPE_PUZZLE, "src\\S1_PUZZLE_MAP_01.png", "src\\S1_PUZZLE_MAP_INFO_01.png");
         MapManager::createMap("S1_JP_MAP_01", TYPE_JUMP, "src\\S1_JUMP_MAP_01.png", "src\\S1_JUMP_MAP_INFO_01.png");
-
         MapManager::getMap("S1_PZ_MAP_01")->setDoorId(MAP_EXIT, "S1_JP_MAP_01");
         MapManager::getMap("S1_JP_MAP_01")->setDoorId(MAP_EXIT, "S1_PZ_MAP_01");
         
-        StageManager::addMap(0, MapManager::getMap("S1_JP_MAP_01"));
         StageManager::addMap(0, MapManager::getMap("S1_PZ_MAP_01"));
-      
-
+        StageManager::addMap(0, MapManager::getMap("S1_JP_MAP_01"));
 
         currentMap = StageManager::getCurrentStage()->getCurrentMap();
 
@@ -121,7 +118,7 @@ public:
 
         // 초기 화면 렌더링
         RenderManager::renderObject();
-        /*
+        
         //테스트씬
         Scene newScene;
         vector<Command> newCmds;
@@ -186,7 +183,7 @@ public:
 
 
         newScene.display();
-         */
+       
         //테스트씬 끝
 
     }
@@ -294,10 +291,10 @@ public:
         if (!sisterCharacter->getisJumping())
         {
             if (sisterCharacter->getFootX() < targetLeft) {
-                sisterCharacter->setDx(2);  // 플레이어 왼쪽에 있을 때 오른쪽으로 이동
+                sisterCharacter->setDx(2.5);  // 플레이어 왼쪽에 있을 때 오른쪽으로 이동
             }
             else if (sisterCharacter->getFootX() > targetRight) {
-                sisterCharacter->setDx(-2); // 플레이어 오른쪽에 있을 때 왼쪽으로 이동
+                sisterCharacter->setDx(-2.5); // 플레이어 오른쪽에 있을 때 왼쪽으로 이동
             }
             else {
                 sisterCharacter->setDx(0);  // 범위 내에 있을 때 멈춤
@@ -331,10 +328,8 @@ public:
             int actionY = it->first.second;
 
             // x 좌표의 근사 비교를 수행 (tolerance는 5로 설정)
-            if (abs(sisterX - actionX) <= offset) {
-
-                sisterCharacter->setDx(it->second.direction * 1.2);
-
+            if (abs(sisterX - actionX) <= offset && abs(sisterY - actionY) <= offset / 2) {
+                sisterCharacter->setDx(it->second.direction * 1.2); 
                 if (it->second.actionType == ACTION_JUMP) {
                     sisterCharacter->jump();
                 }
@@ -348,8 +343,6 @@ public:
                 ++it;
             }
         }
-
-
     }
     // 충돌 발생 시 위치 조정 함수
     void adjustPositionForCollision(Character* character) {
@@ -357,7 +350,6 @@ public:
             character->setDx(character->getDx() + 1);
         else if (character->getDx() > 0)
             character->setDx(character->getDx() - 1);
-
         if (character->getDy() < 0)
             character->setDy(character->getDy() + 1);
         else if (character->getDy() > 0)
