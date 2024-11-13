@@ -77,7 +77,8 @@ public:
 
 	void dash() {
 		if (!isDash) { // 점프 중이지 않으면 점프 시작
-			setDy(jumpStrength / 2); // 위로 이동하는 속도 설정
+			if(getDx() != 0)
+				setDy(jumpStrength / 2); // 위로 이동하는 속도 설정
 			dash_counter = 10;
 			isDash = true; // 점프 상태 설정
 		}

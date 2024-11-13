@@ -35,6 +35,11 @@ struct pair_hash {
     }
 };
 
+struct playerAction {
+    ActionType actionType;
+    int direction;
+};
+
 
 class GameManager
 {
@@ -51,7 +56,7 @@ class GameManager
     int offset = 18;
     int threadTime = 32;
 
-    std::unordered_map<std::pair<int, int>, ActionType, pair_hash> actionPositions;
+    std::unordered_map<std::pair<int, int>, playerAction, pair_hash> actionPositions;
     Map* currentMap;
 
     int currentStageId = 0;
@@ -78,9 +83,9 @@ public:
         MapManager::getMap("S1_PZ_MAP_01")->setDoorId(MAP_EXIT, "S1_JP_MAP_01");
         MapManager::getMap("S1_JP_MAP_01")->setDoorId(MAP_EXIT, "S1_PZ_MAP_01");
         
-
-        StageManager::addMap(0, MapManager::getMap("S1_PZ_MAP_01"));
         StageManager::addMap(0, MapManager::getMap("S1_JP_MAP_01"));
+        StageManager::addMap(0, MapManager::getMap("S1_PZ_MAP_01"));
+      
 
 
         currentMap = StageManager::getCurrentStage()->getCurrentMap();
@@ -103,7 +108,7 @@ public:
         sisterCharacter->setAnimation("IDLE", 1, "src\\sister_idle_02.png");
         sisterCharacter->setAnimation("RIGHT", "src\\sister_right_01.png", "src\\sister_right_02.png");
         sisterCharacter->setAnimation("LEFT", "src\\sister_left_01.png", "src\\sister_left_02.png");
-        //sisterCharacter->setJumpStrength(13.5f);
+        //sisterCharacter->setJumpStrength(14.0f);
 
         GameObjectManager::createObejct("Dialog", "SC1_DL_01", "src\\dialog1.png");
         GameObjectManager::createObejct("Dialog", "SC1_DL_02", "src\\dialog2.png");
@@ -116,7 +121,7 @@ public:
 
         // 초기 화면 렌더링
         RenderManager::renderObject();
-
+        /*
         //테스트씬
         Scene newScene;
         vector<Command> newCmds;
@@ -179,8 +184,9 @@ public:
             newScene.addCommand(cmd);
         }
 
+
         newScene.display();
-    
+         */
         //테스트씬 끝
 
     }
@@ -231,7 +237,7 @@ public:
                     lastJumpTime = now;
 
                     if (currentMap->getType() == TYPE_JUMP)
-                        actionPositions[{playerCharacter->getFootX(), playerCharacter->getFootY()}] = ACTION_JUMP;
+                        actionPositions[{playerCharacter->getFootX(), playerCharacter->getFootY()}] = { ACTION_JUMP, playerCharacter->getDx() };
                 }
                 else {
                     // 쿨타임이 안 지나면 점프하지 않음
@@ -243,8 +249,8 @@ public:
                 HandlerManager::processInput(VK_SPACE);
 
                 if (currentMap->getType() == TYPE_JUMP)
-                    actionPositions[{playerCharacter->getFootX(), playerCharacter->getFootY()}] = ACTION_DASH;
-                
+                    actionPositions[{playerCharacter->getFootX(), playerCharacter->getFootY()}] = { ACTION_DASH, playerCharacter->getDx() };
+            
                 flag = 1;
             }
             if (GetAsyncKeyState(0x46) & 0x8000) {
@@ -260,14 +266,15 @@ public:
             // 충돌 처리 및 물리 연산
             while (CollisionManager::checkWallCollision(*playerCharacter, *currentMap)) {
                 adjustPositionForCollision(playerCharacter);
-
+                //playerCharacter->setDx(0);
+                //playerCharacter->setDy(0);
             }
             PhysicsManager::applyGravity(playerCharacter, currentMap);
 
             while (CollisionManager::checkFloorCollision(*playerCharacter, *currentMap)) {
                 adjustPositionForCollision(playerCharacter);
-
-
+                //playerCharacter->setDx(0);
+                //playerCharacter->setDy(0);
             }
 
             playerCharacter->move();
@@ -284,24 +291,28 @@ public:
         int targetRight = playerCharacter->getFootX() + offset;
 
         // 여동생이 플레이어의 범위 안에 있는지 확인
-        if (sisterCharacter->getFootX() < targetLeft) {
-            sisterCharacter->setDx(2);  // 플레이어 왼쪽에 있을 때 오른쪽으로 이동
+        if (!sisterCharacter->getisJumping())
+        {
+            if (sisterCharacter->getFootX() < targetLeft) {
+                sisterCharacter->setDx(2);  // 플레이어 왼쪽에 있을 때 오른쪽으로 이동
+            }
+            else if (sisterCharacter->getFootX() > targetRight) {
+                sisterCharacter->setDx(-2); // 플레이어 오른쪽에 있을 때 왼쪽으로 이동
+            }
+            else {
+                sisterCharacter->setDx(0);  // 범위 내에 있을 때 멈춤
+            }
         }
-        else if (sisterCharacter->getFootX() > targetRight) {
-            sisterCharacter->setDx(-2); // 플레이어 오른쪽에 있을 때 왼쪽으로 이동
-        }
-        else {
-            sisterCharacter->setDx(0);  // 범위 내에 있을 때 멈춤
-        }
-
 
         handleSisterActions();
+        
         sisterCharacter->dashState();
 
         while (CollisionManager::checkWallCollision(*sisterCharacter, *currentMap)) {
             adjustPositionForCollision(sisterCharacter);
 
         }
+
         PhysicsManager::applyGravity(sisterCharacter, currentMap);
 
         while (CollisionManager::checkFloorCollision(*sisterCharacter, *currentMap)) {
@@ -312,21 +323,24 @@ public:
     }
 
     void handleSisterActions() {
-        auto sisterPos = std::make_pair(sisterCharacter->getX(), sisterCharacter->getY());
+        //auto sisterPos = std::make_pair(sisterCharacter->getX(), sisterCharacter->getY());
         int sisterX = sisterCharacter->getFootX();
+        int sisterY = sisterCharacter->getFootY();
         for (auto it = actionPositions.begin(); it != actionPositions.end();) {
             int actionX = it->first.first;
+            int actionY = it->first.second;
 
             // x 좌표의 근사 비교를 수행 (tolerance는 5로 설정)
-            if (abs(sisterX - actionX) < 3) {
-                sisterCharacter->setDx(sisterCharacter->getDx() > 0 ? 10 : -10);
-                if (it->second == ACTION_JUMP) {
+            if (abs(sisterX - actionX) <= offset) {
+
+                sisterCharacter->setDx(it->second.direction * 1.2);
+
+                if (it->second.actionType == ACTION_JUMP) {
                     sisterCharacter->jump();
                 }
-                else if (it->second == ACTION_DASH) {
+                else if (it->second.actionType == ACTION_DASH) {
                     sisterCharacter->dash();
                 }
-
                 // 여동생이 행동을 수행했으면 해당 위치를 삭제
                 it = actionPositions.erase(it);
             }
