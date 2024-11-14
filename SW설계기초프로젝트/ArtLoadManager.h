@@ -73,15 +73,59 @@ public:
         Array->width = width;
         Array->height = height;
 
-        Array->MapInfo = new int* [height];;
+        Array->MapInfo = new int* [height];
+        Array->ObjectInfo = new int* [height];
         for (int y = 0; y < height; y++) {
             Array->MapInfo[y] = new int[width];
+            Array->ObjectInfo[y] = new int[width];
         }
 
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 CvScalar f1 = cvGet2D(img, y, x);
 
+                Array->MapInfo[y][x] = 0;
+
+                if (f1.val[0] == 0 && f1.val[1] == 0 && f1.val[2] == 0)
+                    Array->MapInfo[y][x] = MAP_FLOOR;
+                else if (f1.val[0] == 255 && f1.val[1] == 0 && f1.val[2] == 255)
+                    Array->MapInfo[y][x] = MAP_WALL;
+                else if (f1.val[0] == 0 && f1.val[1] == 255 && f1.val[2] == 0)
+                    Array->MapInfo[y][x] = MAP_BACKGROUND;
+                else if (f1.val[0] == 0 && f1.val[1] == 0 && f1.val[2] == 255) {
+                    Array->MapInfo[y][x] = MAP_START;
+                    Array->init_x = x;
+                    Array->init_y = y;
+                }
+                else if (f1.val[0] == 0 && f1.val[1] == 255 && f1.val[2] == 255)
+                    Array->MapInfo[y][x] = MAP_EXIT;
+                if (type == TYPE_JUMP)
+                {
+                    if (f1.val[0] == 255 && f1.val[1] == 0 && f1.val[2] == 0)
+                        Array->MapInfo[y][x] = JUMP_TRAP;
+                }
+                
+                if (type == TYPE_PUZZLE) {
+
+                    if (f1.val[0] == 0 && f1.val[1] == 100 && f1.val[2] == 100)
+                        Array->MapInfo[y][x] = MAP_DOOR_01;
+                    else if (f1.val[0] == 0 && f1.val[1] == 200 && f1.val[2] == 200)
+                        Array->MapInfo[y][x] = MAP_DOOR_02;
+
+                    else if (f1.val[0] == 0 && f1.val[1] == 0 && f1.val[2] == 50)
+                        Array->MapInfo[y][x] = PUZZLE_OBJ_01;
+                    else if (f1.val[0] == 0 && f1.val[1] == 0 && f1.val[2] == 100)
+                        Array->MapInfo[y][x] = PUZZLE_OBJ_02;
+                    else if (f1.val[0] == 0 && f1.val[1] == 0 && f1.val[2] == 150)
+                        Array->MapInfo[y][x] = PUZZLE_OBJ_03;
+                    else if (f1.val[0] == 0 && f1.val[1] == 0 && f1.val[2] == 200)
+                        Array->MapInfo[y][x] = PUZZLE_OBJ_04;
+
+                }
+
+                Array->ObjectInfo[y][x] = 0;
+
+                /*
                 if (f1.val[0] == 0 && f1.val[1] == 0 && f1.val[2] == 0) 
                     Array->MapInfo[y][x] = MAP_FLOOR; 
                 else if (f1.val[0] == 255 && f1.val[1] == 0 && f1.val[2] == 255)
@@ -115,6 +159,7 @@ public:
                     else if (f1.val[0] == 255 && f1.val[1] == 255 && f1.val[2] == 0)
                         Array->MapInfo[y][x] = PUZZLE_OBJ_02;
                 }
+                */
             }
         }
     }

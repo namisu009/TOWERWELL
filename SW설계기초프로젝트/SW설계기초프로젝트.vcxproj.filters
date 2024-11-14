@@ -93,6 +93,15 @@
     <ClInclude Include="EventDispatcher.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="ReadOnlyPuzzle.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemPuzzle.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="NumberPuzzle.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ArtLoadManager.cpp">
@@ -168,6 +177,15 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="EventDispatcher.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="ReadOnlyPuzzle.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemPuzzle.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="NumberPuzzle.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

@@ -79,6 +79,7 @@ public:
         // 맵 초기화
         MapManager::createMap("S1_PZ_MAP_01", TYPE_PUZZLE, "src\\S1_PUZZLE_MAP_01.png", "src\\S1_PUZZLE_MAP_INFO_01.png");
         MapManager::createMap("S1_JP_MAP_01", TYPE_JUMP, "src\\S1_JUMP_MAP_01.png", "src\\S1_JUMP_MAP_INFO_01.png");
+
         MapManager::getMap("S1_PZ_MAP_01")->setDoorId(MAP_EXIT, "S1_JP_MAP_01");
         MapManager::getMap("S1_JP_MAP_01")->setDoorId(MAP_EXIT, "S1_PZ_MAP_01");
         
@@ -135,7 +136,7 @@ public:
 
         newCmd.setAction((function<void()>) [this]() { playerCharacter->setDx(-1); });
         newCmds.push_back(newCmd);
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 6; i++) {
             newCmd.setAction((function<void()>) [this]() { playerCharacter->setDx(0); });
             newCmds.push_back(newCmd);
             newCmd.setAction((function<void()>) [this]() { playerCharacter->move(); });
@@ -145,7 +146,7 @@ public:
         // 오른쪽으로 이동
         newCmd.setAction((function<void()>) [this]() { playerCharacter->setDx(1); });
         newCmds.push_back(newCmd);
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 6; i++) {
             newCmd.setAction((function<void()>) [this]() { playerCharacter->setDx(0); });
             newCmds.push_back(newCmd);
             newCmd.setAction((function<void()>) [this]() { playerCharacter->move(); });
@@ -153,7 +154,7 @@ public:
         }
 
         // 오른쪽으로 이동
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 10; i++) {
             newCmd.setAction((function<void()>) [this]() { playerCharacter->setDx(4); });
             newCmds.push_back(newCmd);
             newCmd.setAction((function<void()>) [this]() { playerCharacter->move(); });
@@ -168,13 +169,20 @@ public:
             newCmds.push_back(newCmd);
         }
 
+        for (int i = 0; i < 5; i++) {
+            newCmd.setAction((function<void()>) [this]() { playerCharacter->setDx(-4); });
+            newCmds.push_back(newCmd);
+            newCmd.setAction((function<void()>) [this]() { playerCharacter->move(); });
+            newCmds.push_back(newCmd);
+        }
+        /*
         newCmd.addObject(GameObjectManager::getCharacter("SC1_DL_01"));
-        newCmds.push_back(newCmd);
+        newCmds.push_back(newCmd);w
         newCmd.addObject(GameObjectManager::getCharacter("SC1_DL_02"));
         newCmds.push_back(newCmd);
         newCmd.addObject(GameObjectManager::getCharacter("SC1_DL_03"));
         newCmds.push_back(newCmd);
-
+        */
 
         // 모든 명령을 newScene에 추가
         for (auto& cmd : newCmds) {

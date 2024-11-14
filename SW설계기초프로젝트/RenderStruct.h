@@ -16,6 +16,7 @@ typedef struct ScreenArray {
 	int width;
 	int height;
 	int** MapInfo;
+	int** ObjectInfo;
 }ScreenArray;
 
 enum MapInfo

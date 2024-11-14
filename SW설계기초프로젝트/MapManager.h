@@ -19,7 +19,7 @@ public:
 		map.initializeFromScreen(filename2);
 		addMap(id, map);
 	}
-	static void addMap(string id, Map map) { //¸ã Ãß°¡
+	static void addMap(string id, Map map) { //¸Ê Ãß°¡
 		map.setMapId(id);
 		maps.insert({ id, map });
 	}
