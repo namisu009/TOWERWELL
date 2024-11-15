@@ -13,16 +13,17 @@ class Command
 
 public:
 	Command() {
-		object = 0;
+		object = nullptr;
 		type = 0;
 	}
-	void addObject(GameObject* _object) {
+	void setObject(GameObject* _object) {
 		object = _object;
 		type = object->getType();
 	}
 	void setAction(const function<void()>& action) {
 		cmd = action;
 	}
+
 	int getType() {
 		return type;
 	}

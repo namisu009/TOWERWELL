@@ -15,6 +15,7 @@ private:
 	static unordered_map<string, GameObject*> objects;
 
 public:
+
 	static void createObejct(const char* type, string id, const char* filename) {
 		GameObject* object = NULL;
 		if (type == "Character") {
@@ -39,11 +40,14 @@ public:
 		return objects[id];
 	}
 	static Character* getCharacter(string id) {
-		return (Character*) objects[id];
+		return dynamic_cast<Character*>(objects[id]);
 	}
+
 	static Dialog* getDialog(string id) {
-		return (Dialog*)objects[id];
+		return dynamic_cast<Dialog*>(objects[id]);
 	}
+
+	
 };
 
 

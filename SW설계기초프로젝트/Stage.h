@@ -6,6 +6,7 @@
 #include "EventDispatcher.h"
 #include "Puzzle.h"
 #include "Map.h"
+#include "PuzzleMap.h"
 #include "Scene.h"
 
 using namespace std;
@@ -17,21 +18,30 @@ private:
     unordered_map<string, Map*> maps;// 해당 스테이지의 맵
     unordered_map<string, Scene*> scenes;// 해당 스테이지의 씬들
     bool isCleared; // 스테이지 클리어 여부 //퍼즐이 다 풀렸을 때
-
     EventDispatcher* eventDispatcher; // 이벤트 디스패처 참조
+    EventDispatcher* StageEventDispatcher; // 이벤트 디스패처 참조
 
 public:
     Stage(){}
-    Stage(EventDispatcher* _eventDispatcher) {
+    Stage(EventDispatcher* _eventDispatcher) : Stage() {
         currentMapId = "";
         isCleared = false;
         eventDispatcher = _eventDispatcher;
-        eventDispatcher->subscribe(PUZZLE_SOLVED, [this]() { onPuzzleSolved(); });
+        StageEventDispatcher = new EventDispatcher();
+        StageEventDispatcher->subscribe(PUZZLE_SOLVED, [this]() { this->onPuzzleSolved(); });
     }
 
     /* 사용자 기능 */
     Map* getCurrentMap() {
         return maps[currentMapId];
+    }
+
+    Map* getMap(string id) {
+        return maps[id];
+    }
+
+    EventDispatcher* getStageEventDispatcher() {
+        return StageEventDispatcher;
     }
 
     void onMoveMap(int x, int y) { //맵이동
@@ -43,8 +53,28 @@ public:
     }
     /* 추가 기능*/
 
+    string getDoorId(int x, int y) {
+        Map* map = getCurrentMap();
+
+        if (map->getType() == TYPE_PUZZLE) {
+            return ((PuzzleMap*)map)->getDoorId(x, y);
+        }
+
+        return map->getDoorId(x, y);
+    }
+
+    string getPuzzleId(int x, int y) {
+        Map* map = getCurrentMap();
+
+        if (map->getType() == TYPE_PUZZLE) {
+            return ((PuzzleMap*)map)->getPuzzleId(x, y);
+        }
+
+        return "";
+    }
+
     void addMap(Map* map) {
-        map->setEventDispatcher(eventDispatcher);
+        map->setEventDispatcher(StageEventDispatcher);
         maps[map->getMapId()] = map;
 
         if (currentMapId == "")
@@ -64,7 +94,12 @@ public:
     }
 
     void onPuzzleSolved() {
+        string mapKey = "S" + to_string(stageId + 1) + "_PZ_MAP_01";
+        PuzzleMap* pz = (PuzzleMap*) maps[mapKey];
+        pz->solvePuzzle();
 
+        if (pz->isAllPuzzlesSolved())
+            isCleared = true;
     }
 };
 

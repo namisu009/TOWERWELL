@@ -12,6 +12,7 @@ enum EventType {
     PUZZLE_SOLVED,
     STAGE_COMPLETED,
     MOVE_MAP,
+    CHANGE_MAP_HANDLE,
 };
 
 class EventDispatcher {

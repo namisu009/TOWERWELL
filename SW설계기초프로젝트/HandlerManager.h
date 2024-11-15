@@ -11,6 +11,8 @@
 #include "JumpMap.h"
 #include "EventDispatcher.h"
 #include "GameObjectManager.h"
+#include "PuzzleManager.h"
+#include "RenderManager.h"
 
 using namespace std;
 
@@ -36,7 +38,7 @@ public:
         }
     }
 
-    static void getPuzzleMapHandle(Character* object, Stage* stage, Map* map) {
+    static void getPuzzleMapHandle(Character* object, Stage* stage) {
      
         clearKeyMap();
 
@@ -54,28 +56,21 @@ public:
             object->jump();
         });
 
-        bindInput(0x46, [object, stage, map]() {
-            ScreenArray myScreen = map->getScreenArray();
+        bindInput(0x46, [object, stage]() {
+            PuzzleMap* map = ((PuzzleMap*)stage->getCurrentMap());
 
             int init_x = object->getFootX();
             int init_y = object->getFootY() - object->getHeight() / 2;
-            
-            int in = myScreen.MapInfo[init_y][init_x];
-            if (in == PUZZLE_OBJ_01 || in == PUZZLE_OBJ_02)
-            {
-                Scene newScene;
-                Command newCmd;
 
-                GameObjectManager::createObejct("Dialog", "SC3_PZ_01", "src\\SC3_PZ_01.png");
+            Puzzle* puzzle = PuzzleManager::getPuzzle(stage->getPuzzleId(init_x, init_y));
+            if (puzzle) {
+                puzzle->showPuzzleDetail();
+                getPuzzleDetailHandle(puzzle);
 
-                newCmd.addObject(GameObjectManager::getCharacter("SC3_PZ_01"));
-                newScene.addCommand(newCmd);
-
-                newScene.display();
+                return;
             }
-            
-            printf("");
-            if (map->getDoorId(init_x, init_y) != "") {
+
+            if (stage->getDoorId(init_x, init_y) != "") {
                 stage->onMoveMap(init_x, init_y);
             }
         });
@@ -84,7 +79,7 @@ public:
 
     }
 
-    static void getJumpMapHandle(Character* object, Stage* stage, JumpMap* map) {
+    static void getJumpMapHandle(Character* object, Stage* stage) {
         
         clearKeyMap();
 
@@ -107,14 +102,28 @@ public:
             object->dash();
         });
 
-        bindInput(0x46, [object, stage, map]() {
+        bindInput(0x46, [object, stage]() {
 
             int init_x = object->getFootX();
             int init_y = object->getFootY() - object->getHeight() / 2;
 
-            if (map->getDoorId(init_x, init_y) != "") {
+            if (stage->getDoorId(init_x, init_y) != "") {
                 stage->onMoveMap(init_x, init_y);
             }
+        });
+    }
+
+    static void getPuzzleDetailHandle(Puzzle* puzzle) {
+        clearKeyMap();
+
+        bindInput(VK_SPACE, [puzzle]() {
+            RenderManager::ClearRenderPuzzleDetail();
+
+            if (puzzle->getType() == TYPE_READ_PUZZLE)
+                puzzle->solvePuzzle();
+
+            eventDispatcher->dispatch(CHANGE_MAP_HANDLE);
+
         });
     }
 };

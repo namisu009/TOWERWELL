@@ -5,6 +5,7 @@
 #include <string>
 
 #include "RenderStruct.h"
+#include "EventDispatcher.h"
 #include "ArtLoadManager.h"
 
 using namespace std;
@@ -19,12 +20,23 @@ private:
 	int height;
 	float x, y;
 	float dx, dy;
-
 public:
+
+	EventDispatcher* eventDispatcher;
 	ArtLoadManager* artLoadManager;
-	GameObject(string _id) {
-		id = _id; renderArray = new RenderArray(); width = 0; height = 0; x = 0; y = 0; dx = 0; dy = 0; artLoadManager = artLoadManager->GetInstance();
+
+	GameObject(string _id) : id(_id), renderArray(new RenderArray()), width(0), height(0), x(0), y(0), dx(0), dy(0) {
+		artLoadManager = artLoadManager->GetInstance();
 	}
+
+	void setEventDispatcher(EventDispatcher* dispatcher) {
+		eventDispatcher = dispatcher;
+	}
+
+	EventDispatcher* getEventDispatcher() {
+		return eventDispatcher;
+	}
+
 	virtual void initializeFromASCII(const char* filename)
 	{
 		artLoadManager->RenderArrayLoad(renderArray, filename);
@@ -33,7 +45,6 @@ public:
 		SetStartPosition(DIALOG_X, DIALOG_Y);
 	}
 
-	RenderArray* getRenderArray() { return renderArray; }
 	int getX() { return x; };
 	int getY() { return y; };
 	int getDx() { return dx; };
@@ -46,6 +57,8 @@ public:
 
 	string getId() { return id; }
 
+	RenderArray* getRenderArray() { return renderArray; }
+
 	void setRenderArray(RenderArray* _renderArray) {
 		renderArray = _renderArray;
 	}
@@ -53,7 +66,7 @@ public:
 	void setX(float _x) { x = _x; };
 	void setY(float _y) { y = _y; };
 
-	void setDx(float _dx) { dx = _dx; }
+	virtual void setDx(float _dx) { dx = _dx; }
 	void setDy(float _dy) { dy = _dy; }
 
 	void setWidth(int w) { width = w; }
@@ -62,6 +75,7 @@ public:
 	void setType(int _type) { type = _type; }
 
 	void setPosition(float _x, float _y) { x = _x; y = _y; }
+
 	void SetStartPosition(float init_x, float init_y) {
 		int dw = -width / 2;
 		int dh = -(height);
@@ -84,6 +98,7 @@ public:
 	int getFootX() {
 		return x + (width / 2); // 발바닥 위치는 현재 x 위치 + 캐릭터 길이 절반
 	}
+
 
 };
 
