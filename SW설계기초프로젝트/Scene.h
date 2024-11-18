@@ -114,7 +114,7 @@ public:
 			//RenderManager::renderDialog();
 			if (cmd.getType() == TYPE_CHARACTER) {
 				cmd.getAction()();
-				Sleep(10);
+				Sleep(3);
 				DoubleBufferManager::ScreenFlipping();
 			}
 			else if (cmd.getType() == TYPE_DIALOG) {

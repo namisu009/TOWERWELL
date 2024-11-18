@@ -22,6 +22,7 @@
 #include "MapManager.h"
 
 #include "PhysicsManager.h"
+#include "InitializeManager.h"
 #include "StageManager.h"
 
 using namespace std;
@@ -75,60 +76,21 @@ public:
     }
 
     void initialize() {
-        for (int i = 0; i < 4; i++) {
-            StageManager::addStage(i, &eventDispatcher);
-        }
-        // 캐릭터 생성 및 초기화
-        GameObjectManager::createObejct("Character", "Hero", "src\\hero_idle_01.png");
+        InitializeManager::init(&eventDispatcher);
+
         playerCharacter = GameObjectManager::getCharacter("Hero");
-        playerCharacter->setAnimation("IDLE", 1, "src\\hero_idle_02.png");
-        playerCharacter->setAnimation("RIGHT", "src\\hero_right_01.png", "src\\hero_right_02.png");
-        playerCharacter->setAnimation("LEFT", "src\\hero_left_01.png", "src\\hero_left_02.png");
-
-        GameObjectManager::createObejct("Character", "Sister", "src\\sister_idle_01.png");
         sisterCharacter = GameObjectManager::getCharacter("Sister");
-        sisterCharacter->setAnimation("IDLE", 1, "src\\sister_idle_02.png");
-        sisterCharacter->setAnimation("RIGHT", "src\\sister_right_01.png", "src\\sister_right_02.png");
-        sisterCharacter->setAnimation("LEFT", "src\\sister_left_01.png", "src\\sister_left_02.png");
-
-        GameObjectManager::createObejct("Dialog", "SC1_DL_01", "src\\dialog1.png");
-        GameObjectManager::createObejct("Dialog", "SC1_DL_02", "src\\dialog2.png");
-        GameObjectManager::createObejct("Dialog", "SC1_DL_03", "src\\dialog3.png");
-        GameObjectManager::createObejct("Dialog", "PZ_NCL_DL", "src\\PZ_NCL_DL.png");
-
-        // 맵 초기화
-        MapManager::createMap("S1_PZ_MAP_01", TYPE_PUZZLE, "src\\S1_PUZZLE_MAP_01.png", "src\\S1_PUZZLE_MAP_INFO_01.png");
-        MapManager::createMap("S1_JP_MAP_01", TYPE_JUMP, "src\\S1_JUMP_MAP_01.png", "src\\S1_JUMP_MAP_INFO_01.png");
-
-
-        PuzzleManager::createPuzzle("S1_M1_PZ_01", TYPE_READ_PUZZLE);
-        PuzzleManager::getPuzzle("S1_M1_PZ_01")->setPuzzleDetailASCII(0, "src\\SC3_PZ_01.png");
-        PuzzleManager::getPuzzle("S1_M1_PZ_01")->setPuzzleSceneDialog(0, "SC1_DL_03");
-
-
-        StageManager::addMap(0, MapManager::getMap("S1_PZ_MAP_01"));
-        StageManager::addMap(0, MapManager::getMap("S1_JP_MAP_01"));
-        StageManager::setDoorID(0, "S1_PZ_MAP_01", MAP_EXIT, "S1_JP_MAP_01");
-        StageManager::setDoorID(0, "S1_JP_MAP_01", MAP_EXIT, "S1_PZ_MAP_01");
-        StageManager::setPuzzleId(0, "S1_PZ_MAP_01", PUZZLE_OBJ_01, "S1_M1_PZ_01");
-
-
         currentMap = StageManager::getCurrentStage()->getCurrentMap();
-
-        // 렌더링 초기화
-        RenderManager::ScreenInit();
-        RenderManager::setRenderMap(currentMap);
-        RenderManager::renderMap();
-        DoubleBufferManager::ScreenFlipping();
-
         setMap(currentMap);
 
+        RenderManager::ScreenInit();
+
+        RenderManager::setRenderMap(currentMap);
         RenderManager::addObject(playerCharacter);
         RenderManager::addObject(sisterCharacter);
 
-        // 초기 화면 렌더링
-        RenderManager::renderObject();
-        
+        RenderManager::render();
+
         //테스트씬
         Scene newScene;
 
@@ -153,14 +115,14 @@ public:
         newScene.setAction("Sister", ACTION_MOVE_Y, -3);
         newScene.setAction("Sister", ACTION_MOVE_Y, 3);
         newScene.setAction("Sister", ACTION_MOVE_Y, 0);
-        
+
         newScene.setDelay("Sister", 800);
 
         newScene.setDialog("SC1_DL_02");
 
         newScene.setAction("Hero", ACTION_MOVE_X, 8, 10);
 
-        //newScene.display();
+        newScene.display();
       
 
     }

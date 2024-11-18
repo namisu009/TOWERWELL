@@ -2,9 +2,12 @@
 #define _CHARACTER_H
 #include "GameObject.h"
 #include "AnimationManager.h"
+#include "Item.h"
 
 class Character : public GameObject
 {
+	unordered_map<string, Item*> Inventory;
+
 	bool isJumping; // 점프 상태 여부
 	bool isDash; // 대쉬 상태 여부
 
@@ -28,6 +31,28 @@ public:
 		setRenderArray(animationManager->getRenderArray("IDLE"));
 		setWidth(getRenderArray()->width);
 		setHeight(getRenderArray()->height);
+	}
+
+	void addInventory(Item* item) {
+		if (Inventory.find(item->getItemName()) != Inventory.end()) {
+			Inventory[item->getItemName()] = item;
+		}
+	}
+
+	void uesItem(string name) {
+		if (Inventory.find(name) != Inventory.end()) {
+			Inventory[name]->useItem();
+			if (!Inventory[name]->getUseCount()) { //아이템을 다 사용했을 경우
+				Inventory.erase(name);
+			}
+		}
+	}
+
+	bool isItem(string name) { //아이템이 있는지
+		if (Inventory.find(name) != Inventory.end())
+			return true;
+
+		return false;
 	}
 
 	bool getisJumping() { return isJumping; }

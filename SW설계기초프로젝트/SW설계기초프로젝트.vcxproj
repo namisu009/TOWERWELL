@@ -31,6 +31,9 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameObjectManager.h" />
     <ClInclude Include="HandlerManager.h" />
+    <ClInclude Include="InitializeManager.h" />
+    <ClInclude Include="Item.h" />
+    <ClInclude Include="ItemMananger.h" />
     <ClInclude Include="ItemPuzzle.h" />
     <ClInclude Include="JumpMap.h" />
     <ClInclude Include="Map.h" />
@@ -62,6 +65,9 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameObjectManager.cpp" />
     <ClCompile Include="HandlerManager.cpp" />
+    <ClCompile Include="InitializeManager.cpp" />
+    <ClCompile Include="Item.cpp" />
+    <ClCompile Include="ItemMananger.cpp" />
     <ClCompile Include="ItemPuzzle.cpp" />
     <ClCompile Include="JumpMap.cpp" />
     <ClCompile Include="main.cpp" />
