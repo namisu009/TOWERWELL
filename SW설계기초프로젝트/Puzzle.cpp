@@ -4,8 +4,9 @@
 
 Puzzle::Puzzle(string _id) : GameObject(_id) {
     objectArrayIdx = 0;
-    DetailArrayIdx = 0;
-    SceneArrayIdx = 0;
+    detailArrayIdx = 0;
+    sceneArrayIdx = 0;
+    rewardArrayIdx = 0;
     solvedThreshold = 0;
     solvedPuzzleCount = 0;
     isSolved = false;
@@ -13,6 +14,7 @@ Puzzle::Puzzle(string _id) : GameObject(_id) {
         puzzleObjectArray[i] = nullptr; // 포인터 초기화
         puzzleDetailArray[i] = nullptr; // 포인터 초기화
         puzzleSceneArray[i] = nullptr; // 포인터 초기화
+        puzzleRewardArray[i] = "";
     }
 }
 
@@ -31,21 +33,35 @@ Puzzle::~Puzzle() {
 
 
 void Puzzle::solvePuzzle() {
-    if (solvedPuzzleCount < puzzleCount && puzzleSceneArray[solvedPuzzleCount] != nullptr) {
+    if (!isPuzzleSolved() && solvedPuzzleCount < puzzleCount && puzzleSceneArray[solvedPuzzleCount] != nullptr) {
         puzzleSceneArray[solvedPuzzleCount]->display();
         solvedPuzzleCount++;
 
         if (objectArrayIdx < 2 && puzzleObjectArray[objectArrayIdx + 1] != nullptr)
             objectArrayIdx++;
 
-        if (DetailArrayIdx < 2 && puzzleDetailArray[DetailArrayIdx + 1] != nullptr)
-            DetailArrayIdx++;
+        if (detailArrayIdx < 2 && puzzleDetailArray[detailArrayIdx + 1] != nullptr)
+            detailArrayIdx++;
 
-        if (SceneArrayIdx < 2 && puzzleSceneArray[SceneArrayIdx + 1] != nullptr)
-            SceneArrayIdx++;
+        if (sceneArrayIdx < 2)
+            sceneArrayIdx++;
 
         isPuzzleSolved();
     }
+}
+
+void Puzzle::setPuzzleReward(int key, string name) {
+    puzzleRewardArray[key] = name;
+}
+
+string Puzzle::getPuzzleReward() {
+    if (rewardArrayIdx >= solvedThreshold) {
+        return "";
+    }
+
+    string n = puzzleRewardArray[rewardArrayIdx];
+    rewardArrayIdx++;
+    return n;
 }
 
 bool Puzzle::isPuzzleSolved() {
@@ -58,6 +74,7 @@ bool Puzzle::isPuzzleSolved() {
 
 void Puzzle::showPuzzleDetail() {
     RenderManager::setRenderPuzzleDetail(getId());
+    RenderManager::render();
 }
 
 void Puzzle::setSolvedThreshold(int key) {
@@ -133,9 +150,9 @@ void Puzzle::setPuzzleSceneDelay(int key, string cmd, int time) {
 
 
 RenderArray* Puzzle::getObjectArray() {
-    return puzzleObjectArray[solvedPuzzleCount];
+    return puzzleObjectArray[objectArrayIdx];
 }
 
 RenderArray* Puzzle::getDetailArray() {
-    return puzzleDetailArray[solvedPuzzleCount];
+    return puzzleDetailArray[detailArrayIdx];
 }

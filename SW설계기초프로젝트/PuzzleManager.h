@@ -4,6 +4,7 @@
 #include "Puzzle.h"
 #include "RenderStruct.h"
 #include "ReadOnlyPuzzle.h"
+#include "ItemPuzzle.h"
 #include "NumberPuzzle.h"
 #include <unordered_map>
 #include <string>
@@ -21,7 +22,7 @@ public:
             puzzle = new ReadOnlyPuzzle(id);
 		}
 		else if (type == TYPE_ITEM_PUZZLE) {
-
+            puzzle = new ItemPuzzle(id);
 		}
 		else if (type == TYPE_NUMBER_PUZZLE) {
 
@@ -39,6 +40,15 @@ public:
 
         if (puzzles.find(id) != puzzles.end()) {
             return puzzles[id];
+        }
+        else {
+            return nullptr;
+        }
+    }
+
+    static ItemPuzzle* getItemPuzzle(string id) {
+        if (puzzles.find(id) != puzzles.end() && puzzles[id]->getType() == TYPE_ITEM_PUZZLE) {
+            return (ItemPuzzle*)puzzles[id];
         }
         else {
             return nullptr;

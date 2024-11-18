@@ -25,13 +25,14 @@
 #include "InitializeManager.h"
 #include "StageManager.h"
 
+
 using namespace std;
 
 struct pair_hash {
     template <class T1, class T2>
-    std::size_t operator () (const std::pair<T1, T2>& p) const {
-        auto hash1 = std::hash<T1>{}(p.first);
-        auto hash2 = std::hash<T2>{}(p.second);
+    size_t operator () (const pair<T1, T2>& p) const {
+        auto hash1 = hash<T1>{}(p.first);
+        auto hash2 = hash<T2>{}(p.second);
         return hash1 ^ hash2; // XOR을 사용하여 해시 결합
     }
 };
@@ -56,11 +57,14 @@ class GameManager
 
     int offset = 16;
     int threadTime = 32;
+    int renderTime = 32;
 
-    std::unordered_map<std::pair<int, int>, playerAction, pair_hash> actionPositions;
+    unordered_map<pair<int, int>, playerAction, pair_hash> actionPositions;
     Map* currentMap;
 
     int currentStageId = 0;
+
+    mutex mtx;
 
 public:
     GameManager() : isRunning(true), playerCharacter(nullptr), sisterCharacter(nullptr), currentMap(nullptr) {
@@ -94,7 +98,7 @@ public:
         //테스트씬
         Scene newScene;
 
-        newScene.setAction("Sister", ACTION_MOVE_X, 4, 10);
+        newScene.setAction("Sister", ACTION_MOVE_X, 6, 10);
 
 
         newScene.setDelay("Sister", 64);
@@ -120,11 +124,9 @@ public:
 
         newScene.setDialog("SC1_DL_02");
 
-        newScene.setAction("Hero", ACTION_MOVE_X, 8, 10);
+        newScene.setAction("Hero", ACTION_MOVE_X, 10, 10);
 
-        newScene.display();
-      
-
+        //newScene.display();
     }
 
     void changeMapHandle() {
@@ -152,10 +154,13 @@ public:
 
     // 물리 연산 루프
     void physicsLoop() {
-        std::chrono::steady_clock::time_point lastJumpTime;
+
+
+        chrono::steady_clock::time_point lastJumpTime;
         int jumpCooldown = 500;
 
         while (isRunning) {
+            mtx.lock();
             int flag = 0;
 
             if (GetAsyncKeyState(VK_RIGHT) & 0x8000) {
@@ -169,8 +174,8 @@ public:
             if (GetAsyncKeyState(VK_UP) & 0x8000) {
                 
                 
-                auto now = std::chrono::steady_clock::now();
-                int elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(now - lastJumpTime).count();
+                auto now = chrono::steady_clock::now();
+                int elapsed = chrono::duration_cast<chrono::milliseconds>(now - lastJumpTime).count();
 
                 if (elapsed >= jumpCooldown) {
                     // 쿨타임이 지나면 점프
@@ -179,9 +184,6 @@ public:
 
                     if (currentMap->getType() == TYPE_JUMP)
                         actionPositions[{playerCharacter->getFootX(), playerCharacter->getFootY()}] = { ACTION_JUMP, playerCharacter->getDx() };
-                }
-                else {
-                    // 쿨타임이 안 지나면 점프하지 않음
                 }
 
                 flag = 1;
@@ -221,7 +223,8 @@ public:
             playerCharacter->move();
             updateSisterPosition();
 
-            std::this_thread::sleep_for(std::chrono::milliseconds(threadTime));
+            mtx.unlock();
+            this_thread::sleep_for(chrono::milliseconds(threadTime));
         }
     }
 
@@ -264,7 +267,7 @@ public:
     }
 
     void handleSisterActions() {
-        //auto sisterPos = std::make_pair(sisterCharacter->getX(), sisterCharacter->getY());
+        //auto sisterPos = make_pair(sisterCharacter->getX(), sisterCharacter->getY());
         int sisterX = sisterCharacter->getFootX();
         int sisterY = sisterCharacter->getFootY();
         for (auto it = actionPositions.begin(); it != actionPositions.end();) {
@@ -304,19 +307,21 @@ public:
     // 렌더링 루프
     void renderLoop() {
         while (isRunning) {
+            mtx.lock();
             RenderManager::render();
-            std::this_thread::sleep_for(std::chrono::milliseconds(threadTime)); // 약 threadTime FPS
+            mtx.unlock();
+            this_thread::sleep_for(chrono::milliseconds(renderTime)); // 약 threadTime FPS
         }
     }
 
     // 게임 시작
     void start() {
         // 물리 연산 및 렌더링 스레드 시작
-        std::thread physicsThread(&GameManager::physicsLoop, this);
-        std::thread renderThread(&GameManager::renderLoop, this);
+        thread physicsThread(&GameManager::physicsLoop, this);
+        thread renderThread(&GameManager::renderLoop, this);
 
         // 게임 종료 조건 처리
-        //std::cin.get(); // 엔터 입력 시 종료
+        //cin.get(); // 엔터 입력 시 종료
         //isRunning = false;
 
         // 스레드 종료 대기

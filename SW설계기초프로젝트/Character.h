@@ -2,7 +2,7 @@
 #define _CHARACTER_H
 #include "GameObject.h"
 #include "AnimationManager.h"
-#include "Item.h"
+#include "ItemManager.h"
 
 class Character : public GameObject
 {
@@ -33,9 +33,12 @@ public:
 		setHeight(getRenderArray()->height);
 	}
 
-	void addInventory(Item* item) {
-		if (Inventory.find(item->getItemName()) != Inventory.end()) {
-			Inventory[item->getItemName()] = item;
+	void addInventory(string key) {
+		if (key != "") {
+			Item* item = ItemManager::getItems(key);
+			if (item != nullptr && Inventory.find(item->getItemName()) != Inventory.end()) {
+				Inventory[item->getItemName()] = item;
+			}
 		}
 	}
 
@@ -48,7 +51,7 @@ public:
 		}
 	}
 
-	bool isItem(string name) { //아이템이 있는지
+	bool getisItem(string name) { //아이템이 있는지
 		if (Inventory.find(name) != Inventory.end())
 			return true;
 

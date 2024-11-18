@@ -4,9 +4,14 @@
 
 class Dialog : public GameObject
 {
+	string text;
 public:
-	Dialog(string _id) : GameObject(_id) {
+	Dialog(string _id, string _text) : GameObject(_id) {
+		text = _text;
+	}
 
+	string getText() {
+		return text;
 	}
 };
 

@@ -21,16 +21,18 @@ public:
 		if (type == "Character") {
 			object = new Character(id);
 			object->setType(TYPE_CHARACTER);
+			object->initializeFromASCII(filename);
 		}
 		else if (type == "Dialog") {
-			object = new Dialog(id);
+			object = new Dialog(id, filename);
+			object->initializeFromASCII("src\\DL.png");
 			object->setType(TYPE_DIALOG);
 		}
 		else {
 			return;
 		}
 
-		object->initializeFromASCII(filename);
+		
 		addGameObject(id, object);
 	}
 	static void addGameObject(string id, GameObject* object) {

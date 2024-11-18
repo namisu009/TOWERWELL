@@ -7,6 +7,8 @@
 #include "GameObjectManager.h"
 #include "RenderManager.h"
 
+#include <thread>
+
 class Puzzle; // 전방 선언
 
 using namespace std;
@@ -108,29 +110,17 @@ public:
 	void display() {
 		while (!commands.empty()) {
 			Command cmd = popCommand();
-			RenderManager::renderClear();
-			RenderManager::renderMap();
-			RenderManager::renderObject();
-			//RenderManager::renderDialog();
+			
 			if (cmd.getType() == TYPE_CHARACTER) {
 				cmd.getAction()();
-				Sleep(3);
-				DoubleBufferManager::ScreenFlipping();
+				Sleep(10);
 			}
 			else if (cmd.getType() == TYPE_DIALOG) {
 				RenderManager::setRenderDialog((Dialog*)cmd.getObject());
-				RenderManager::renderDialog();
-				DoubleBufferManager::ScreenFlipping();
-				
-				clearInputBuffer(); // 대화 시작 전 입력 버퍼 클리어
-				int key = _getch();
-				while (key != VK_SPACE) { // 스페이스바를 누를 때까지 기다림
-					key = _getch();
-				}
+				clearInputBuffer();
 			}
 
-			RenderManager::setRenderDialog(nullptr);
-			
+			RenderManager::render();
 		}
 	}
 };

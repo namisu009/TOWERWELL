@@ -1,5 +1,8 @@
+#define _
+
 #include "RenderManager.h"
 
+#include <cstdlib> // for mbstowcs
 
 Map* RenderManager::currentMap = nullptr;
 unordered_map<string, GameObject*> RenderManager::objectMap;
@@ -7,6 +10,15 @@ unordered_map<string, Puzzle*> RenderManager::puzzleMap;
 Dialog* RenderManager::renderLog = nullptr;
 Puzzle * RenderManager::renderPzl = nullptr;
 EventDispatcher* RenderManager::eventDispatcher;
+
+wstring stringToWstring(const std::string& str) {
+    size_t size = str.size() + 1;
+    std::wstring wstr(size, L'\0');
+    size_t convertedSize = 0;
+    mbstowcs_s(&convertedSize, &wstr[0], size, str.c_str(), size - 1);
+    //wstr.resize(convertedSize - 1);
+    return wstr;
+};
 
 void RenderManager::addObject(GameObject* object) {
     objectMap[object->getId()] = object; // 렌더링할 객체 추가
@@ -140,26 +152,54 @@ void RenderManager::renderPuzzleDetail () {
         pos.Y = renderPzl_y + y;
         DoubleBufferManager::ScreenPrint(renderPzl_x, pos.Y, art->ASCIIArtArr[y]);
     }
+
 }
 
 void RenderManager::renderDialog() {
-    if (renderLog == nullptr)
-        return;
-
-    const auto& art = renderLog->getRenderArray(); // ASCII 아트 가져오기
-    int renderLog_x = renderLog->getX(); // X 좌표 가져오기
-    int renderLog_y = renderLog->getY(); // Y 좌표 가져오기
-
-    COORD pos = { 0, 0 };
-    pos.X = renderLog_x;
-    pos.Y = renderLog_y;
-
-    // 객체의 ASCII 아트를 특정 위치에 렌더링
-    for (int y = 0; y < art->height; y++)
+    if (renderLog != nullptr)
     {
-        pos.Y = renderLog_y + y;
-        DoubleBufferManager::ScreenPrint(renderLog_x, pos.Y, art->ASCIIArtArr[y]);
+        const auto& art = renderLog->getRenderArray(); // ASCII 아트 가져오기
+        int renderLog_x = renderLog->getX(); // X 좌표 가져오기
+        int renderLog_y = renderLog->getY(); // Y 좌표 가져오기
+
+        COORD pos = { 0, 0 };
+        pos.X = renderLog_x;
+        pos.Y = renderLog_y;
+
+        // 객체의 ASCII 아트를 특정 위치에 렌더링
+        for (int y = 0; y < art->height; y++)
+        {
+            pos.Y = renderLog_y + y;
+            DoubleBufferManager::ScreenPrint(renderLog_x, pos.Y, art->ASCIIArtArr[y]);
+        }
+
+        DoubleBufferManager::ScreenFlipping();
+        Sleep(10);
+        //DoubleBufferManager::ScreenFlipping();
+
+        // 사용자 입력 대기
+        while (_kbhit()) {
+            _getch();  // 입력 버퍼 비우기
+        }
+
+        while (1) {
+            if (_kbhit()) { // 키 입력 확인
+                int key = _getch(); // 키 입력 읽기
+                if (key == VK_SPACE) { // ESC 키로 종료
+                    break;
+                }
+            }
+            DoubleBufferManager::drawText(
+                stringToWstring(renderLog->getText()), cmdWidth + renderLog_x, 1080
+            );
+        }
+
+        setRenderDialog(nullptr);  // 대화창 내용 초기화
     }
+    else {
+        DoubleBufferManager::ScreenFlipping();
+    }
+
 }
 
 void RenderManager::render() {
@@ -172,7 +212,8 @@ void RenderManager::render() {
     renderObject();
     renderPuzzleDetail();
     renderDialog();
-    DoubleBufferManager::ScreenFlipping();
+
+
 }
 
 void RenderManager::objectClear() {
@@ -195,9 +236,6 @@ void RenderManager::ScreenInit() {
 void RenderManager::setRenderMap(Map* map) {
     currentMap = map;
 }
-
-
-
 
 
 /*

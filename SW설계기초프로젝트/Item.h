@@ -2,6 +2,7 @@
 #define _ITEM_H
 
 #include <string>
+using namespace std; // std 네임스페이스 사용
 
 class Item
 {

@@ -28,7 +28,6 @@ private:
     static EventDispatcher* eventDispatcher;
 
 public:
-    // EventDispatcher ¼³Á¤
     static void setEventDispatcher(EventDispatcher* dispatcher) {
         eventDispatcher = dispatcher;
     }

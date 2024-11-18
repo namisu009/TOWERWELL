@@ -2,6 +2,7 @@
 #define _HANDLEMANAGER_H
 #include <unordered_map>
 #include <functional>
+#include <string>
 
 #include "Map.h"
 #include "Scene.h"
@@ -64,10 +65,21 @@ public:
 
             Puzzle* puzzle = PuzzleManager::getPuzzle(stage->getPuzzleId(init_x, init_y));
             if (puzzle) {
-                puzzle->showPuzzleDetail();
-                getPuzzleDetailHandle(puzzle);
+                if (puzzle->getDetailArray() != nullptr) { //퍼즐 디테일 화면이 있다면 출력
+                    puzzle->showPuzzleDetail();
+                    getPuzzleDetailHandle(puzzle);
+                }
+                bool puzzleSolved = false;
+                if (puzzle->getType() == TYPE_ITEM_PUZZLE)
+                    puzzleSolved = ((ItemPuzzle*)puzzle)->isSatisfyCondition(object);
+                else
+                    puzzleSolved = puzzle->isSatisfyCondition();
 
-                return;
+                if (puzzleSolved) { //만약 퍼즐이 해결되었다면 (최종해결X)
+                    puzzle->solvePuzzle();
+                    object->addInventory(puzzle->getPuzzleReward());
+                    return;
+                }
             }
 
             if (stage->getDoorId(init_x, init_y) != "") {
@@ -116,15 +128,25 @@ public:
     static void getPuzzleDetailHandle(Puzzle* puzzle) {
         clearKeyMap();
 
-        bindInput(VK_SPACE, [puzzle]() {
+        if (puzzle->getType() == TYPE_NUMBER_PUZZLE)
+        {
+            //또 다른 핸들로 넘어가기
+            return;
+        }
+
+        int flag = 1;
+        bindInput(VK_SPACE, []() {
             RenderManager::ClearRenderPuzzleDetail();
-
-            if (puzzle->getType() == TYPE_READ_PUZZLE)
-                puzzle->solvePuzzle();
-
             eventDispatcher->dispatch(CHANGE_MAP_HANDLE);
-
         });
+
+        while (flag) {
+            if (GetAsyncKeyState(VK_SPACE) & 0x8000) {
+                HandlerManager::processInput(VK_SPACE);
+                flag = 0;
+            }
+        }
+
     }
 };
 

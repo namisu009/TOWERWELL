@@ -5,7 +5,7 @@
 #include <string>
 #include "Item.h"
 using namespace std;
-class ItemMananger
+class ItemManager
 {
 	static unordered_map<string, Item> items;
 

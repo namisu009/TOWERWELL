@@ -27,8 +27,8 @@ private:
         //Dialoginit
         GameObjectManager::createObejct("Dialog", "SC1_DL_01", "src\\dialog1.png");
         GameObjectManager::createObejct("Dialog", "SC1_DL_02", "src\\dialog2.png");
-        GameObjectManager::createObejct("Dialog", "SC1_DL_03", "src\\dialog3.png");
-        GameObjectManager::createObejct("Dialog", "PZ_NCL_DL", "src\\PZ_NCL_DL.png");
+        GameObjectManager::createObejct("Dialog", "SC1_DL_03", "여동생: 소문이 사실인가봐! 저기 끝에 문이 있는 거 같은데 한 번 가보자.");
+        GameObjectManager::createObejct("Dialog", "PZ_NCL_DL", "히로: 문이 열리지 않아...");
     };
 
     static void SceneInit() {
