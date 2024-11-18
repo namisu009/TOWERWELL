@@ -4,12 +4,16 @@
 #include <string>
 #include "ArtLoadManager.h";
 #include "EventDispatcher.h";
+#include "Scene.h";
 
 class Puzzle
 {
+	static const int puzzleCount = 3;
 	ArtLoadManager* artLoadManager;
-	RenderArray* renderArray[5];
-	int puzzleCount;
+	RenderArray* puzzleObejctArray[puzzleCount]; //ÆÛÁñ ¿ÀºêÁ§Æ® (¸Ê¿¡ ±×·ÁÁú ÆÛÁñ)
+	RenderArray* puzzleDetailArray[puzzleCount]; //ÆÛÁñ »ó¼¼ Á¤º¸
+	Scene* puzzleSceneArray[puzzleCount]; //ÆÛÁñ ¾À
+	int solvedPuzzleCount;
 	int type;
 	int width;
 	int height;
@@ -18,8 +22,14 @@ class Puzzle
 	EventDispatcher& eventDispatcher;
 public:
 	Puzzle(EventDispatcher& dispatcher) : eventDispatcher(dispatcher) {
-		puzzleCount = 0;
+		solvedPuzzleCount = 0;
+		width = 0; height = 0;
+		x = 0; y = 0; dx = 0; dy = 0;
 		artLoadManager->GetInstance();
+	}
+
+	void setCondition() {
+		
 	}
 
 	void solvePuzzle() {
@@ -27,11 +37,25 @@ public:
 		eventDispatcher.dispatch(PUZZLE_SOLVED); // PUZZLE_SOLVED ÀÌº¥Æ® Àü¼Û
 	}
 
-	void initializeFromASCII(const char* filename) {
-		if (puzzleCount >= 5)
+	void initializeFromObjectASCII(int cnt, const char* filename) {
+		if (cnt >= puzzleCount)
 			return;
 
-		artLoadManager->RenderArrayLoad(renderArray[puzzleCount], filename);
+		artLoadManager->RenderArrayLoad(puzzleObejctArray[cnt], filename); // 0 1 2
+	}
+
+	void initializeFromDetailASCII(int cnt, const char* filename) {
+		if (cnt >= puzzleCount)
+			return;
+
+		artLoadManager->RenderArrayLoad(puzzleDetailArray[cnt], filename); // 0 1 2
+	}
+
+	void initializeFromScene(int cnt, const char* filename) {
+		if (cnt >= puzzleCount)
+			return;
+
+		artLoadManager->RenderArrayLoad(puzzleObejctArray[cnt], filename); // 0 1 2
 	}
 
 	void setType(int _type)
