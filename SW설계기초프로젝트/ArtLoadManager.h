@@ -85,7 +85,7 @@ public:
                 CvScalar f1 = cvGet2D(img, y, x);
 
                 Array->MapInfo[y][x] = 0;
-
+                /*
                 if (f1.val[0] == 0 && f1.val[1] == 0 && f1.val[2] == 0)
                     Array->MapInfo[y][x] = MAP_FLOOR;
                 else if (f1.val[0] == 255 && f1.val[1] == 0 && f1.val[2] == 255)
@@ -122,10 +122,10 @@ public:
                         Array->MapInfo[y][x] = PUZZLE_OBJ_04;
 
                 }
+                */
+                //Array->ObjectInfo[y][x] = 0;
 
-                Array->ObjectInfo[y][x] = 0;
-
-                /*
+                
                 if (f1.val[0] == 0 && f1.val[1] == 0 && f1.val[2] == 0) 
                     Array->MapInfo[y][x] = MAP_FLOOR; 
                 else if (f1.val[0] == 255 && f1.val[1] == 0 && f1.val[2] == 255)
@@ -159,7 +159,7 @@ public:
                     else if (f1.val[0] == 255 && f1.val[1] == 255 && f1.val[2] == 0)
                         Array->MapInfo[y][x] = PUZZLE_OBJ_02;
                 }
-                */
+                
             }
         }
     }

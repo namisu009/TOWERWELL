@@ -50,9 +50,15 @@ public:
 
     static void ScreenClear()
     {
-        COORD Coor = { 0,0 };
+        COORD CursorPosition = { 0,0 };
         DWORD dw;
-        FillConsoleOutputCharacter(g_hScreen[g_nScreenIndex], ' ', cmdWidth * cmdHeight, Coor, &dw);
+        char string[cmdWidth] = { ' ' };
+
+        for (int y = 0; y < cmdHeight; y++) {
+            CursorPosition.Y = y;
+            SetConsoleCursorPosition(g_hScreen[g_nScreenIndex], CursorPosition);
+            WriteFile(g_hScreen[g_nScreenIndex], string, strlen(string), &dw, NULL);
+        }
     }
 
     static void ScreenRelease()

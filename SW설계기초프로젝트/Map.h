@@ -42,6 +42,8 @@ public:
     RenderArray& getRenderArray() { return renderArray; }
     ScreenArray& getScreenArray() { return screenArray;  }
 
+    EventDispatcher* getEventDispathcer() { return eventDispatcher; }
+
     void initializeFromASCII(const char* filename)// 맵 초기화 // 파일명 넣으면 ArtLoadManager << 의 RenderArray를 불러서 맵 초기화
     {
         artLoadManager->RenderArrayLoad(&renderArray, filename);
@@ -70,7 +72,7 @@ public:
     }
 
     bool isDoor(int x, int y) const {
-        if (screenArray.MapInfo[y + 1][x] == MAP_DOOR_01 || screenArray.MapInfo[y + 1][x] == MAP_DOOR_02) return true;
+        if (screenArray.MapInfo[y + 1][x] == MAP_DOOR_01 || screenArray.MapInfo[y + 1][x] == MAP_DOOR_02 || screenArray.MapInfo[y + 1][x] == MAP_EXIT) return true;
         return false;
     }
 
@@ -120,6 +122,10 @@ public:
 
     void setType(int _type) {
         type = _type;
+    }
+
+    void callDispatch(EventType type) {
+
     }
 };
 

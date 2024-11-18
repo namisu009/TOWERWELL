@@ -4,39 +4,64 @@
 
 #include "Map.h"
 #include "Character.h"
+#include "PuzzleManager.h"
+#include "RenderManager.h"
+#include "Scene.h"
 #include <string>
 
 class PuzzleMap : public Map
 {
     unordered_map <int, string> PuzzleMapping;// 색상과 퍼즐 ID 매핑
     int puzzleCount;
-    int clearPuzzleCount;
+    int solvedPuzzleCount;
 
 public:
-    PuzzleMap() {
+    PuzzleMap() : Map() {
         setType(TYPE_PUZZLE);
         for (int i = PUZZLE_OBJ_01; i <= PUZZLE_OBJ_05; i++)
             PuzzleMapping[i] = "X";
-        puzzleCount = 0;
-        clearPuzzleCount = 0;
 
+        puzzleCount = 0;
+        solvedPuzzleCount = 0;
+        callDispatch(PUZZLE_SOLVED);
     }
 
     string getPuzzleId(int x, int y) {
         ScreenArray myScreen = getScreenArray();
-        if (myScreen.MapInfo[y][x] < PUZZLE_OBJ_01 || myScreen.MapInfo[y][x] > PUZZLE_OBJ_05)
-            return ""; // 퍼즐 X
-        else
-            return PuzzleMapping[myScreen.MapInfo[y][x]]; //퍼즐 ID 리턴
+        int key = myScreen.MapInfo[y][x];
+        if (key < PUZZLE_OBJ_01 || key > PUZZLE_OBJ_05) {
+            return ""; // 퍼즐 없음
+        }
+
+        // PuzzleMapping에 key가 있는지 확인
+        auto it = PuzzleMapping.find(key);
+        if (it != PuzzleMapping.end()) {
+            return it->second; // 퍼즐 ID 반환
+        }
+        else {
+            return "";
+        }
     }
 
-    void setPuzzleId(int colorId, string PuzzleId) { //색상과 퍼즐id 매핑
-        PuzzleMapping[colorId] = PuzzleId;
+    void addRenderPuzzle() {
+        for (auto& i : PuzzleMapping)
+        {
+            if (i.second != "X")
+                RenderManager::addPuzzle(PuzzleManager::getPuzzle(i.second));
+        }
+    }
+
+    void setPuzzleId(PuzzleMapInfo colorId, string PuzzleId) { //색상과 퍼즐id 매핑
+        PuzzleMapping[(int)colorId] = PuzzleId;
         puzzleCount++;
     }
 
-    void clearPuzzle() {
-        clearPuzzleCount++;
+    void solvePuzzle() {
+        solvedPuzzleCount++;
+    }
+
+    bool isAllPuzzlesSolved() {
+        return puzzleCount == solvedPuzzleCount;
     }
 
     string getDoorId(int x, int y) {
@@ -45,8 +70,13 @@ public:
             return ""; // Map Z
         else
         {
-            if (isExitDoor(x, y) && clearPuzzleCount != puzzleCount)
+            if (isExitDoor(x, y) && !isAllPuzzlesSolved())
+            {
+                Scene newScene;
+                newScene.setDialog("PZ_NCL_DL");
+                newScene.display();
                 return "";
+            }
                 
             
             return getDoorMapping()[myScreen.MapInfo[y][x]]; //Map Id return

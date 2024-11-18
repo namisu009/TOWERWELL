@@ -1,44 +1,44 @@
+#pragma once
 #ifndef _PUZZLE_H_
 #define _PUZZLE_H_
 
 #include <string>
-#include "ArtLoadManager.h";
-#include "EventDispatcher.h";
+#include "GameObject.h"
 
-class Puzzle
-{
-	ArtLoadManager* artLoadManager;
-	RenderArray* renderArray[5];
-	int puzzleCount;
-	int type;
-	int width;
-	int height;
-	float x, y;
-	float dx, dy;
-	EventDispatcher& eventDispatcher;
+class Scene;
+
+class Puzzle : public GameObject {
+    RenderArray* puzzleObjectArray[3];
+    RenderArray* puzzleDetailArray[3];
+    Scene* puzzleSceneArray[3];
+
+    int objectArrayIdx;
+    int DetailArrayIdx;
+    int SceneArrayIdx;
+
+    int solvedPuzzleCount;
+    int solvedThreshold;
+
+    bool isSolved;
+
+    static const int puzzleCount = 3;
+
 public:
-	Puzzle(EventDispatcher& dispatcher) : eventDispatcher(dispatcher) {
-		puzzleCount = 0;
-		artLoadManager->GetInstance();
-	}
+    Puzzle(std::string _id);
+    ~Puzzle();
 
-	void solvePuzzle() {
-		// 퍼즐이 해결된 경우 처리
-		eventDispatcher.dispatch(PUZZLE_SOLVED); // PUZZLE_SOLVED 이벤트 전송
-	}
+    void setPuzzleSceneDialog(int key, std::string cmd);
+    void setPuzzleSceneAction(int key, std::string cmd, ActionType command, int dt);
+    void setPuzzleSceneAction(int key, std::string cmd, ActionType command, int dt, int repeat);
+    void setPuzzleSceneDelay(int key, std::string cmd, int time);
+    void solvePuzzle();
+    bool isPuzzleSolved();
+    void showPuzzleDetail();
+    void setSolvedThreshold(int key);
+    void setPuzzleObjectASCII(int key, const char* filename);
+    void setPuzzleDetailASCII(int key, const char* filename);
 
-	void initializeFromASCII(const char* filename) {
-		if (puzzleCount >= 5)
-			return;
-
-		artLoadManager->RenderArrayLoad(renderArray[puzzleCount], filename);
-	}
-
-	void setType(int _type)
-	{
-		type = _type;
-	}
-	
+    RenderArray* getObjectArray();
+    RenderArray* getDetailArray();
 };
-
 #endif
