@@ -68,22 +68,21 @@ public:
 
             Puzzle* puzzle = PuzzleManager::getPuzzle(stg->getPuzzleId(init_x, init_y));
             if (puzzle) {
-                if (puzzle->getDetailArray() != nullptr) { //퍼즐 디테일 화면이 있다면 출력
+                if (puzzle->getDetailArray() != nullptr) {
                     puzzle->showPuzzleDetail();
                     getPuzzleDetailHandle(puzzle);
                 }
-                bool puzzleSolved = false;
+
+                // 퍼즐 해결 조건 처리
+                bool puzzleSolved = puzzle->isPuzzleSolved();
                 if (puzzle->getType() == TYPE_ITEM_PUZZLE)
                     puzzleSolved = ((ItemPuzzle*)puzzle)->isSatisfyCondition(obj);
                 else
-                    puzzleSolved = puzzle->isSatisfyCondition();
+                    puzzleSolved = puzzle->isIntermediateSolved();
 
-                if (puzzleSolved) { //만약 퍼즐이 해결되었다면 (최종해결X)
-
+                if (puzzleSolved) {
+                    puzzle->progressPuzzle(); // 중간 해결 진행
                     obj->addInventory(puzzle->getPuzzleReward());
-                    puzzle->solvePuzzle();
-                    
-                    return;
                 }
             }
 

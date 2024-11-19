@@ -86,7 +86,8 @@ public:
         sisterCharacter = GameObjectManager::getCharacter("Sister");
         currentMap = StageManager::getCurrentStage()->getCurrentMap();
         setMap(currentMap);
-
+        playerCharacter->SetStartPosition(currentMap->getInitX(), currentMap->getInitY());
+        sisterCharacter->SetStartPosition(currentMap->getInitX() - 18, currentMap->getInitY());
         RenderManager::ScreenInit();
 
         RenderManager::setRenderMap(currentMap);
@@ -145,11 +146,11 @@ public:
 
         changeMapHandle();
 
-        RenderManager::setRenderMap(currentMap);
-        RenderManager::renderMap();
-
         playerCharacter->SetStartPosition(currentMap->getInitX(), currentMap->getInitY());
         sisterCharacter->SetStartPosition(currentMap->getInitX() - 18, currentMap->getInitY());
+
+        RenderManager::setRenderMap(currentMap);
+        RenderManager::render();
     }
 
     // 물리 연산 루프

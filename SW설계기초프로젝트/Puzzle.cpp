@@ -31,27 +31,56 @@ Puzzle::~Puzzle() {
     }
 }
 
+// 중간 해결 상태 확인
+bool Puzzle::isIntermediateSolved() {
+    return currentStep >= solvedThreshold;
+}
 
-void Puzzle::solvePuzzle() {
-    if (!isPuzzleSolved() && solvedPuzzleCount < puzzleCount && puzzleSceneArray[solvedPuzzleCount] != nullptr) {
-        puzzleSceneArray[solvedPuzzleCount]->display();
-        solvedPuzzleCount++;
+// 최종 해결 상태 확인
+bool Puzzle::isPuzzleSolved() {
+    if (!isSolved && currentStep >= puzzleCount) {
+        isSolved = true;
+        eventDispatcher->dispatch(PUZZLE_SOLVED); // 최종 해결 이벤트
+    }
+    return isSolved;
+}
 
-        if (objectArrayIdx < 2 && puzzleObjectArray[objectArrayIdx + 1] != nullptr)
-        {
+bool Puzzle::progressPuzzle() {
+    if (isSolved) return false; // 이미 최종 해결된 경우
+
+    if (currentStep < puzzleCount && puzzleSceneArray[currentStep] != nullptr) {
+        puzzleSceneArray[currentStep]->display(); // 중간 해결 장면 출력
+        currentStep++;
+
+        // 상태 업데이트
+        if (objectArrayIdx < puzzleCount && puzzleObjectArray[objectArrayIdx + 1] != nullptr) {
             objectArrayIdx++;
             setWidth(puzzleObjectArray[objectArrayIdx]->width);
             setHeight(puzzleObjectArray[objectArrayIdx]->height);
         }
 
-        if (detailArrayIdx < 2 && puzzleDetailArray[detailArrayIdx + 1] != nullptr)
+        if (detailArrayIdx < puzzleCount && puzzleDetailArray[detailArrayIdx + 1] != nullptr) {
             detailArrayIdx++;
+        }
 
-        if (sceneArrayIdx < 2)
+        if (sceneArrayIdx < puzzleCount) {
             sceneArrayIdx++;
+        }
 
-        isPuzzleSolved();
+        solvePuzzle();
+        return true; // 중간 해결 성공
     }
+
+    return false; // 중간 해결 실패
+}
+
+bool Puzzle::solvePuzzle() {
+    if (isIntermediateSolved() && !isSolved) {
+        isSolved = true;
+        eventDispatcher->dispatch(PUZZLE_SOLVED); // 최종 해결 이벤트
+        return true;
+    }
+    return false; // 최종 해결 조건이 충족되지 않음
 }
 
 void Puzzle::setPuzzleReward(int key, string name) {
@@ -59,7 +88,7 @@ void Puzzle::setPuzzleReward(int key, string name) {
 }
 
 string Puzzle::getPuzzleReward() {
-    if (rewardArrayIdx >= solvedThreshold) {
+    if (rewardArrayIdx > solvedThreshold) {
         return "";
     }
 
@@ -68,22 +97,14 @@ string Puzzle::getPuzzleReward() {
     return n;
 }
 
-bool Puzzle::isPuzzleSolved() {
-    if (!isSolved && solvedThreshold < solvedPuzzleCount) {
-        isSolved = true;
-        eventDispatcher->dispatch(PUZZLE_SOLVED); // PUZZLE_SOLVED 이벤트 전송
-    }
-    return isSolved;
-}
-
 void Puzzle::showPuzzleDetail() {
     RenderManager::setRenderPuzzleDetail(getId());
     RenderManager::render();
 }
 
 void Puzzle::setSolvedThreshold(int key) {
-    if (solvedThreshold < key + 1)
-        solvedThreshold = key + 1;
+    if (solvedThreshold < key)
+        solvedThreshold = key;
 }
 
 void Puzzle::setPuzzleObjectASCII(int key, const char* filename) {
@@ -159,6 +180,8 @@ void Puzzle::setPuzzleSceneDelay(int key, string cmd, int time) {
     setSolvedThreshold(key);
     puzzleSceneArray[key]->setDelay(cmd, time);
 }
+
+
 
 
 RenderArray* Puzzle::getObjectArray() {

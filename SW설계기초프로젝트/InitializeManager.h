@@ -32,7 +32,7 @@ private:
 
         GameObjectManager::createObejct("Dialog", "S1_M1_PZ2_DL_00_01", "문이 열리면서 균열이 생겼다.");
         GameObjectManager::createObejct("Dialog", "S1_M1_PZ2_DL_00_02", "문 틈 사이로 물줄기가 나왔다.");
-        GameObjectManager::createObejct("Dialog", "S1_M1_PZ2_DL_00_03", "문 틈 사이로 물줄기가 나온다. ㅇㅇ을 가져다 놓으면 좋을 거 같다.");
+        GameObjectManager::createObejct("Dialog", "S1_M1_PZ2_DL_00_03", "문 틈 사이로 물줄기가 나온다.");
 
     };
 
@@ -48,7 +48,6 @@ private:
 
     static void PuzzleInit() {
         PuzzleManager::createPuzzle("S1_M1_PZ_01", TYPE_READ_PUZZLE);
-        //PuzzleManager::getPuzzle("S1_M1_PZ_01")->setPuzzleObjectASCII(0, "src\\READ1.png");
         PuzzleManager::getPuzzle("S1_M1_PZ_01")->setPuzzleDetailASCII(0, "src\\SC3_PZ_01.png");
         PuzzleManager::getPuzzle("S1_M1_PZ_01")->setPuzzleSceneDialog(0, "SC1_DL_03");
         PuzzleManager::getPuzzle("S1_M1_PZ_01")->setPuzzleReward(0, "S1_M1_PZ_02_KEY");
@@ -57,9 +56,9 @@ private:
         PuzzleManager::getItemPuzzle("S1_M1_PZ_02")->setPuzzleObjectASCII(0, "src\\GATE1.png");
         PuzzleManager::getItemPuzzle("S1_M1_PZ_02")->setPuzzleObjectASCII(1, "src\\GATE2.png");
         PuzzleManager::getItemPuzzle("S1_M1_PZ_02")->setPuzzleObjectASCII(2, "src\\GATE3.png");
-        PuzzleManager::getItemPuzzle("S1_M1_PZ_02")->setPuzzleDetailASCII(0, "src\\DL.png");
-        PuzzleManager::getItemPuzzle("S1_M1_PZ_02")->setPuzzleDetailASCII(1, "src\\DL.png");
-        PuzzleManager::getItemPuzzle("S1_M1_PZ_02")->setPuzzleDetailASCII(2, "src\\DL.png");
+        //PuzzleManager::getItemPuzzle("S1_M1_PZ_02")->setPuzzleDetailASCII(0, "src\\DL.png");
+        //PuzzleManager::getItemPuzzle("S1_M1_PZ_02")->setPuzzleDetailASCII(1, "src\\DL.png");
+        //PuzzleManager::getItemPuzzle("S1_M1_PZ_02")->setPuzzleDetailASCII(2, "src\\DL.png");
         PuzzleManager::getItemPuzzle("S1_M1_PZ_02")->setPuzzleSceneDialog(0, "S1_M1_PZ2_DL_00_01");
         PuzzleManager::getItemPuzzle("S1_M1_PZ_02")->setPuzzleSceneDialog(1, "S1_M1_PZ2_DL_00_02");
         PuzzleManager::getItemPuzzle("S1_M1_PZ_02")->setPuzzleConditionItem(0, "S1_M1_PZ_02_KEY");
@@ -69,7 +68,7 @@ private:
 
     static void MapInit() {
         MapManager::createMap("S1_PZ_MAP_01", TYPE_PUZZLE, "src\\TEST_MAP_01.png", "src\\TEST_MAP_INFO_01.png");
-        MapManager::createMap("S1_JP_MAP_01", TYPE_JUMP, "src\\S1_JUMP_MAP_01.png", "src\\S1_JUMP_MAP_INFO_01.png");
+        MapManager::createMap("S1_JP_MAP_01", TYPE_JUMP, "src\\S1_J_MAP_01.png", "src\\S1_J_MAP_01_STAGE_INFO.png");
     };
 
     static void StageInit(EventDispatcher *eventDispathcer) {
@@ -84,6 +83,7 @@ private:
         StageManager::setPuzzleId(0, "S1_PZ_MAP_01", PUZZLE_OBJ_01, "S1_M1_PZ_01");
         StageManager::setPuzzleId(0, "S1_PZ_MAP_01", PUZZLE_OBJ_02, "S1_M1_PZ_02");
         MapManager::setMapASCII("S1_PZ_MAP_01");
+        MapManager::setMapASCII("S1_JP_MAP_01");
     };
 public:
 	static void init(EventDispatcher* eventDispatcher) {
