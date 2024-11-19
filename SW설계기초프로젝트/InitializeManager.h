@@ -26,13 +26,15 @@ private:
 
         //Dialoginit
         GameObjectManager::createObejct("Dialog", "SC1_DL_01", "src\\dialog1.png");
-        GameObjectManager::createObejct("Dialog", "SC1_DL_02", "src\\dialog2.png");
+        GameObjectManager::createObejct("Dialog", "SC1_DL_02", "열쇠를 얻었다");
         GameObjectManager::createObejct("Dialog", "SC1_DL_03", "여동생: 소문이 사실인가봐! 저기 끝에 문이 있는 거 같은데 한 번 가보자.");
         GameObjectManager::createObejct("Dialog", "PZ_NCL_DL", "히로: 문이 열리지 않아...");
 
-        GameObjectManager::createObejct("Dialog", "S1_M1_PZ2_DL_00_01", "문이 열리면서 균열이 생겼다.");
-        GameObjectManager::createObejct("Dialog", "S1_M1_PZ2_DL_00_02", "문 틈 사이로 물줄기가 나왔다.");
-        GameObjectManager::createObejct("Dialog", "S1_M1_PZ2_DL_00_03", "문 틈 사이로 물줄기가 나온다.");
+        
+        GameObjectManager::createObejct("Dialog", "S1_M1_PZ2_DL_00_01", "열쇠를 사용한다.");
+        GameObjectManager::createObejct("Dialog", "S1_M1_PZ2_DL_00_02", "문이 열리면서 균열이 생겼다.");
+        GameObjectManager::createObejct("Dialog", "S1_M1_PZ2_DL_01_01", "문 틈 사이로 물줄기가 나왔다.");
+        GameObjectManager::createObejct("Dialog", "S1_M1_PZ2_DL_02_01", "문 틈 사이로 물줄기가 나온다.");
 
     };
 
@@ -49,6 +51,7 @@ private:
     static void PuzzleInit() {
         PuzzleManager::createPuzzle("S1_M1_PZ_01", TYPE_READ_PUZZLE);
         PuzzleManager::getPuzzle("S1_M1_PZ_01")->setPuzzleDetailASCII(0, "src\\SC3_PZ_01.png");
+        PuzzleManager::getPuzzle("S1_M1_PZ_01")->setPuzzleSceneDialog(0, "SC1_DL_02");
         PuzzleManager::getPuzzle("S1_M1_PZ_01")->setPuzzleSceneDialog(0, "SC1_DL_03");
         PuzzleManager::getPuzzle("S1_M1_PZ_01")->setPuzzleReward(0, "S1_M1_PZ_02_KEY");
 
@@ -60,7 +63,9 @@ private:
         //PuzzleManager::getItemPuzzle("S1_M1_PZ_02")->setPuzzleDetailASCII(1, "src\\DL.png");
         //PuzzleManager::getItemPuzzle("S1_M1_PZ_02")->setPuzzleDetailASCII(2, "src\\DL.png");
         PuzzleManager::getItemPuzzle("S1_M1_PZ_02")->setPuzzleSceneDialog(0, "S1_M1_PZ2_DL_00_01");
-        PuzzleManager::getItemPuzzle("S1_M1_PZ_02")->setPuzzleSceneDialog(1, "S1_M1_PZ2_DL_00_02");
+        PuzzleManager::getItemPuzzle("S1_M1_PZ_02")->setPuzzleSceneDialog(0, "S1_M1_PZ2_DL_00_02");
+        PuzzleManager::getItemPuzzle("S1_M1_PZ_02")->setPuzzleSceneDialog(1, "S1_M1_PZ2_DL_01_01");
+        PuzzleManager::getItemPuzzle("S1_M1_PZ_02")->setPuzzleSceneDialog(1, "S1_M1_PZ2_DL_02_01");
         PuzzleManager::getItemPuzzle("S1_M1_PZ_02")->setPuzzleConditionItem(0, "S1_M1_PZ_02_KEY");
        
 

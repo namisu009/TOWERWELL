@@ -1,8 +1,10 @@
-#define _
-
+#define _CRT_SECURE_NO_WARNINGS
 #include "RenderManager.h"
-
-#include <cstdlib> // for mbstowcs
+#include <string>
+#include <locale>
+#include <codecvt>
+#include <iostream>
+#include <cstdlib>
 
 Map* RenderManager::currentMap = nullptr;
 unordered_map<string, GameObject*> RenderManager::objectMap;
@@ -11,14 +13,14 @@ Dialog* RenderManager::renderLog = nullptr;
 Puzzle * RenderManager::renderPzl = nullptr;
 EventDispatcher* RenderManager::eventDispatcher;
 
-wstring stringToWstring(const std::string& str) {
-    size_t size = str.size() + 1;
-    std::wstring wstr(size, L'\0');
-    size_t convertedSize = 0;
-    mbstowcs_s(&convertedSize, &wstr[0], size, str.c_str(), size - 1);
-    //wstr.resize(convertedSize - 1);
-    return wstr;
-};
+using namespace std;
+
+std::wstring stringToWstring(const std::string& var)
+{
+    static std::locale loc("");
+    auto& facet = std::use_facet<std::codecvt<wchar_t, char, std::mbstate_t>>(loc);
+    return std::wstring_convert<std::remove_reference<decltype(facet)>::type, wchar_t>(&facet).from_bytes(var);
+}
 
 void RenderManager::addObject(GameObject* object) {
     objectMap[object->getId()] = object; // 렌더링할 객체 추가
@@ -189,8 +191,8 @@ void RenderManager::renderDialog() {
                     break;
                 }
             }
-            //DoubleBufferManager::drawText(renderLog->getText(), cmdWidth + renderLog_x, 1080);
-            DoubleBufferManager::drawText(L"우선테스트", cmdWidth + renderLog_x, 1080);
+            DoubleBufferManager::drawText(stringToWstring(renderLog->getText()), cmdWidth + renderLog_x, 1085, RGB(200, 200, 200), 60);
+            //DoubleBufferManager::drawText(L"우선테스트", cmdWidth + renderLog_x, 1080);
         }
 
         setRenderDialog(nullptr);  // 대화창 내용 초기화

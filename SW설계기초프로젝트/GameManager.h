@@ -56,8 +56,8 @@ class GameManager
     StageManager stageManager;
 
     int offset = 16;
-    int threadTime = 32;
-    int renderTime = 32;
+    int threadTime = 16;
+    int renderTime = 16;
 
     unordered_map<pair<int, int>, playerAction, pair_hash> actionPositions;
     Map* currentMap;
