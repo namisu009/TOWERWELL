@@ -32,8 +32,11 @@ public:
 	bool isSatisfyCondition(Character* player) {
 		//해당 이름의 아이템이 플레이어에게 존재하는지 확인하고 있으면 true
 		//없으면 false
+		if (itemArrayIdx >= puzzleCount)
+			return false;
+
 		string name = puzzleItemArray[itemArrayIdx];
-		if (player->getisItem(name)) { //사용자에게 있을 때
+		if (name == "" || name != "" && player->getisItem(name)) { //사용자에게 있을 때 또는 아이템 조건이 없을 때
 			player->uesItem(name); //아이템 사용하게 하기
 			itemArrayIdx++; //다음 문제의 필요한 아이템으로 넘어가기
 			return true;

@@ -28,13 +28,24 @@ public:
 
     string getPuzzleId(int x, int y) {
         ScreenArray myScreen = getScreenArray();
-        int key = myScreen.MapInfo[y][x];
+        int key = myScreen.ObjectInfo[y][x];
         if (key < PUZZLE_OBJ_01 || key > PUZZLE_OBJ_05) {
             return ""; // 퍼즐 없음
         }
 
         // PuzzleMapping에 key가 있는지 확인
         auto it = PuzzleMapping.find(key);
+        if (it != PuzzleMapping.end()) {
+            return it->second; // 퍼즐 ID 반환
+        }
+        else {
+            return "";
+        }
+    }
+
+    string getPuzzleId(int type) {
+        // PuzzleMapping에 key가 있는지 확인
+        auto it = PuzzleMapping.find(type);
         if (it != PuzzleMapping.end()) {
             return it->second; // 퍼즐 ID 반환
         }
@@ -54,6 +65,8 @@ public:
     void setPuzzleId(PuzzleMapInfo colorId, string PuzzleId) { //색상과 퍼즐id 매핑
         PuzzleMapping[(int)colorId] = PuzzleId;
         puzzleCount++;
+
+        RenderManager::addPuzzle(PuzzleManager::getPuzzle(PuzzleId));
     }
 
     void solvePuzzle() {

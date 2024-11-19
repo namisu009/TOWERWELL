@@ -36,7 +36,7 @@ public:
 	void addInventory(string key) {
 		if (key != "") {
 			Item* item = ItemManager::getItems(key);
-			if (item != nullptr && Inventory.find(item->getItemName()) != Inventory.end()) {
+			if (item != nullptr && Inventory.find(item->getItemName()) == Inventory.end()) {
 				Inventory[item->getItemName()] = item;
 			}
 		}

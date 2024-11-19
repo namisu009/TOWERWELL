@@ -16,6 +16,9 @@ using namespace std;
 class Map
 {
 private:
+    const char * renderFile;
+    const char * screenFile;
+
     RenderArray renderArray;
     ScreenArray screenArray;
 
@@ -44,6 +47,22 @@ public:
 
     EventDispatcher* getEventDispathcer() { return eventDispatcher; }
 
+    void initializeFromASCII()// 맵 초기화 // 파일명 넣으면 ArtLoadManager << 의 RenderArray를 불러서 맵 초기화
+    {
+        artLoadManager->RenderArrayLoad(&renderArray, renderFile);
+    }
+
+    void initializeFromScreen()// 스크린 초기화 (스크린 파일 따로 존재)
+    {
+        artLoadManager->ScreenArrayLoad(type, this, screenFile);
+        width = screenArray.width;
+        height = screenArray.height;
+        init_x = screenArray.init_x;
+        init_y = screenArray.init_y;
+    }
+
+
+
     void initializeFromASCII(const char* filename)// 맵 초기화 // 파일명 넣으면 ArtLoadManager << 의 RenderArray를 불러서 맵 초기화
     {
         artLoadManager->RenderArrayLoad(&renderArray, filename);
@@ -51,7 +70,7 @@ public:
 
     void initializeFromScreen(const char* filename)// 스크린 초기화 (스크린 파일 따로 존재)
     {
-        artLoadManager->ScreenArrayLoad(type, &screenArray, filename);
+        artLoadManager->ScreenArrayLoad(type, this, filename);
         width = screenArray.width;
         height = screenArray.height;
         init_x = screenArray.init_x;
@@ -126,6 +145,11 @@ public:
 
     void callDispatch(EventType type) {
 
+    }
+
+    void setFile(const char * filename1, const char * filename2){
+        renderFile = filename1;
+        screenFile = filename2;
     }
 };
 

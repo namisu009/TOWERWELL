@@ -189,9 +189,8 @@ void RenderManager::renderDialog() {
                     break;
                 }
             }
-            DoubleBufferManager::drawText(
-                stringToWstring(renderLog->getText()), cmdWidth + renderLog_x, 1080
-            );
+            //DoubleBufferManager::drawText(renderLog->getText(), cmdWidth + renderLog_x, 1080);
+            DoubleBufferManager::drawText(L"우선테스트", cmdWidth + renderLog_x, 1080);
         }
 
         setRenderDialog(nullptr);  // 대화창 내용 초기화

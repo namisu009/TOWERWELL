@@ -38,7 +38,11 @@ void Puzzle::solvePuzzle() {
         solvedPuzzleCount++;
 
         if (objectArrayIdx < 2 && puzzleObjectArray[objectArrayIdx + 1] != nullptr)
+        {
             objectArrayIdx++;
+            setWidth(puzzleObjectArray[objectArrayIdx]->width);
+            setHeight(puzzleObjectArray[objectArrayIdx]->height);
+        }
 
         if (detailArrayIdx < 2 && puzzleDetailArray[detailArrayIdx + 1] != nullptr)
             detailArrayIdx++;
@@ -78,8 +82,8 @@ void Puzzle::showPuzzleDetail() {
 }
 
 void Puzzle::setSolvedThreshold(int key) {
-    if (solvedThreshold < key)
-        solvedThreshold = key;
+    if (solvedThreshold < key + 1)
+        solvedThreshold = key + 1;
 }
 
 void Puzzle::setPuzzleObjectASCII(int key, const char* filename) {
@@ -89,7 +93,10 @@ void Puzzle::setPuzzleObjectASCII(int key, const char* filename) {
     if (puzzleObjectArray[key] == nullptr)
         puzzleObjectArray[key] = new RenderArray();
 
+    setSolvedThreshold(key);
     artLoadManager->RenderArrayLoad(puzzleObjectArray[key], filename);
+    setWidth(puzzleObjectArray[key]->width);
+    setHeight(puzzleObjectArray[key]->height);
 }
 
 // 퍼즐 디테일 ASCII 설정 함수
@@ -100,6 +107,7 @@ void Puzzle::setPuzzleDetailASCII(int key, const char* filename) {
     if (puzzleDetailArray[key] == nullptr)
         puzzleDetailArray[key] = new RenderArray();
 
+    setSolvedThreshold(key);
     artLoadManager->RenderArrayLoad(puzzleDetailArray[key], filename);
 }
 
@@ -112,6 +120,7 @@ void Puzzle::setPuzzleSceneDialog(int key, string cmd) {
     if (puzzleSceneArray[key] == nullptr)
         puzzleSceneArray[key] = new Scene();
 
+    setSolvedThreshold(key);
     puzzleSceneArray[key]->setDialog(cmd);
 }
 
@@ -123,6 +132,7 @@ void Puzzle::setPuzzleSceneAction(int key, string cmd, ActionType command, int d
     if (puzzleSceneArray[key] == nullptr)
         puzzleSceneArray[key] = new Scene();
 
+    setSolvedThreshold(key);
     puzzleSceneArray[key]->setAction(cmd, command, dt);
 }
 
@@ -134,6 +144,7 @@ void Puzzle::setPuzzleSceneAction(int key, string cmd, ActionType command, int d
     if (puzzleSceneArray[key] == nullptr)
         puzzleSceneArray[key] = new Scene();
 
+    setSolvedThreshold(key);
     puzzleSceneArray[key]->setAction(cmd, command, dt, repeat);
 }
 
@@ -145,6 +156,7 @@ void Puzzle::setPuzzleSceneDelay(int key, string cmd, int time) {
     if (puzzleSceneArray[key] == nullptr)
         puzzleSceneArray[key] = new Scene();
 
+    setSolvedThreshold(key);
     puzzleSceneArray[key]->setDelay(cmd, time);
 }
 

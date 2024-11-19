@@ -26,8 +26,7 @@ public:
 			return;
 
 		map->setType(type);
-		map->initializeFromASCII(filename1);
-		map->initializeFromScreen(filename2);
+		map->setFile(filename1, filename2);
 		addMap(id, map);
 	}
 	static void addMap(string id, Map* map) { //¸Ê Ãß°¡
@@ -37,12 +36,15 @@ public:
 	static Map* getMap(string id) {
 		return maps[id];
 	}
-
 	static PuzzleMap* getPuzzleMap(string id) {
 		if (maps[id]->getType() == TYPE_PUZZLE)
 			return (PuzzleMap*) maps[id];
 
 		return nullptr;
+	}
+	static void setMapASCII(string id) {
+		maps[id]->initializeFromASCII();
+		maps[id]->initializeFromScreen();
 	}
 };
 

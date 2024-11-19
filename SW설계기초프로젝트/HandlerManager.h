@@ -60,10 +60,13 @@ public:
         bindInput(0x46, [object, stage]() {
             PuzzleMap* map = ((PuzzleMap*)stage->getCurrentMap());
 
-            int init_x = object->getFootX();
-            int init_y = object->getFootY() - object->getHeight() / 2;
+            Character* obj = object;
+            Stage* stg = stage;
 
-            Puzzle* puzzle = PuzzleManager::getPuzzle(stage->getPuzzleId(init_x, init_y));
+            int init_x = obj->getFootX();
+            int init_y = obj->getFootY() - obj->getHeight() / 2;
+
+            Puzzle* puzzle = PuzzleManager::getPuzzle(stg->getPuzzleId(init_x, init_y));
             if (puzzle) {
                 if (puzzle->getDetailArray() != nullptr) { //퍼즐 디테일 화면이 있다면 출력
                     puzzle->showPuzzleDetail();
@@ -71,19 +74,21 @@ public:
                 }
                 bool puzzleSolved = false;
                 if (puzzle->getType() == TYPE_ITEM_PUZZLE)
-                    puzzleSolved = ((ItemPuzzle*)puzzle)->isSatisfyCondition(object);
+                    puzzleSolved = ((ItemPuzzle*)puzzle)->isSatisfyCondition(obj);
                 else
                     puzzleSolved = puzzle->isSatisfyCondition();
 
                 if (puzzleSolved) { //만약 퍼즐이 해결되었다면 (최종해결X)
+
+                    obj->addInventory(puzzle->getPuzzleReward());
                     puzzle->solvePuzzle();
-                    object->addInventory(puzzle->getPuzzleReward());
+                    
                     return;
                 }
             }
 
-            if (stage->getDoorId(init_x, init_y) != "") {
-                stage->onMoveMap(init_x, init_y);
+            if (stg->getDoorId(init_x, init_y) != "") {
+                stg->onMoveMap(init_x, init_y);
             }
         });
 
