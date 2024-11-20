@@ -77,9 +77,9 @@ private:
         for (int i = 0; i < 4; i++) {
             StageManager::addStage(i, eventDispathcer);
         }
-        StageManager::addMap(0, MapManager::getMap("S1_PZ_MAP_01"));
 
         StageManager::addMap(0, MapManager::getMap("S1_JP_MAP_03"));
+        StageManager::addMap(0, MapManager::getMap("S1_PZ_MAP_01"));
         StageManager::addMap(0, MapManager::getMap("S1_JP_MAP_01"));
         StageManager::setDoorID(0, "S1_PZ_MAP_01", MAP_EXIT, "S1_JP_MAP_01");
         StageManager::setDoorID(0, "S1_JP_MAP_01", MAP_EXIT, "S1_PZ_MAP_01");
