@@ -20,6 +20,9 @@ private:
     static HANDLE g_hScreen[2];
 
 public:
+    static HANDLE* getHandle() {
+        return &g_hScreen[g_nScreenIndex];
+    }
     static void ScreenInit()
     {
         COORD size = { cmdWidth + 10, cmdHeight + 10 };
@@ -83,7 +86,7 @@ public:
     static void ScreenprintAtPosition(int x, int y, const char* string) {
         DWORD dw;
         COORD CursorPosition = { x, y };
-        SetConsoleCursorPosition(g_hScreen[g_nScreenIndex], CursorPosition);
+        //SetConsoleCursorPosition(g_hScreen[g_nScreenIndex], CursorPosition);
         WriteConsoleOutputCharacterA(g_hScreen[g_nScreenIndex], string, strlen(string), CursorPosition, &dw); //<<�̳༮
     }
 

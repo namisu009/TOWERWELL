@@ -18,7 +18,7 @@ class Scene
 	queue<Command> commands;
 public:
 	Scene() {
-		sceneLoop = false;
+		sceneLoop = true;
 	}
 
 	void setSceneLoop(bool _b) {
@@ -98,6 +98,10 @@ public:
 	Command popCommand() {
 		Command cmd = commands.front();
 		commands.pop();
+
+		if (sceneLoop)
+			commands.push(cmd);
+
 		return cmd;
 	}
 
@@ -108,7 +112,9 @@ public:
 	}
 
 	void display() {
-		while (!commands.empty()) {
+
+		int size = commands.size();
+		while (size) {
 			Command cmd = popCommand();
 			
 			if (cmd.getType() == TYPE_CHARACTER) {
@@ -121,6 +127,7 @@ public:
 			}
 
 			RenderManager::render();
+			size--;
 		}
 	}
 };

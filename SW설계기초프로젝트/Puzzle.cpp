@@ -5,7 +5,8 @@
 Puzzle::Puzzle(string _id) : GameObject(_id) {
     objectArrayIdx = 0;
     detailArrayIdx = 0;
-    sceneArrayIdx = 0;
+    cl_sceneArrayIdx = 0;
+    ncl_sceneArrayIdx = 0;
     rewardArrayIdx = 0;
     solvedThreshold = 0;
     solvedPuzzleCount = 0;
@@ -46,14 +47,19 @@ bool Puzzle::isPuzzleSolved() {
         isSolved = true;
         eventDispatcher->dispatch(PUZZLE_SOLVED); // 최종 해결 이벤트
     }
+    else {
+        if (puzzleCLSceneArray[currentStep] != nullptr)
+            puzzleCLSceneArray[cl_sceneArrayIdx]->display();
+    }
     return isSolved;
 }
 
 bool Puzzle::progressPuzzle() {
-    if (isSolved) return false; // 이미 최종 해결된 경우
-
+    if (isSolved)
+        return false; // 이미 최종 해결된 경우
+    
     if (currentStep < puzzleCount && puzzleCLSceneArray[currentStep] != nullptr) {
-        puzzleCLSceneArray[currentStep]->display(); // 중간 해결 장면 출력
+        puzzleCLSceneArray[cl_sceneArrayIdx]->display(); // 중간 해결 장면 출력
         currentStep++;
 
         // 상태 업데이트
@@ -67,15 +73,21 @@ bool Puzzle::progressPuzzle() {
             detailArrayIdx++;
         }
 
-        if (sceneArrayIdx < puzzleCount) {
-            sceneArrayIdx++;
+        if (cl_sceneArrayIdx < puzzleCount) {
+            cl_sceneArrayIdx++;
+            ncl_sceneArrayIdx++;
         }
 
         solvePuzzle();
         return true; // 중간 해결 성공
     }
-
+    
     return false; // 중간 해결 실패
+}
+
+void Puzzle::PuzzleNCLSceneDisplay() {
+     if(puzzleNCLSceneArray[ncl_sceneArrayIdx] != nullptr)
+    puzzleNCLSceneArray[ncl_sceneArrayIdx]->display();
 }
 
 bool Puzzle::solvePuzzle() {
