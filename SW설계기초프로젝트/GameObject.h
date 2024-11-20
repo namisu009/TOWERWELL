@@ -89,6 +89,7 @@ public:
 
 	void move() {
 		setPosition(getX() + dx, getY() + dy);
+		//eventDispatcher->dispatch(RENDER);
 	}
 
 	int getFootY() {

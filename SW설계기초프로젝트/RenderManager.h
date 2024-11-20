@@ -48,7 +48,7 @@ public:
     static void renderPuzzle(); // 모든 객체 렌더링
     static void renderPuzzleDetail(); // 모든 객체 렌더링
     static void renderDialog(); // 대화창 렌더링
-    //static void clearObject(); //화면에서 객체 지우기 (맵 그리기)
+    static void clearObject(); //화면에서 객체 지우기 (맵 그리기)
 
     static void renderClear();
 
@@ -61,4 +61,4 @@ public:
 
 
 
-#endif m  
+#endif 

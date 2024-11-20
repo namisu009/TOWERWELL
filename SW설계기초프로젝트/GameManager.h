@@ -56,8 +56,8 @@ class GameManager
     StageManager stageManager;
 
     int offset = 16;
-    int threadTime = 16;
-    int renderTime = 16;
+    int threadTime = 32;
+    int renderTime = 32;
 
     unordered_map<pair<int, int>, playerAction, pair_hash> actionPositions;
     Map* currentMap;
@@ -87,7 +87,7 @@ public:
         currentMap = StageManager::getCurrentStage()->getCurrentMap();
         setMap(currentMap);
         playerCharacter->SetStartPosition(currentMap->getInitX(), currentMap->getInitY());
-        sisterCharacter->SetStartPosition(currentMap->getInitX() - 18, currentMap->getInitY());
+        sisterCharacter->SetStartPosition(currentMap->getInitX() - offset, currentMap->getInitY());
         RenderManager::ScreenInit();
 
         RenderManager::setRenderMap(currentMap);
@@ -239,10 +239,10 @@ public:
         if (!sisterCharacter->getisJumping())
         {
             if (sisterCharacter->getFootX() < targetLeft) {
-                sisterCharacter->setDx(2.5);  // 플레이어 왼쪽에 있을 때 오른쪽으로 이동
+                sisterCharacter->setDx(4);  // 플레이어 왼쪽에 있을 때 오른쪽으로 이동
             }
             else if (sisterCharacter->getFootX() > targetRight) {
-                sisterCharacter->setDx(-2.5); // 플레이어 오른쪽에 있을 때 왼쪽으로 이동
+                sisterCharacter->setDx(-4); // 플레이어 오른쪽에 있을 때 왼쪽으로 이동
             }
             else {
                 sisterCharacter->setDx(0);  // 범위 내에 있을 때 멈춤

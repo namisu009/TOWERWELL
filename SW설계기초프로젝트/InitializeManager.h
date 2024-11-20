@@ -50,30 +50,27 @@ private:
 
     static void PuzzleInit() {
         PuzzleManager::createPuzzle("S1_M1_PZ_01", TYPE_READ_PUZZLE);
-        PuzzleManager::getPuzzle("S1_M1_PZ_01")->setPuzzleDetailASCII(0, "src\\SC3_PZ_01.png");
-        PuzzleManager::getPuzzle("S1_M1_PZ_01")->setPuzzleSceneDialog(0, "SC1_DL_02");
-        PuzzleManager::getPuzzle("S1_M1_PZ_01")->setPuzzleSceneDialog(0, "SC1_DL_03");
-        PuzzleManager::getPuzzle("S1_M1_PZ_01")->setPuzzleReward(0, "S1_M1_PZ_02_KEY");
+        PuzzleManager::setPuzzleDetailASCII("S1_M1_PZ_01", 0, "src\\SC3_PZ_01.png");
+        PuzzleManager::setPuzzleSceneDialog("S1_M1_PZ_01", TYPE_CL_DL, 0, "SC1_DL_02");
+        PuzzleManager::setPuzzleSceneDialog("S1_M1_PZ_01", TYPE_CL_DL, 0, "SC1_DL_03");
+        PuzzleManager::setPuzzleReward("S1_M1_PZ_01", 0, "S1_M1_PZ_02_KEY");
 
         PuzzleManager::createPuzzle("S1_M1_PZ_02", TYPE_ITEM_PUZZLE);
-        PuzzleManager::getItemPuzzle("S1_M1_PZ_02")->setPuzzleObjectASCII(0, "src\\GATE1.png");
-        PuzzleManager::getItemPuzzle("S1_M1_PZ_02")->setPuzzleObjectASCII(1, "src\\GATE2.png");
-        PuzzleManager::getItemPuzzle("S1_M1_PZ_02")->setPuzzleObjectASCII(2, "src\\GATE3.png");
-        //PuzzleManager::getItemPuzzle("S1_M1_PZ_02")->setPuzzleDetailASCII(0, "src\\DL.png");
-        //PuzzleManager::getItemPuzzle("S1_M1_PZ_02")->setPuzzleDetailASCII(1, "src\\DL.png");
-        //PuzzleManager::getItemPuzzle("S1_M1_PZ_02")->setPuzzleDetailASCII(2, "src\\DL.png");
-        PuzzleManager::getItemPuzzle("S1_M1_PZ_02")->setPuzzleSceneDialog(0, "S1_M1_PZ2_DL_00_01");
-        PuzzleManager::getItemPuzzle("S1_M1_PZ_02")->setPuzzleSceneDialog(0, "S1_M1_PZ2_DL_00_02");
-        PuzzleManager::getItemPuzzle("S1_M1_PZ_02")->setPuzzleSceneDialog(1, "S1_M1_PZ2_DL_01_01");
-        PuzzleManager::getItemPuzzle("S1_M1_PZ_02")->setPuzzleSceneDialog(1, "S1_M1_PZ2_DL_02_01");
-        PuzzleManager::getItemPuzzle("S1_M1_PZ_02")->setPuzzleConditionItem(0, "S1_M1_PZ_02_KEY");
-       
-
+        PuzzleManager::setPuzzleObjectASCII("S1_M1_PZ_02", 0, "src\\GATE1.png");
+        PuzzleManager::setPuzzleObjectASCII("S1_M1_PZ_02", 1, "src\\GATE2.png");
+        PuzzleManager::setPuzzleObjectASCII("S1_M1_PZ_02", 2, "src\\GATE3.png");
+        PuzzleManager::setPuzzleSceneDialog("S1_M1_PZ_02", TYPE_CL_DL, 0, "S1_M1_PZ2_DL_00_01");
+        PuzzleManager::setPuzzleSceneDialog("S1_M1_PZ_02", TYPE_CL_DL, 0, "S1_M1_PZ2_DL_00_02");
+        PuzzleManager::setPuzzleSceneDialog("S1_M1_PZ_02", TYPE_CL_DL, 1, "S1_M1_PZ2_DL_01_01");
+        PuzzleManager::setPuzzleSceneDialog("S1_M1_PZ_02", TYPE_CL_DL, 2, "S1_M1_PZ2_DL_02_01");
+        PuzzleManager::setPuzzleConditionItem("S1_M1_PZ_02", 0, "S1_M1_PZ_02_KEY");
     };
 
     static void MapInit() {
+        MapManager::createMap("S1_JP_MAP_03", TYPE_JUMP, "src\\S3_J_MAP_01.png", "src\\S3_J_MAP_INFO_01.png");
         MapManager::createMap("S1_PZ_MAP_01", TYPE_PUZZLE, "src\\TEST_MAP_01.png", "src\\TEST_MAP_INFO_01.png");
         MapManager::createMap("S1_JP_MAP_01", TYPE_JUMP, "src\\S1_J_MAP_01.png", "src\\S1_J_MAP_01_STAGE_INFO.png");
+        MapManager::createMap("S1_JP_MAP_TEST", TYPE_JUMP, "src\\TEST_JUMP_MAP_01.png", "src\\TEST_JUMP_MAP_INFO_01.png");
     };
 
     static void StageInit(EventDispatcher *eventDispathcer) {
@@ -81,6 +78,7 @@ private:
             StageManager::addStage(i, eventDispathcer);
         }
 
+        StageManager::addMap(0, MapManager::getMap("S1_JP_MAP_03"));
         StageManager::addMap(0, MapManager::getMap("S1_PZ_MAP_01"));
         StageManager::addMap(0, MapManager::getMap("S1_JP_MAP_01"));
         StageManager::setDoorID(0, "S1_PZ_MAP_01", MAP_EXIT, "S1_JP_MAP_01");
@@ -89,6 +87,8 @@ private:
         StageManager::setPuzzleId(0, "S1_PZ_MAP_01", PUZZLE_OBJ_02, "S1_M1_PZ_02");
         MapManager::setMapASCII("S1_PZ_MAP_01");
         MapManager::setMapASCII("S1_JP_MAP_01");
+        MapManager::setMapASCII("S1_JP_MAP_03");
+        MapManager::setMapASCII("S1_JP_MAP_TEST");
     };
 public:
 	static void init(EventDispatcher* eventDispatcher) {

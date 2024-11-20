@@ -69,24 +69,34 @@ public:
         puzzles[id]->setSolvedThreshold(key);
     }
 
-    static void setPuzzleSceneDialog(string id, int key, string cmd) {
-        puzzles[id]->setPuzzleSceneDialog(key, cmd);
+    static void setPuzzleSceneDialog(string id, int type, int key, string cmd) {
+        puzzles[id]->setPuzzleSceneDialog(type, key, cmd);
         puzzles[id]->setSolvedThreshold(key);
     }
 
-    static void setPuzzleSceneAction(string id, int key, string cmd, ActionType command, int dt) {
-        puzzles[id]->setPuzzleSceneAction(key, cmd, command, dt);
+    static void setPuzzleSceneAction(string id, int type, int key, string cmd, ActionType command, int dt) {
+        puzzles[id]->setPuzzleSceneAction(type, key, cmd, command, dt);
         puzzles[id]->setSolvedThreshold(key);
     }
 
-    static void setPuzzleSceneAction(string id, int key, string cmd, ActionType command, int dt, int repeat) {
-        puzzles[id]->setPuzzleSceneAction(key, cmd, command, dt, repeat);
+    static void setPuzzleSceneAction(string id, int type, int key, string cmd, ActionType command, int dt, int repeat) {
+        puzzles[id]->setPuzzleSceneAction(type, key, cmd, command, dt, repeat);
         puzzles[id]->setSolvedThreshold(key);
     }
 
-    static void setPuzzleSceneDelay(string id, int key, string cmd, int time) {
-        puzzles[id]->setPuzzleSceneDelay(key, cmd, time);
+    static void setPuzzleSceneDelay(string id, int type, int key, string cmd, int time) {
+        puzzles[id]->setPuzzleSceneDelay(type, key, cmd, time);
         puzzles[id]->setSolvedThreshold(key);
+    }
+
+    static void setPuzzleReward(string id, int key, string reward) {
+        puzzles[id]->setPuzzleReward(key, reward);
+    }
+
+    static void setPuzzleConditionItem(string id, int key, string name) {
+        if (puzzles[id]->getType() == TYPE_ITEM_PUZZLE) {
+            ((ItemPuzzle*)puzzles[id])->setPuzzleConditionItem(key, name);
+        }
     }
 };
 

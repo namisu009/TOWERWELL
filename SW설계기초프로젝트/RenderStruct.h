@@ -68,6 +68,11 @@ enum ActionType {
 	ACTION_DASH,
 };
 
+enum PuzzleSceneType {
+	TYPE_NCL_DL,
+	TYPE_CL_DL
+};
+
 const int DIALOG_X = cmdWidth / 2;
 const int DIALOG_Y = cmdHeight;
 

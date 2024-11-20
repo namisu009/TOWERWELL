@@ -103,7 +103,6 @@ void RenderManager::renderObject() {
 
 
 void RenderManager::renderPuzzle() {
-    // 현재 게임 상태에 따라 필요한 객체를 렌더링 큐에 추가
     for (const auto& o : puzzleMap) {
         Puzzle* object = o.second;
         const auto& art = object->getObjectArray(); // ASCII 아트 가져오기
@@ -119,6 +118,7 @@ void RenderManager::renderPuzzle() {
         pos.Y = object_y;
 
         // 객체의 ASCII 아트를 특정 위치에 렌더링
+        /*
         for (int y = 0; y < art->height; y++)
         {
             pos.Y = object_y + y;
@@ -132,6 +132,7 @@ void RenderManager::renderPuzzle() {
 
             }
         }
+        */
     }
 }
 

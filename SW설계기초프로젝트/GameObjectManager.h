@@ -13,9 +13,12 @@ class GameObjectManager
 {
 private:
 	static unordered_map<string, GameObject*> objects;
+	static EventDispatcher* eventDispatcher;
 
 public:
-
+	static void setEventDispatcher(EventDispatcher* dispatcher) {
+		eventDispatcher = dispatcher;
+	}
 	static void createObejct(const char* type, string id, const char* filename) {
 		GameObject* object = NULL;
 		if (type == "Character") {
@@ -32,7 +35,7 @@ public:
 			return;
 		}
 
-		
+		object->setEventDispatcher(eventDispatcher);
 		addGameObject(id, object);
 	}
 	static void addGameObject(string id, GameObject* object) {

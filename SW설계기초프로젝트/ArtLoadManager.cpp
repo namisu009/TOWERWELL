@@ -88,8 +88,8 @@ void ArtLoadManager::RenderArrayLoad(RenderArray* Array, const char* fileName) {
             CvScalar f1 = cvGet2D(img, y, x);
             Array->ASCIIArtArr[y][x] = ' ';
 
-            if (f1.val[0] == 0 && f1.val[1] == 0) Array->ASCIIArtArr[y][x] = '*';
-            else if (f1.val[0] == 50)  Array->ASCIIArtArr[y][x] = 'w';
+            if (f1.val[0] == 0) Array->ASCIIArtArr[y][x] = '@';
+            else if (f1.val[0] == 50)  Array->ASCIIArtArr[y][x] = '#';//w
             else if (f1.val[0] == 100) Array->ASCIIArtArr[y][x] = '=';
             else if (f1.val[0] == 111) Array->ASCIIArtArr[y][x] = '|';
             else if (f1.val[0] == 150) Array->ASCIIArtArr[y][x] = '-';
@@ -130,7 +130,7 @@ void ArtLoadManager::ScreenArrayLoad(int type, Map* map, const char* fileName) {
 
             if (f1.val[2] == 0 && f1.val[1] == 0 && f1.val[0] == 0)
                 Array->MapInfo[y][x] = MAP_FLOOR;
-            else if (f1.val[2] == 255 && f1.val[1] == 0 && f1.val[0] == 255)
+            else if (f1.val[2] >= 250 && f1.val[1] == 0 && f1.val[0] >= 250)
                 Array->MapInfo[y][x] = MAP_WALL;
             else if (f1.val[2] == 0 && f1.val[1] == 255 && f1.val[0] == 0)
                 Array->MapInfo[y][x] = MAP_BACKGROUND;

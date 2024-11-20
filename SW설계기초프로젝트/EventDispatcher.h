@@ -13,6 +13,7 @@ enum EventType {
     STAGE_COMPLETED,
     MOVE_MAP,
     CHANGE_MAP_HANDLE,
+    RENDER,
 };
 
 class EventDispatcher {

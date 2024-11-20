@@ -12,7 +12,8 @@ class Puzzle : public GameObject {
 private:
     RenderArray* puzzleObjectArray[3];
     RenderArray* puzzleDetailArray[3];
-    Scene* puzzleSceneArray[3];
+    Scene* puzzleCLSceneArray[3];
+    Scene* puzzleNCLSceneArray[3]; //클리어 전 씬
     string puzzleRewardArray[3];
 
     int objectArrayIdx;
@@ -51,10 +52,10 @@ public:
     // 퍼즐 관련 데이터 설정
     void setPuzzleObjectASCII(int key, const char* filename);
     void setPuzzleDetailASCII(int key, const char* filename);
-    void setPuzzleSceneDialog(int key, string cmd);
-    void setPuzzleSceneAction(int key, string cmd, ActionType command, int dt);
-    void setPuzzleSceneAction(int key, string cmd, ActionType command, int dt, int repeat);
-    void setPuzzleSceneDelay(int key, string cmd, int time);
+    void setPuzzleSceneDialog(int type, int key, string cmd);
+    void setPuzzleSceneAction(int type, int key, string cmd, ActionType command, int dt);
+    void setPuzzleSceneAction(int type, int key, string cmd, ActionType command, int dt, int repeat);
+    void setPuzzleSceneDelay(int type, int key, string cmd, int time);
 
     // 조건 확인 및 해결
     virtual bool isSatisfyCondition() { return false; }; // 조건 만족 여부 확인

@@ -84,7 +84,7 @@ public:
         DWORD dw;
         COORD CursorPosition = { x, y };
         SetConsoleCursorPosition(g_hScreen[g_nScreenIndex], CursorPosition);
-        WriteConsoleOutputCharacterA(g_hScreen[g_nScreenIndex], string, strlen(string), CursorPosition, &dw);
+        WriteConsoleOutputCharacterA(g_hScreen[g_nScreenIndex], string, strlen(string), CursorPosition, &dw); //<<ÀÌ³à¼®
     }
 
     static void drawText(const std::wstring& text, int x, int y, COLORREF color = RGB(150, 150, 150), int fontSize = 90, const std::wstring& fontName = L"¸¼Àº °íµñ") {
