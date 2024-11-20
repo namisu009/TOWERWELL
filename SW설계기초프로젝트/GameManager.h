@@ -59,6 +59,8 @@ class GameManager
     int threadTime = 32;
     int renderTime = 32;
 
+    float sisterSpeed = 2.5f;
+
     unordered_map<pair<int, int>, playerAction, pair_hash> actionPositions;
     Map* currentMap;
 
@@ -127,7 +129,7 @@ public:
 
         newScene.setAction("Hero", ACTION_MOVE_X, 10, 10);
 
-        //newScene.display();
+        newScene.display();
     }
 
     void changeMapHandle() {
@@ -239,10 +241,10 @@ public:
         if (!sisterCharacter->getisJumping())
         {
             if (sisterCharacter->getFootX() < targetLeft) {
-                sisterCharacter->setDx(4);  // 플레이어 왼쪽에 있을 때 오른쪽으로 이동
+                sisterCharacter->setDx(sisterSpeed);  // 플레이어 왼쪽에 있을 때 오른쪽으로 이동
             }
             else if (sisterCharacter->getFootX() > targetRight) {
-                sisterCharacter->setDx(-4); // 플레이어 오른쪽에 있을 때 왼쪽으로 이동
+                sisterCharacter->setDx(-sisterSpeed); // 플레이어 오른쪽에 있을 때 왼쪽으로 이동
             }
             else {
                 sisterCharacter->setDx(0);  // 범위 내에 있을 때 멈춤

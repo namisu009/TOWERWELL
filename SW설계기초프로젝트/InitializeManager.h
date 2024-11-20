@@ -31,10 +31,13 @@ private:
         GameObjectManager::createObejct("Dialog", "PZ_NCL_DL", "히로: 문이 열리지 않아...");
 
         
+        GameObjectManager::createObejct("Dialog", "S1_M1_PZ2_DL_00_00", "히로: 문이 열리지 않아... 열쇠가 필요할 거 같아.");
         GameObjectManager::createObejct("Dialog", "S1_M1_PZ2_DL_00_01", "열쇠를 사용한다.");
         GameObjectManager::createObejct("Dialog", "S1_M1_PZ2_DL_00_02", "문이 열리면서 균열이 생겼다.");
         GameObjectManager::createObejct("Dialog", "S1_M1_PZ2_DL_01_01", "문 틈 사이로 물줄기가 나왔다.");
         GameObjectManager::createObejct("Dialog", "S1_M1_PZ2_DL_02_01", "문 틈 사이로 물줄기가 나온다.");
+
+
 
     };
 
@@ -59,6 +62,7 @@ private:
         PuzzleManager::setPuzzleObjectASCII("S1_M1_PZ_02", 0, "src\\GATE1.png");
         PuzzleManager::setPuzzleObjectASCII("S1_M1_PZ_02", 1, "src\\GATE2.png");
         PuzzleManager::setPuzzleObjectASCII("S1_M1_PZ_02", 2, "src\\GATE3.png");
+        PuzzleManager::setPuzzleSceneDialog("S1_M1_PZ_02", TYPE_NCL_DL, 0, "S1_M1_PZ2_DL_00_00");
         PuzzleManager::setPuzzleSceneDialog("S1_M1_PZ_02", TYPE_CL_DL, 0, "S1_M1_PZ2_DL_00_01");
         PuzzleManager::setPuzzleSceneDialog("S1_M1_PZ_02", TYPE_CL_DL, 0, "S1_M1_PZ2_DL_00_02");
         PuzzleManager::setPuzzleSceneDialog("S1_M1_PZ_02", TYPE_CL_DL, 1, "S1_M1_PZ2_DL_01_01");
@@ -77,9 +81,8 @@ private:
         for (int i = 0; i < 4; i++) {
             StageManager::addStage(i, eventDispathcer);
         }
-
-        StageManager::addMap(0, MapManager::getMap("S1_JP_MAP_03"));
         StageManager::addMap(0, MapManager::getMap("S1_PZ_MAP_01"));
+        StageManager::addMap(0, MapManager::getMap("S1_JP_MAP_03"));
         StageManager::addMap(0, MapManager::getMap("S1_JP_MAP_01"));
         StageManager::setDoorID(0, "S1_PZ_MAP_01", MAP_EXIT, "S1_JP_MAP_01");
         StageManager::setDoorID(0, "S1_JP_MAP_01", MAP_EXIT, "S1_PZ_MAP_01");

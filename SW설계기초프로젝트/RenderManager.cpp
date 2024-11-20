@@ -94,8 +94,11 @@ void RenderManager::renderObject() {
                 pos.X = object_x + x;
                 char buf[2] = { art->ASCIIArtArr[y][x], '\0' };
 
-                if (art->drawornotArr[y][x] == 1)
+                if (art->drawornotArr[y][x] == 1){
+                    COORD CursorPosition;
+                    //SetConsoleCursorPosition(DoubleBufferManager::getHandle(), CursorPosition);
                     DoubleBufferManager::ScreenprintAtPosition(pos.X, pos.Y, buf); //현재 화면이 캐릭터가 그려질 곳이 아니라면 맵 그리기
+                }
             }
         }
     }
@@ -118,7 +121,7 @@ void RenderManager::renderPuzzle() {
         pos.Y = object_y;
 
         // 객체의 ASCII 아트를 특정 위치에 렌더링
-        /*
+
         for (int y = 0; y < art->height; y++)
         {
             pos.Y = object_y + y;
@@ -132,7 +135,7 @@ void RenderManager::renderPuzzle() {
 
             }
         }
-        */
+
     }
 }
 

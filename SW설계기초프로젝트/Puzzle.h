@@ -18,7 +18,8 @@ private:
 
     int objectArrayIdx;
     int detailArrayIdx;
-    int sceneArrayIdx;
+    int cl_sceneArrayIdx;
+    int ncl_sceneArrayIdx;
     int rewardArrayIdx;
 
     int solvedPuzzleCount;    // 현재까지 해결된 퍼즐 단계 수
@@ -42,6 +43,8 @@ public:
     // 퍼즐 진행 메서드
     bool progressPuzzle();        // 중간 해결 진행
     bool solvePuzzle();           // 최종 해결
+    void PuzzleNCLSceneDisplay(); //해결 못했을 때 보여줘야할 씬
+
 
     // 퍼즐 디테일 및 보상 관리
     void showPuzzleDetail();

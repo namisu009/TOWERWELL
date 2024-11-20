@@ -84,6 +84,9 @@ public:
                     puzzle->progressPuzzle(); // 중간 해결 진행
                     obj->addInventory(puzzle->getPuzzleReward());
                 }
+                else {
+                    puzzle->PuzzleNCLSceneDisplay();
+                }
             }
 
             if (stg->getDoorId(init_x, init_y) != "") {
