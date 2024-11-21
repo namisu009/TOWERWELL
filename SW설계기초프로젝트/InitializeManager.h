@@ -12,17 +12,18 @@ class InitializeManager
 private:
     static void ObjectInit() {
         // 캐릭터 생성 및 초기화
-        GameObjectManager::createObejct("Character", "Hero", "src\\hero_idle_01.png");
-        GameObjectManager::getCharacter("Hero");
-        GameObjectManager::getCharacter("Hero")->setAnimation("IDLE", 1, "src\\hero_idle_02.png");
+        GameObjectManager::createObejct("Character", "Hero", "src\\hero_idle_right_01.png");
+        GameObjectManager::getCharacter("Hero")->setAnimation("IDLE_RIGHT", 1, "src\\hero_idle_right_02.png");
+        GameObjectManager::getCharacter("Hero")->setAnimation("IDLE_LEFT", "src\\hero_idle_left_01.png", "src\\hero_idle_left_02.png");
         GameObjectManager::getCharacter("Hero")->setAnimation("RIGHT", "src\\hero_right_01.png", "src\\hero_right_02.png");
         GameObjectManager::getCharacter("Hero")->setAnimation("LEFT", "src\\hero_left_01.png", "src\\hero_left_02.png");
 
+        /*
         GameObjectManager::createObejct("Character", "Sister", "src\\sister_idle_01.png");
         GameObjectManager::getCharacter("Sister")->setAnimation("IDLE", 1, "src\\sister_idle_02.png");
         GameObjectManager::getCharacter("Sister")->setAnimation("RIGHT", "src\\sister_right_01.png", "src\\sister_right_02.png");
         GameObjectManager::getCharacter("Sister")->setAnimation("LEFT", "src\\sister_left_01.png", "src\\sister_left_02.png");
-
+        */
 
         //Dialoginit
         GameObjectManager::createObejct("Dialog", "SC1_DL_01", "src\\dialog1.png");
@@ -35,7 +36,7 @@ private:
         GameObjectManager::createObejct("Dialog", "S1_M1_PZ2_DL_00_01", "열쇠를 사용한다.");
         GameObjectManager::createObejct("Dialog", "S1_M1_PZ2_DL_00_02", "문이 열리면서 균열이 생겼다.");
         GameObjectManager::createObejct("Dialog", "S1_M1_PZ2_DL_01_01", "문 틈 사이로 물줄기가 나왔다.");
-        GameObjectManager::createObejct("Dialog", "S1_M1_PZ2_DL_02_01", "문 틈 사이로 물줄기가 나온다.");
+        GameObjectManager::createObejct("Dialog", "S1_M1_PZ2_DL_02_01", "문 틈 사이로 물줄기가 나온다. 화분을 가져다 놓으면 좋을 거 같다.");
 
 
 

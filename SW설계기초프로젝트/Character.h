@@ -27,8 +27,8 @@ public:
 
 	void initializeFromASCII(const char* filename)
 	{
-		setAnimation("IDLE", filename, filename);
-		setRenderArray(animationManager->getRenderArray("IDLE"));
+		setAnimation("IDLE_RIGHT", filename, filename);
+		setRenderArray(animationManager->getRenderArray("IDLE_RIGHT"));
 		setWidth(getRenderArray()->width);
 		setHeight(getRenderArray()->height);
 	}

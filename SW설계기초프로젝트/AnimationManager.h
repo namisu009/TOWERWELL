@@ -40,24 +40,52 @@ public:
 		animationToggle = t;
 	}
 
-	RenderArray* getRenderArray(string _id) {
-
-		if(_id != "IDLE")
+	RenderArray* getIdle() {
+		if (id == "IDEL_RIGHT" || id == "IDEL_LEFT")
 			animationCounter++;
 		else
+			return Animations[id][animationToggle];
+
+		if (animationCounter >= 8)
 		{
-			if (id == "RIGHT") {
-				animationToggle = 0;
-			}
-			else if (id == "LEFT") {
+			if (animationToggle == 0)
 				animationToggle = 1;
-			}
+			else
+				animationToggle = 0;
 			animationCounter = 0;
 		}
 
-		id = _id;
+		return Animations[id][animationToggle];
+	}
 
-		if (animationCounter >= 8)
+	RenderArray* getRenderArray(string _id) {
+
+		if(_id == "IDLE"){ //IDLE_RIGHT
+			if (id == "RIGHT") {
+				_id = "IDLE_RIGHT";
+				//animationCounter = 0;
+			}
+			else if (id == "LEFT" ) {
+				_id = "IDLE_LEFT";
+				//animationCounter = 0;
+			}
+			else if (id == "IDLE_RIGHT") {
+				_id = "IDLE_RIGHT";
+			}
+			else if (id == "IDLE_LEFT") {
+				_id = "IDLE_LEFT";
+			}
+		}
+		
+		if (id != _id)
+		{
+			id = _id;
+			//animationCounter = 0;
+		}
+
+		animationCounter++;
+
+		if (animationCounter >= 16)
 		{
 			if (animationToggle == 0)
 				animationToggle = 1;

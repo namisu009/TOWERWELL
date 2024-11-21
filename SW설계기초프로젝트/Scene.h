@@ -1,136 +1,144 @@
-#pragma once
-#ifndef _SCENE_H_
-#define _SCENE_H_
+	#pragma once
+	#ifndef _SCENE_H_
+	#define _SCENE_H_
 
-#include <queue>
-#include "Command.h"
-#include "GameObjectManager.h"
-#include "RenderManager.h"
+	#include <queue>
+	#include "Command.h"
+	#include "GameObjectManager.h"
+	#include "RenderManager.h"
 
-#include <thread>
+	#include <thread>
 
-class Puzzle; // 전방 선언
+	class Puzzle; // 전방 선언
 
-using namespace std;
-class Scene
-{
-	bool sceneLoop;
-	queue<Command> commands;
-public:
-	Scene() {
-		sceneLoop = true;
-	}
-
-	void setSceneLoop(bool _b) {
-		sceneLoop = _b;
-	}
-
-	int getCmdSize() {
-		return commands.size();
-	}
-
-	void setDialog(string key) {
-		Command cmd;
-		cmd.setObject(GameObjectManager::getDialog(key));
-		commands.push(cmd);
-	}
-
-	void setAction(string key, ActionType command, int dt, int repeat) { //setDx, setDy, dx, dy
-		for(int i = 0; i < repeat; i++)
-			setAction(key, command, dt);
-	}
-
-	void setAction(string key, ActionType command, int dt) { //setDx, setDy, dx, dy
-		Command cmd;
-		cmd.setObject(GameObjectManager::getCharacter(key));
-		if (command == ACTION_MOVE_X)
-			cmd.setAction([cmd, dt]() mutable {cmd.getObject()->setDx(dt); });
-		else if (command == ACTION_MOVE_Y)
-			cmd.setAction([cmd, dt]() mutable {cmd.getObject()->setDy(dt); });
-		else
-			return;
-
-		commands.push(cmd);
-
-		cmd.setAction([cmd, dt]() mutable {cmd.getObject()->move(); });
-		commands.push(cmd);
-	}
-
-	void setAction(string key1, string key2, ActionType command, int dt) { //setDx, setDy, dx, dy
-		Command cmd1, cmd2;
-		cmd1.setObject(GameObjectManager::getCharacter(key1));
-		cmd2.setObject(GameObjectManager::getCharacter(key2));
-		if (command == ACTION_MOVE_X)
-		{
-			cmd1.setAction([cmd1, dt]() mutable {cmd1.getObject()->setDx(dt); });
-			cmd2.setAction([cmd2, dt]() mutable {cmd2.getObject()->setDx(dt); });
+	using namespace std;
+	class Scene
+	{
+		bool sceneLoop;
+		queue<Command> commands;
+	public:
+		Scene() {
+			sceneLoop = true;
 		}
-		else if (command == ACTION_MOVE_Y){
-			cmd1.setAction([cmd1, dt]() mutable {cmd1.getObject()->setDy(dt); });
-			cmd2.setAction([cmd2, dt]() mutable {cmd2.getObject()->setDy(dt); });
+
+		void setSceneLoop(bool _b) {
+			sceneLoop = _b;
 		}
-		else
-			return;
 
-		commands.push(cmd1);
-		commands.push(cmd2);
+		int getCmdSize() {
+			return commands.size();
+		}
 
-		cmd1.setAction([cmd1, dt]() mutable {cmd1.getObject()->move(); });
-		cmd2.setAction([cmd2, dt]() mutable {cmd2.getObject()->move(); });
+		void setDialog(string key) {
+			Command cmd;
+			cmd.setObject(GameObjectManager::getDialog(key));
+			commands.push(cmd);
+		}
 
-		commands.push(cmd1);
-		commands.push(cmd2);
-	}
+		void setAction(string key, ActionType command, int dt, int repeat) { //setDx, setDy, dx, dy
+			for(int i = 0; i < repeat; i++)
+				setAction(key, command, dt);
+		}
 
-	void setAction(string key1, string key2, ActionType command, int dt, int repeat) { //setDx, setDy, dx, dy
-		for (int i = 0; i < repeat; i++)
-			setAction(key1, key2, command, dt);
-	}
+		void setAction(string key, ActionType command, int dt) { //setDx, setDy, dx, dy
+			Command cmd;
+			cmd.setObject(GameObjectManager::getCharacter(key));
+			if (command == ACTION_MOVE_X)
+				cmd.setAction([cmd, dt]() mutable {cmd.getObject()->setDx(dt); });
+			else if (command == ACTION_MOVE_Y)
+				cmd.setAction([cmd, dt]() mutable {cmd.getObject()->setDy(dt); });
+			else
+				return;
 
-
-	void setDelay(string key, int time) {
-		Command cmd;
-		cmd.setObject(GameObjectManager::getCharacter(key));
-		cmd.setAction([cmd, time]() mutable { Sleep(time); });
-		commands.push(cmd);
-	}
-
-	Command popCommand() {
-		Command cmd = commands.front();
-		commands.pop();
-
-		if (sceneLoop)
 			commands.push(cmd);
 
-		return cmd;
-	}
-
-	void clearInputBuffer() {
-		while (_kbhit()) { // 입력 버퍼에 남아있는 키가 있으면
-			_getch(); // 해당 키를 소비하고 버림
+			cmd.setAction([cmd, dt]() mutable {cmd.getObject()->move(); });
+			commands.push(cmd);
 		}
-	}
 
-	void display() {
-
-		int size = commands.size();
-		while (size) {
-			Command cmd = popCommand();
-			
-			if (cmd.getType() == TYPE_CHARACTER) {
-				cmd.getAction()();
-				Sleep(10);
+		void setAction(string key1, string key2, ActionType command, int dt) { //setDx, setDy, dx, dy
+			Command cmd1, cmd2;
+			cmd1.setObject(GameObjectManager::getCharacter(key1));
+			cmd2.setObject(GameObjectManager::getCharacter(key2));
+			if (command == ACTION_MOVE_X)
+			{
+				cmd1.setAction([cmd1, dt]() mutable {cmd1.getObject()->setDx(dt); });
+				cmd2.setAction([cmd2, dt]() mutable {cmd2.getObject()->setDx(dt); });
 			}
-			else if (cmd.getType() == TYPE_DIALOG) {
-				RenderManager::setRenderDialog((Dialog*)cmd.getObject());
-				clearInputBuffer();
+			else if (command == ACTION_MOVE_Y){
+				cmd1.setAction([cmd1, dt]() mutable {cmd1.getObject()->setDy(dt); });
+				cmd2.setAction([cmd2, dt]() mutable {cmd2.getObject()->setDy(dt); });
 			}
+			else
+				return;
 
-			RenderManager::render();
-			size--;
+			commands.push(cmd1);
+			commands.push(cmd2);
+
+			cmd1.setAction([cmd1, dt]() mutable {cmd1.getObject()->move(); });
+			cmd2.setAction([cmd2, dt]() mutable {cmd2.getObject()->move(); });
+
+			commands.push(cmd1);
+			commands.push(cmd2);
 		}
-	}
-};
 
-#endif
+		void setAction(string key1, string key2, ActionType command, int dt, int repeat) { //setDx, setDy, dx, dy
+			for (int i = 0; i < repeat; i++)
+				setAction(key1, key2, command, dt);
+		}
+
+
+		void setDelay(string key, int time) {
+			Command cmd;
+			cmd.setObject(GameObjectManager::getCharacter(key));
+			cmd.setAction([cmd, time]() mutable { Sleep(time); });
+			commands.push(cmd);
+		}
+
+		Command popCommand() {
+			Command cmd = commands.front();
+			commands.pop();
+
+			if (sceneLoop)
+				commands.push(cmd);
+
+			return cmd;
+		}
+
+		void clearInputBuffer() {
+			while (_kbhit()) { // 입력 버퍼에 남아있는 키가 있으면
+				_getch(); // 해당 키를 소비하고 버림
+			}
+		}
+
+		void display() {
+			auto lastTime = chrono::high_resolution_clock::now();
+
+			int size = commands.size();
+			while (size) {
+				Command cmd = popCommand();
+
+				auto now = chrono::high_resolution_clock::now();
+				auto duration = chrono::duration_cast<chrono::milliseconds>(now - lastTime);
+
+				if (duration.count() >= 32) { // 32ms 간격으로 실행
+					if (cmd.getType() == TYPE_CHARACTER) {
+						cmd.getAction()();
+						size--;
+					}
+					else if (cmd.getType() == TYPE_DIALOG) {
+						RenderManager::setRenderDialog((Dialog*)cmd.getObject());
+						clearInputBuffer();
+						size--;
+					}
+
+					RenderManager::render();
+					lastTime = now;
+				}
+			}
+		}
+
+	};
+
+	#endif
 

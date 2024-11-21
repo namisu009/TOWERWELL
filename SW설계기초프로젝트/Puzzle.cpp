@@ -47,7 +47,7 @@ bool Puzzle::isPuzzleSolved() {
         isSolved = true;
         eventDispatcher->dispatch(PUZZLE_SOLVED); // 최종 해결 이벤트
     }
-    else {
+    else if (isSolved) {
         if (puzzleCLSceneArray[currentStep] != nullptr)
             puzzleCLSceneArray[cl_sceneArrayIdx]->display();
     }
@@ -86,8 +86,8 @@ bool Puzzle::progressPuzzle() {
 }
 
 void Puzzle::PuzzleNCLSceneDisplay() {
-     if(puzzleNCLSceneArray[ncl_sceneArrayIdx] != nullptr)
-    puzzleNCLSceneArray[ncl_sceneArrayIdx]->display();
+    if(puzzleNCLSceneArray[ncl_sceneArrayIdx] != nullptr)
+        puzzleNCLSceneArray[ncl_sceneArrayIdx]->display();
 }
 
 bool Puzzle::solvePuzzle() {

@@ -51,7 +51,7 @@ class GameManager
     HandlerManager handlerManager;
 
     Character* playerCharacter;
-    Character* sisterCharacter;
+    //Character* sisterCharacter;
 
     StageManager stageManager;
 
@@ -69,7 +69,7 @@ class GameManager
     mutex mtx;
 
 public:
-    GameManager() : isRunning(true), playerCharacter(nullptr), sisterCharacter(nullptr), currentMap(nullptr) {
+    GameManager() : isRunning(true), playerCharacter(nullptr),  currentMap(nullptr) {//sisterCharacter(nullptr),
         HandlerManager::setEventDispatcher(&eventDispatcher);
         RenderManager::setEventDispatcher(&eventDispatcher);
 
@@ -85,22 +85,22 @@ public:
         InitializeManager::init(&eventDispatcher);
 
         playerCharacter = GameObjectManager::getCharacter("Hero");
-        sisterCharacter = GameObjectManager::getCharacter("Sister");
+        //sisterCharacter = GameObjectManager::getCharacter("Sister");
         currentMap = StageManager::getCurrentStage()->getCurrentMap();
         setMap(currentMap);
         playerCharacter->SetStartPosition(currentMap->getInitX(), currentMap->getInitY());
-        sisterCharacter->SetStartPosition(currentMap->getInitX() - offset, currentMap->getInitY());
+        //sisterCharacter->SetStartPosition(currentMap->getInitX() - offset, currentMap->getInitY());
         RenderManager::ScreenInit();
 
         RenderManager::setRenderMap(currentMap);
         RenderManager::addObject(playerCharacter);
-        RenderManager::addObject(sisterCharacter);
+        //RenderManager::addObject(sisterCharacter);
 
         RenderManager::render();
 
         //테스트씬
         Scene newScene;
-
+        /*
         newScene.setAction("Sister", ACTION_MOVE_X, 6, 10);
 
 
@@ -116,7 +116,7 @@ public:
         newScene.setAction("Sister", ACTION_MOVE_X, 6, 10);
         newScene.setAction("Sister", ACTION_MOVE_X, -1);
         newScene.setAction("Sister", ACTION_MOVE_X, 0);
-        newScene.setDelay("Sister", 500);
+        newScene.setDelay("Sister", 300);
         newScene.setAction("Sister", ACTION_MOVE_Y, -3);
         newScene.setAction("Sister", ACTION_MOVE_Y, 3);
         newScene.setAction("Sister", ACTION_MOVE_Y, -3);
@@ -128,8 +128,8 @@ public:
         newScene.setDialog("SC1_DL_02");
 
         newScene.setAction("Hero", ACTION_MOVE_X, 10, 10);
-
-        newScene.display();
+        */
+        //newScene.display();
     }
 
     void changeMapHandle() {
@@ -149,13 +149,13 @@ public:
         changeMapHandle();
 
         playerCharacter->SetStartPosition(currentMap->getInitX(), currentMap->getInitY());
-        sisterCharacter->SetStartPosition(currentMap->getInitX() - 18, currentMap->getInitY());
+        //sisterCharacter->SetStartPosition(currentMap->getInitX() - 18, currentMap->getInitY());
 
         RenderManager::setRenderMap(currentMap);
         RenderManager::render();
     }
 
-    // 물리 연산 루프
+    // 물리 연산 루프5
     void physicsLoop() {
 
 
@@ -165,6 +165,9 @@ public:
         while (isRunning) {
             mtx.lock();
             int flag = 0;
+
+            playerCharacter->setDx(0);
+
 
             if (GetAsyncKeyState(VK_RIGHT) & 0x8000) {
                 HandlerManager::processInput(VK_RIGHT);
@@ -205,9 +208,8 @@ public:
 
             playerCharacter->dashState();
 
-            if (!flag) {
-                playerCharacter->setDx(0);
-            }
+            
+            
 
             // 충돌 처리 및 물리 연산
             while (CollisionManager::checkWallCollision(*playerCharacter, *currentMap)) {
@@ -224,13 +226,13 @@ public:
             }
 
             playerCharacter->move();
-            updateSisterPosition();
+            //updateSisterPosition();
 
             mtx.unlock();
             this_thread::sleep_for(chrono::milliseconds(threadTime));
         }
     }
-
+    /*
     // 여동생이 플레이어 캐릭터를 따라가도록 위치 업데이트
     void updateSisterPosition() {
         // 예제: 여동생이 플레이어를 일정 거리 뒤따라 이동하게 함
@@ -294,6 +296,7 @@ public:
             }
         }
     }
+    */
     // 충돌 발생 시 위치 조정 함수
     void adjustPositionForCollision(Character* character) {
         if (character->getDx() < 0)

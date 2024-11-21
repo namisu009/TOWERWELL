@@ -85,11 +85,14 @@ void RenderManager::renderObject() {
         pos.X = object_x;
         pos.Y = object_y;
 
+        int artHeight = art->height;
+        int artWidth = art->height;
+
         // 객체의 ASCII 아트를 특정 위치에 렌더링
-        for (int y = 0; y < art->height; y++)
+        for (int y = 0; y < artHeight; y++)
         {
             pos.Y = object_y + y;
-            for (int x = 0; x < art->width; x++)
+            for (int x = 0; x < artWidth; x++)
             {
                 pos.X = object_x + x;
                 char buf[2] = { art->ASCIIArtArr[y][x], '\0' };
@@ -132,7 +135,6 @@ void RenderManager::renderPuzzle() {
 
                 if (art->drawornotArr[y][x] == 1)
                     DoubleBufferManager::ScreenprintAtPosition(pos.X, pos.Y, buf); //현재 화면이 캐릭터가 그려질 곳이 아니라면 맵 그리기
-
             }
         }
 
@@ -208,7 +210,7 @@ void RenderManager::renderDialog() {
 }
 
 void RenderManager::render() {
-    renderClear();
+    //renderClear();
     renderMap();
 
     if (currentMap->getType() == TYPE_PUZZLE)
