@@ -164,6 +164,13 @@ public:
         int flag = 1;
         string userInput;
 
+        const auto& art = GameObjectManager::getDialog("NUMBER_WINDOW")->getRenderArray(); // ASCII 아트 가져오기
+        DoubleBufferManager::ScreenFlipping();
+
+        COORD pos = { 0, 0 };
+        pos.X = GameObjectManager::getDialog("NUMBER_WINDOW")->getX();
+        pos.Y = GameObjectManager::getDialog("NUMBER_WINDOW")->getY();
+
         // 숫자 키 입력 핸들링
         bindInput(VK_RETURN, [&]() {
             if (!userInput.empty()) {
@@ -187,38 +194,31 @@ public:
             }
             });
 
-        bindInput(VK_BACK, [&]() {
-            if (!userInput.empty()) {
-                userInput.pop_back(); // 입력 문자열에서 마지막 문자 삭제
-            }
-        });
-
         bindInput(VK_ESCAPE, [&]() {
             RenderManager::setRenderDialog(nullptr);
             RenderManager::ClearRenderPuzzleDetail();
             flag = 0; // 핸들링 종료
         });
 
+        bindInput(VK_BACK, [&]() {
+            if (!userInput.empty()) {
+                userInput.pop_back(); // 마지막 문자 삭제
+                RenderManager::renderInputText(userInput, cmdWidth + GameObjectManager::getDialog("NUMBER_WINDOW")->getX(), 1085);    // 화면 갱신
+            }
+            });
 
         // 숫자 키 입력 바인딩
         for (int key = '0'; key <= '9'; ++key) {
             bindInput(key, [&, key]() {
                 userInput += static_cast<char>(key);
-            });
+                RenderManager::renderInputText(userInput, cmdWidth + GameObjectManager::getDialog("NUMBER_WINDOW")->getX(), 1085); // 화면 갱신
+                });
         }
-
-        // 핸들링 루프
-        // 
-        const auto& art = GameObjectManager::getDialog("NUMBER_WINDOW")->getRenderArray(); // ASCII 아트 가져오기
-        DoubleBufferManager::ScreenFlipping();
-
-        COORD pos = { 0, 0 };
-        pos.X = GameObjectManager::getDialog("NUMBER_WINDOW")->getX();
-        pos.Y = GameObjectManager::getDialog("NUMBER_WINDOW")->getY();
 
         // 객체의 ASCII 아트를 특정 위치에 렌더링
         for (int y = 0; y < art->height; y++)
         {
+           
             pos.Y = GameObjectManager::getDialog("NUMBER_WINDOW")->getY() + y;
             DoubleBufferManager::ScreenPrint(GameObjectManager::getDialog("NUMBER_WINDOW")->getX(), pos.Y, art->ASCIIArtArr[y]);
         }

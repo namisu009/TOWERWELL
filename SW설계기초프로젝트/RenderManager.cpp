@@ -206,6 +206,15 @@ void RenderManager::renderDialog() {
 
 }
 
+void RenderManager::renderInputText(string& input, int x, int y) {
+    DoubleBufferManager::drawText(
+        stringToWstring(input), // 입력 문자열을 렌더링
+        x, y,                  // 시작 좌표
+        RGB(200, 200, 200),    // 텍스트 색상
+        60                     // 텍스트 크기
+    );
+}
+
 void RenderManager::render() {
     renderClear();
     renderMap();
