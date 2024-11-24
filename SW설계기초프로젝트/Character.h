@@ -96,12 +96,12 @@ public:
 
     }
 
-    void jump() {
-        if (!isJumping) { // 점프 중이지 않으면 점프 시작
-            setDy(jumpStrength); // 위로 이동하는 속도 설정
-            isJumping = true; // 점프 상태 설정
-        }
-    }
+	void jump() {
+		if (!isJumping) { // 점프 중이지 않으면 점프 시작
+			setDy(jumpStrength); // 위로 이동하는 속도 설정
+			isJumping = true; // 점프 상태 설정
+		}
+	}
 
     void dash() {
         if (!isDash) { // 점프 중이지 않으면 점프 시작

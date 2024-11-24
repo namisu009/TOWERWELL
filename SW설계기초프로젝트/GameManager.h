@@ -51,7 +51,7 @@ class GameManager
     HandlerManager handlerManager;
 
     Character* playerCharacter;
-    //Character* sisterCharacter;
+    Character* sisterCharacter;
 
     StageManager stageManager;
 
@@ -85,22 +85,22 @@ public:
         InitializeManager::init(&eventDispatcher);
 
         playerCharacter = GameObjectManager::getCharacter("Hero");
-        //sisterCharacter = GameObjectManager::getCharacter("Sister");
+        sisterCharacter = GameObjectManager::getCharacter("Sister");
         currentMap = StageManager::getCurrentStage()->getCurrentMap();
         setMap(currentMap);
         playerCharacter->SetStartPosition(currentMap->getInitX(), currentMap->getInitY());
-        //sisterCharacter->SetStartPosition(currentMap->getInitX() - offset, currentMap->getInitY());
+        sisterCharacter->SetStartPosition(currentMap->getInitX() - offset, currentMap->getInitY());
         RenderManager::ScreenInit();
 
         RenderManager::setRenderMap(currentMap);
         RenderManager::addObject(playerCharacter);
-        //RenderManager::addObject(sisterCharacter);
+        RenderManager::addObject(sisterCharacter);
 
         RenderManager::render();
 
         //테스트씬
         Scene newScene;
-        /*
+
         newScene.setAction("Sister", ACTION_MOVE_X, 6, 10);
 
 
@@ -128,7 +128,7 @@ public:
         newScene.setDialog("SC1_DL_02");
 
         newScene.setAction("Hero", ACTION_MOVE_X, 10, 10);
-        */
+
         //newScene.display();
     }
 
@@ -226,13 +226,13 @@ public:
             }
 
             playerCharacter->move();
-            //updateSisterPosition();
+            updateSisterPosition();
 
             mtx.unlock();
             this_thread::sleep_for(chrono::milliseconds(threadTime));
         }
     }
-    /*
+
     // 여동생이 플레이어 캐릭터를 따라가도록 위치 업데이트
     void updateSisterPosition() {
         // 예제: 여동생이 플레이어를 일정 거리 뒤따라 이동하게 함
@@ -296,7 +296,7 @@ public:
             }
         }
     }
-    */
+
     // 충돌 발생 시 위치 조정 함수
     void adjustPositionForCollision(Character* character) {
         if (character->getDx() < 0)
