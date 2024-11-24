@@ -94,7 +94,7 @@ public:
     }
 
     void onPuzzleSolved() {
-        string mapKey = "S" + to_string(stageId + 1) + "_PZ_MAP_01";
+        string mapKey = "S" + to_string(stageId + 1) + "_P_MAP_01";
         PuzzleMap* pz = (PuzzleMap*) maps[mapKey];
         pz->solvePuzzle();
 

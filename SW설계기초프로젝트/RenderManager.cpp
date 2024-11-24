@@ -195,11 +195,10 @@ void RenderManager::renderDialog() {
                     break;
                 }
             }
-            DoubleBufferManager::drawText(stringToWstring(renderLog->getText()), cmdWidth + renderLog_x, 1085, RGB(200, 200, 200), 60);
+             DoubleBufferManager::drawText(stringToWstring(renderLog->getText()), cmdWidth + renderLog_x, 1085, RGB(200, 200, 200), 60);
             //DoubleBufferManager::drawText(L"우선테스트", cmdWidth + renderLog_x, 1080);
         }
 
-        setRenderDialog(nullptr);  // 대화창 내용 초기화
     }
     else {
         DoubleBufferManager::ScreenFlipping();
@@ -217,7 +216,6 @@ void RenderManager::render() {
     renderObject();
     renderPuzzleDetail();
     renderDialog();
-
 
 }
 

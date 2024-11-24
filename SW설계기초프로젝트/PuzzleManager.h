@@ -25,7 +25,7 @@ public:
             puzzle = new ItemPuzzle(id);
 		}
 		else if (type == TYPE_NUMBER_PUZZLE) {
-
+            puzzle = new NumberPuzzle(id);
 		}
 
         puzzle->setType(type);
@@ -54,6 +54,7 @@ public:
             return nullptr;
         }
     }
+
 
     static void setEventDispatcher(string id, EventDispatcher* dispatcher) {
         puzzles[id]->setEventDispatcher(dispatcher);
@@ -98,6 +99,13 @@ public:
             ((ItemPuzzle*)puzzles[id])->setPuzzleConditionItem(key, name);
         }
     }
+
+    static void setCorrectAnswer(string id, int n) {
+        if (puzzles[id]->getType() == TYPE_NUMBER_PUZZLE) {
+            ((NumberPuzzle*)puzzles[id])->setCorrectAnswer(n);
+        }
+    }
+
 };
 
 #endif

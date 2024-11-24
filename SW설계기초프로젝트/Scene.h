@@ -127,6 +127,7 @@ public:
 			}
 
 			RenderManager::render();
+			RenderManager::setRenderDialog(nullptr);  // 대화창 내용 초기화
 			size--;
 		}
 	}

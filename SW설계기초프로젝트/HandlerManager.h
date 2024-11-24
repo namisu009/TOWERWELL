@@ -137,6 +137,7 @@ public:
 
         if (puzzle->getType() == TYPE_NUMBER_PUZZLE) {
             getNumberPuzzleHandle(puzzle);
+            return;
         }
 
         int flag = 1;
@@ -177,6 +178,7 @@ public:
 
                 // 퍼즐에 입력값 전달
                 if (numberPuzzle->setAnswer(answer)) {
+                    RenderManager::setRenderDialog(nullptr);
                     RenderManager::ClearRenderPuzzleDetail();
                     flag = 0; // 핸들링 종료
                 }
@@ -189,7 +191,14 @@ public:
             if (!userInput.empty()) {
                 userInput.pop_back(); // 입력 문자열에서 마지막 문자 삭제
             }
-            });
+        });
+
+        bindInput(VK_ESCAPE, [&]() {
+            RenderManager::setRenderDialog(nullptr);
+            RenderManager::ClearRenderPuzzleDetail();
+            flag = 0; // 핸들링 종료
+        });
+
 
         // 숫자 키 입력 바인딩
         for (int key = '0'; key <= '9'; ++key) {
@@ -199,7 +208,27 @@ public:
         }
 
         // 핸들링 루프
+        // 
+        const auto& art = GameObjectManager::getDialog("NUMBER_WINDOW")->getRenderArray(); // ASCII 아트 가져오기
+        DoubleBufferManager::ScreenFlipping();
+
+        COORD pos = { 0, 0 };
+        pos.X = GameObjectManager::getDialog("NUMBER_WINDOW")->getX();
+        pos.Y = GameObjectManager::getDialog("NUMBER_WINDOW")->getY();
+
+        // 객체의 ASCII 아트를 특정 위치에 렌더링
+        for (int y = 0; y < art->height; y++)
+        {
+            pos.Y = GameObjectManager::getDialog("NUMBER_WINDOW")->getY() + y;
+            DoubleBufferManager::ScreenPrint(GameObjectManager::getDialog("NUMBER_WINDOW")->getX(), pos.Y, art->ASCIIArtArr[y]);
+        }
+
+        DoubleBufferManager::ScreenFlipping();
+        Sleep(10);
+
         while (flag) {
+ 
+
             for (int key = '0'; key <= '9'; ++key) {
                 if (GetAsyncKeyState(key) & 0x8000) {
                     processInput(key);
@@ -214,10 +243,15 @@ public:
                 processInput(VK_RETURN);
             }
 
+            if (GetAsyncKeyState(VK_ESCAPE) & 0x8000) {
+                processInput(VK_ESCAPE);
+            }
+
             // CPU 부하를 줄이기 위해 짧은 대기 추가
             this_thread::sleep_for(chrono::milliseconds(50));
         }
 
+        eventDispatcher->dispatch(CHANGE_MAP_HANDLE);
         return;
     }
 };

@@ -89,7 +89,7 @@ public:
         currentMap = StageManager::getCurrentStage()->getCurrentMap();
         setMap(currentMap);
         playerCharacter->SetStartPosition(currentMap->getInitX(), currentMap->getInitY());
-        sisterCharacter->SetStartPosition(currentMap->getInitX() - offset, currentMap->getInitY());
+        sisterCharacter->SetStartPosition(currentMap->getInitX() - 0, currentMap->getInitY());
         RenderManager::ScreenInit();
 
         RenderManager::setRenderMap(currentMap);
@@ -149,7 +149,7 @@ public:
         changeMapHandle();
 
         playerCharacter->SetStartPosition(currentMap->getInitX(), currentMap->getInitY());
-        //sisterCharacter->SetStartPosition(currentMap->getInitX() - 18, currentMap->getInitY());
+        sisterCharacter->SetStartPosition(currentMap->getInitX() - 0, currentMap->getInitY());
 
         RenderManager::setRenderMap(currentMap);
         RenderManager::render();

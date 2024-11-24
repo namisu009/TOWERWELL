@@ -56,7 +56,11 @@ bool Puzzle::isPuzzleSolved() {
 
 bool Puzzle::progressPuzzle() {
     if (isSolved)
+    {
+        //if(puzzleCLSceneArray[cl_sceneArrayIdx] != nullptr)
+        //    puzzleCLSceneArray[cl_sceneArrayIdx]->display(); // 중간 해결 장면 출력
         return false; // 이미 최종 해결된 경우
+    }
     
     if (currentStep < puzzleCount && puzzleCLSceneArray[currentStep] != nullptr) {
         puzzleCLSceneArray[cl_sceneArrayIdx]->display(); // 중간 해결 장면 출력
