@@ -28,7 +28,7 @@ public:
 		}
 		else if (type == "Dialog") {
 			object = new Dialog(id, filename);
-			object->initializeFromASCII("src\\DL.png");
+			object->initializeFromASCII("src\\SPEECH_WINDOW.png");
 			object->setType(TYPE_DIALOG);
 		}
 		else {

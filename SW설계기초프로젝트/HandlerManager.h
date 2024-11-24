@@ -39,6 +39,40 @@ public:
         }
     }
 
+    static void getJumpMapHandle(Character* object, Stage* stage) {
+
+        clearKeyMap();
+
+        bindInput(VK_RIGHT, [object]() {
+            object->setDx(4);
+            });
+
+        // 왼쪽 이동
+        bindInput(VK_LEFT, [object]() {
+            object->setDx(-4);
+            });
+
+        // 점프
+        bindInput(VK_UP, [object]() {
+            object->jump();
+            });
+
+        // 대시
+        bindInput(VK_SPACE, [object]() {
+            object->dash();
+            });
+
+        bindInput(0x46, [object, stage]() {
+
+            int init_x = object->getFootX();
+            int init_y = object->getFootY() - object->getHeight() / 2;
+
+            if (stage->getDoorId(init_x, init_y) != "") {
+                stage->onMoveMap(init_x, init_y);
+            }
+            });
+    }
+
     static void getPuzzleMapHandle(Character* object, Stage* stage) {
      
         clearKeyMap();
@@ -98,47 +132,11 @@ public:
 
     }
 
-    static void getJumpMapHandle(Character* object, Stage* stage) {
-        
-        clearKeyMap();
-
-        bindInput(VK_RIGHT, [object]() {
-            object->setDx(4);
-        });
-
-        // 왼쪽 이동
-        bindInput(VK_LEFT, [object]() {
-            object->setDx(-4);
-        });
-
-        // 점프
-        bindInput(VK_UP, [object]() {
-            object->jump();
-        });
-
-        // 대시
-        bindInput(VK_SPACE, [object]() {
-            object->dash();
-        });
-
-        bindInput(0x46, [object, stage]() {
-
-            int init_x = object->getFootX();
-            int init_y = object->getFootY() - object->getHeight() / 2;
-
-            if (stage->getDoorId(init_x, init_y) != "") {
-                stage->onMoveMap(init_x, init_y);
-            }
-        });
-    }
-
     static void getPuzzleDetailHandle(Puzzle* puzzle) {
         clearKeyMap();
 
-        if (puzzle->getType() == TYPE_NUMBER_PUZZLE)
-        {
-            //또 다른 핸들로 넘어가기
-            return;
+        if (puzzle->getType() == TYPE_NUMBER_PUZZLE) {
+            getNumberPuzzleHandle(puzzle);
         }
 
         int flag = 1;
@@ -154,6 +152,73 @@ public:
             }
         }
 
+    }
+
+    static void getNumberPuzzleHandle(Puzzle* puzzle) {
+        NumberPuzzle* numberPuzzle = (NumberPuzzle*) puzzle;
+        if (!numberPuzzle) {
+            return;
+        }
+
+        int flag = 1;
+        string userInput;
+
+        // 숫자 키 입력 핸들링
+        bindInput(VK_RETURN, [&]() {
+            if (!userInput.empty()) {
+                vector<int> answer;
+
+                // 입력 문자열을 숫자로 변환
+                for (char c : userInput) {
+                    if (isdigit(c)) {
+                        answer.push_back(c - '0');
+                    }
+                }
+
+                // 퍼즐에 입력값 전달
+                if (numberPuzzle->setAnswer(answer)) {
+                    RenderManager::ClearRenderPuzzleDetail();
+                    flag = 0; // 핸들링 종료
+                }
+
+                userInput.clear(); // 입력 초기화
+            }
+            });
+
+        bindInput(VK_BACK, [&]() {
+            if (!userInput.empty()) {
+                userInput.pop_back(); // 입력 문자열에서 마지막 문자 삭제
+            }
+            });
+
+        // 숫자 키 입력 바인딩
+        for (int key = '0'; key <= '9'; ++key) {
+            bindInput(key, [&, key]() {
+                userInput += static_cast<char>(key);
+            });
+        }
+
+        // 핸들링 루프
+        while (flag) {
+            for (int key = '0'; key <= '9'; ++key) {
+                if (GetAsyncKeyState(key) & 0x8000) {
+                    processInput(key);
+                }
+            }
+
+            if (GetAsyncKeyState(VK_BACK) & 0x8000) {
+                processInput(VK_BACK);
+            }
+
+            if (GetAsyncKeyState(VK_RETURN) & 0x8000) {
+                processInput(VK_RETURN);
+            }
+
+            // CPU 부하를 줄이기 위해 짧은 대기 추가
+            this_thread::sleep_for(chrono::milliseconds(50));
+        }
+
+        return;
     }
 };
 

@@ -191,7 +191,7 @@ void RenderManager::renderDialog() {
         while (1) {
             if (_kbhit()) { // 키 입력 확인
                 int key = _getch(); // 키 입력 읽기
-                if (key == VK_SPACE) { // ESC 키로 종료
+                if (key == VK_SPACE) {
                     break;
                 }
             }
