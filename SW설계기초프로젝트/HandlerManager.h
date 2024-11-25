@@ -127,6 +127,9 @@ public:
             }
 
             if (stg->getDoorId(init_x, init_y) != "") {
+                if (!stg->getCurrentMap()->isExitDoor(init_x, init_y)) {
+                    stg->getCurrentMap()->setInitPosition(init_x, obj->getFootY());
+                }
                 stg->onMoveMap(init_x, init_y);
             }
         });

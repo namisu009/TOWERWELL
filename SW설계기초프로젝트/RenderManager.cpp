@@ -113,8 +113,8 @@ void RenderManager::renderPuzzle() {
         if (art == nullptr)
             continue;
 
-        int object_x = object->getX(); // X ÁÂÇ¥ °¡Á®¿À±â
-        int object_y = object->getY(); // Y ÁÂÇ¥ °¡Á®¿À±â
+        int object_x = object->getX() - art->width / 2; // X ÁÂÇ¥ °¡Á®¿À±â
+        int object_y = object->getY() - art->height; // Y ÁÂÇ¥ °¡Á®¿À±â
 
         COORD pos = { 0, 0 };
         pos.X = object_x;

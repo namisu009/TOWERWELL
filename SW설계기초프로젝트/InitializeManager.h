@@ -49,37 +49,36 @@ private:
 
 
 	static void Iteminit() {
-		ItemManager::addItems("S3_M1_PZ_01_KEY", 1);
-		ItemManager::addItems("S3_M2_PZ_01_SEED", 1);
-		ItemManager::addItems("S3_M2_PZ_02_LIGHTER", 1);
+		ItemManager::addItems("S2_M1_PZ_KEY", 1);
+		ItemManager::addItems("S2_M2_PZ_SEED", 1);
+		ItemManager::addItems("S2_M2_PZ_LIGHTER", 1);
+		ItemManager::addItems("S2_M2_PZ_POT", 1);
 	}
 
 	static void PuzzleInit() {
 		PuzzleManager::createPuzzle("S2_M1_PZ_01", TYPE_ITEM_PUZZLE);
-		PuzzleManager::setPuzzleObjectASCII("S2_M1_PZ_01", 0, "src\\S2_M1_PZ_01_01.png");//석상 2-1방
-
-		PuzzleManager::createPuzzle("S2_M1_PZ_02", TYPE_ITEM_PUZZLE);
-		PuzzleManager::setPuzzleObjectASCII("S2_M1_PZ_02", 0, "src\\S2_M1_PZ_02_01.png");//2-2방
-		PuzzleManager::setPuzzleObjectASCII("S2_M1_PZ_02", 1, "src\\S2_M1_PZ_02_02.png");
-
-		PuzzleManager::createPuzzle("S2_M1_PZ_03", TYPE_ITEM_PUZZLE);
-		PuzzleManager::setPuzzleObjectASCII("S2_M1_PZ_03", 0, "src\\S2_M1_PZ_03_01.png");//2-3방
-		PuzzleManager::setPuzzleObjectASCII("S2_M1_PZ_03", 1, "src\\S2_M1_PZ_03_02.png");
+		PuzzleManager::setPuzzleObjectASCII("S2_M1_PZ_01", 0, "src\\S2_M1_PZ_01_01.png");
+		PuzzleManager::setPuzzleObjectASCII("S2_M1_PZ_01", 1, "src\\S2_M1_PZ_01_02.png");
 
 		PuzzleManager::createPuzzle("S2_M2_PZ_01", TYPE_ITEM_PUZZLE);
+		PuzzleManager::setPuzzleConditionItem("S2_M2_PZ_01", 0, "S2_M1_PZ_KEY");
+		PuzzleManager::setPuzzleReward("S2_M2_PZ_01", 0, "S2_M2_PZ_LIGHTER");
 
-
-		PuzzleManager::createPuzzle("S2_M2_PZ_02", TYPE_ITEM_PUZZLE);
-
+		PuzzleManager::createPuzzle("S2_M2_PZ_02", TYPE_READ_PUZZLE);
+		PuzzleManager::setPuzzleReward("S2_M2_PZ_02", 0, "S2_M2_PZ_SEED");
 
 		PuzzleManager::createPuzzle("S2_M3_PZ_01", TYPE_ITEM_PUZZLE);
 		PuzzleManager::setPuzzleObjectASCII("S2_M3_PZ_01", 0, "src\\S2_M3_PZ_01_01.png");
 		PuzzleManager::setPuzzleObjectASCII("S2_M3_PZ_01", 1, "src\\S2_M3_PZ_01_02.png");
+		PuzzleManager::setPuzzleObjectASCII("S2_M3_PZ_01", 2, "src\\S2_M3_PZ_01_03.png");
+		PuzzleManager::setPuzzleConditionItem("S2_M3_PZ_01", 0, "S2_M2_PZ_SEED");
+		PuzzleManager::setPuzzleReward("S2_M3_PZ_01", 1, "S2_M2_PZ_POT");
 
 		PuzzleManager::createPuzzle("S2_M3_PZ_02", TYPE_ITEM_PUZZLE);
 		PuzzleManager::setPuzzleObjectASCII("S2_M3_PZ_02", 0, "src\\S2_M3_PZ_02_01.png");
 		PuzzleManager::setPuzzleObjectASCII("S2_M3_PZ_02", 1, "src\\S2_M3_PZ_02_02.png");
 		PuzzleManager::setPuzzleObjectASCII("S2_M3_PZ_02", 2, "src\\S2_M3_PZ_02_03.png");
+		PuzzleManager::setPuzzleConditionItem("S2_M3_PZ_02", 1, "S2_M2_PZ_LIGHTER");
 		//PuzzleManager::setPuzzleSceneDialog("S2_M3_PZ_02", TYPE_CL_DL, 0, "S2_M3_PZ2_DL_00_00");
 		//PuzzleManager::setPuzzleSceneDialog("S2_M3_PZ_02", TYPE_CL_DL, 1, "S2_M3_PZ2_DL_00_01");
 		//PuzzleManager::setPuzzleSceneDialog("S2_M3_PZ_02", TYPE_CL_DL, 2, "S2_M3_PZ2_DL_00_02");
@@ -120,17 +119,16 @@ private:
 		StageManager::addMap(0, MapManager::getMap("S2_J_MAP_01"));
 		StageManager::addMap(0, MapManager::getMap("S3_P_MAP_01"));
 		StageManager::addMap(0, MapManager::getMap("S3_J_MAP_01"));
+
 		StageManager::setDoorID(0, "S2_P_MAP_01", MAP_EXIT, "S2_J_MAP_01");
 		StageManager::setDoorID(0, "S2_P_MAP_01", MAP_DOOR_01, "S2_P_MAP_02");
-		StageManager::setDoorID(0, "S2_P_MAP_02", MAP_DOOR_01, "S2_P_MAP_01");
 		StageManager::setDoorID(0, "S2_P_MAP_01", MAP_DOOR_02, "S2_P_MAP_03");
+		StageManager::setDoorID(0, "S2_P_MAP_02", MAP_DOOR_02, "S2_P_MAP_01");
 		StageManager::setDoorID(0, "S2_P_MAP_03", MAP_DOOR_02, "S2_P_MAP_01");
 		StageManager::setDoorID(0, "S2_J_MAP_01", MAP_EXIT, "S3_P_MAP_01");
 		StageManager::setDoorID(0, "S3_P_MAP_01", MAP_EXIT, "S3_J_MAP_01");
 
 		StageManager::setPuzzleId(0, "S2_P_MAP_01", PUZZLE_OBJ_01, "S2_M1_PZ_01");
-		StageManager::setPuzzleId(0, "S2_P_MAP_01", PUZZLE_OBJ_02, "S2_M1_PZ_02");
-		StageManager::setPuzzleId(0, "S2_P_MAP_01", PUZZLE_OBJ_03, "S2_M1_PZ_03");
 
 		StageManager::setPuzzleId(0, "S2_P_MAP_02", PUZZLE_OBJ_01, "S2_M2_PZ_01");
 		StageManager::setPuzzleId(0, "S2_P_MAP_02", PUZZLE_OBJ_02, "S2_M2_PZ_02");

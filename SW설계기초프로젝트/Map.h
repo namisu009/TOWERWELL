@@ -121,6 +121,8 @@ public:
             return DoorMapping[screenArray.MapInfo[y][x]]; //Map Id return
     }
 
+    void setInitPosition(int x, int y) { init_x = x; init_y = y; }
+
     int getInitX() { return init_x; }
     int getInitY() { return init_y; }
 

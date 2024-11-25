@@ -60,6 +60,10 @@ public:
     void setPuzzleSceneAction(int type, int key, string cmd, ActionType command, int dt, int repeat);
     void setPuzzleSceneDelay(int type, int key, string cmd, int time);
 
+    void SetStartPosition(float init_x, float init_y) {
+        setPosition(init_x, init_y);
+    }
+
     // 조건 확인 및 해결
     virtual bool isSatisfyCondition() { return false; }; // 조건 만족 여부 확인
     RenderArray* getObjectArray();                       // 현재 오브젝트 배열 가져오기

@@ -55,6 +55,7 @@ public:
     }
 
     void addRenderPuzzle() {
+        RenderManager::puzzleClear();
         for (auto& i : PuzzleMapping)
         {
             if (i.second != "X")
@@ -90,7 +91,6 @@ public:
                 newScene.display();
                 return "";
             }
-                
             
             return getDoorMapping()[myScreen.MapInfo[y][x]]; //Map Id return
         }
