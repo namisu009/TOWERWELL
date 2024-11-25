@@ -1,5 +1,6 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include "RenderManager.h"
+#include "PuzzleMap.h"
 #include <string>
 #include <locale>
 #include <codecvt>
@@ -260,6 +261,9 @@ void RenderManager::ScreenInit() {
 
 void RenderManager::setRenderMap(Map* map) {
     currentMap = map;
+
+    if (map->getType() == TYPE_PUZZLE)
+        ((PuzzleMap*)map)->addRenderPuzzle();
 }
 
 

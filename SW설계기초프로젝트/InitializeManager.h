@@ -33,12 +33,29 @@ private:
 		GameObjectManager::createObejct("Dialog", "SC1_DL_03", "여동생: 소문이 사실인가봐! 저기 끝에 문이 있는 거 같은데 한 번 가보자.");
 		GameObjectManager::createObejct("Dialog", "PZ_NCL_DL", "히로: 문이 열리지 않아...");
 
-
+		
 		GameObjectManager::createObejct("Dialog", "S1_M1_PZ2_DL_00_00", "히로: 문이 열리지 않아... 열쇠가 필요할 거 같아.");
 		GameObjectManager::createObejct("Dialog", "S1_M1_PZ2_DL_00_01", "열쇠를 사용한다.");
-		GameObjectManager::createObejct("Dialog", "S1_M1_PZ2_DL_00_02", "문이 열리면서 균열이 생겼다.");
-		GameObjectManager::createObejct("Dialog", "S1_M1_PZ2_DL_01_01", "문 틈 사이로 물줄기가 나왔다.");
-		GameObjectManager::createObejct("Dialog", "S1_M1_PZ2_DL_02_01", "문 틈 사이로 물줄기가 나온다. 화분을 가져다 놓으면 좋을 거 같다.");
+
+		GameObjectManager::createObejct("Dialog", "S2_M1_PZ1_DL_00_00", "석상: 바깥 세상이 보고싶어...");
+		GameObjectManager::createObejct("Dialog", "S2_M1_PZ1_DL_00_01", "석상: 바깥 세상을 보여줘서 고마워");
+
+		GameObjectManager::createObejct("Dialog", "S2_M2_PZ1_DL_00_00", "히로: 문이 열리지 않아... 열쇠가 필요할 거 같아.");
+		GameObjectManager::createObejct("Dialog", "S2_M2_PZ1_DL_00_01", "[열쇠]를 사용한다.");
+		GameObjectManager::createObejct("Dialog", "S2_M2_PZ1_DL_00_02", "[라이터]를 얻었다.");
+
+		GameObjectManager::createObejct("Dialog", "S2_M2_PZ2_DL_00_00", "[씨앗]을 얻었다.");
+		GameObjectManager::createObejct("Dialog", "S2_M2_PZ2_DL_00_01", "더 이상 얻을 것이 없어보인다.");
+
+		GameObjectManager::createObejct("Dialog", "S2_M3_PZ1_DL_00_00", "흙밖에 없는 텅 빈 화분이다.");
+		GameObjectManager::createObejct("Dialog", "S2_M3_PZ1_DL_00_01", "화분에 씨앗을 심었더니 싹이 곧바로 자랐다.");
+		GameObjectManager::createObejct("Dialog", "S2_M3_PZ1_DL_00_02", "[씨앗을 심은 화분]을 얻었다");
+
+		GameObjectManager::createObejct("Dialog", "S2_M3_PZ2_DL_00_00", "문이 열리면서 [균열]이 생겼다.");
+		GameObjectManager::createObejct("Dialog", "S2_M3_PZ2_DL_00_01", "열린 문 사이로 [열쇠]를 얻었다.");
+		GameObjectManager::createObejct("Dialog", "S2_M3_PZ2_DL_00_02", "[라이터]를 갖다대자 균열이 깨졌다.");
+		GameObjectManager::createObejct("Dialog", "S2_M3_PZ2_DL_00_03", "문 틈 사이로 [물줄기]가 나왔다.");
+		GameObjectManager::createObejct("Dialog", "S2_M3_PZ2_DL_00_04", "문 틈 사이로 [물줄기]가 나온다. [화분]을 가져다 놓으면 좋을 거 같다.");
 
 
 	};
@@ -56,32 +73,46 @@ private:
 	}
 
 	static void PuzzleInit() {
-		PuzzleManager::createPuzzle("S2_M1_PZ_01", TYPE_ITEM_PUZZLE);
+		PuzzleManager::createPuzzle("S2_M1_PZ_01", TYPE_ITEM_PUZZLE); //석상
 		PuzzleManager::setPuzzleObjectASCII("S2_M1_PZ_01", 0, "src\\S2_M1_PZ_01_01.png");
 		PuzzleManager::setPuzzleObjectASCII("S2_M1_PZ_01", 1, "src\\S2_M1_PZ_01_02.png");
+		PuzzleManager::setPuzzleSceneDialog("S2_M1_PZ_01", 0, TYPE_NCL_DL, "S2_M1_PZ1_DL_00_00");
+		PuzzleManager::setPuzzleSceneDialog("S2_M1_PZ_01", 0, TYPE_CL_DL, "S2_M1_PZ1_DL_00_01");
 
-		PuzzleManager::createPuzzle("S2_M2_PZ_01", TYPE_ITEM_PUZZLE);
+		PuzzleManager::createPuzzle("S2_M2_PZ_01", TYPE_ITEM_PUZZLE); //서랍
 		PuzzleManager::setPuzzleConditionItem("S2_M2_PZ_01", 0, "S2_M1_PZ_KEY");
 		PuzzleManager::setPuzzleReward("S2_M2_PZ_01", 0, "S2_M2_PZ_LIGHTER");
+		PuzzleManager::setPuzzleSceneDialog("S2_M2_PZ_01", 0, TYPE_NCL_DL, "S2_M2_PZ1_DL_00_00");
+		PuzzleManager::setPuzzleSceneDialog("S2_M2_PZ_01", 0, TYPE_CL_DL, "S2_M2_PZ1_DL_00_01");
+		PuzzleManager::setPuzzleSceneDialog("S2_M2_PZ_01", 0, TYPE_CL_DL, "S2_M2_PZ1_DL_00_02");
 
-		PuzzleManager::createPuzzle("S2_M2_PZ_02", TYPE_READ_PUZZLE);
+		PuzzleManager::createPuzzle("S2_M2_PZ_02", TYPE_READ_PUZZLE); //씨앗
 		PuzzleManager::setPuzzleReward("S2_M2_PZ_02", 0, "S2_M2_PZ_SEED");
+		PuzzleManager::setPuzzleSceneDialog("S2_M2_PZ_02", 0, TYPE_NCL_DL, "S2_M2_PZ2_DL_00_00");
+		PuzzleManager::setPuzzleSceneDialog("S2_M2_PZ_02", 0, TYPE_CL_DL, "S2_M2_PZ2_DL_00_01");
 
-		PuzzleManager::createPuzzle("S2_M3_PZ_01", TYPE_ITEM_PUZZLE);
+		PuzzleManager::createPuzzle("S2_M3_PZ_01", TYPE_ITEM_PUZZLE); //화분
 		PuzzleManager::setPuzzleObjectASCII("S2_M3_PZ_01", 0, "src\\S2_M3_PZ_01_01.png");
 		PuzzleManager::setPuzzleObjectASCII("S2_M3_PZ_01", 1, "src\\S2_M3_PZ_01_02.png");
 		PuzzleManager::setPuzzleObjectASCII("S2_M3_PZ_01", 2, "src\\S2_M3_PZ_01_03.png");
 		PuzzleManager::setPuzzleConditionItem("S2_M3_PZ_01", 0, "S2_M2_PZ_SEED");
 		PuzzleManager::setPuzzleReward("S2_M3_PZ_01", 1, "S2_M2_PZ_POT");
 
-		PuzzleManager::createPuzzle("S2_M3_PZ_02", TYPE_ITEM_PUZZLE);
+		PuzzleManager::setPuzzleSceneDialog("S2_M2_PZ_02", 0, TYPE_NCL_DL, "S2_M3_PZ1_DL_00_00"); //텅 빈 화분이다
+		PuzzleManager::setPuzzleSceneDialog("S2_M2_PZ_02", 0, TYPE_CL_DL, "S2_M3_PZ1_DL_00_01"); //화분에다 씨앗을 심었다.
+		PuzzleManager::setPuzzleSceneDialog("S2_M2_PZ_02", 1, TYPE_CL_DL, "S2_M3_PZ1_DL_00_02"); //화분을 얻었다.
+
+		PuzzleManager::createPuzzle("S2_M3_PZ_02", TYPE_ITEM_PUZZLE); //균열 서랍
 		PuzzleManager::setPuzzleObjectASCII("S2_M3_PZ_02", 0, "src\\S2_M3_PZ_02_01.png");
 		PuzzleManager::setPuzzleObjectASCII("S2_M3_PZ_02", 1, "src\\S2_M3_PZ_02_02.png");
 		PuzzleManager::setPuzzleObjectASCII("S2_M3_PZ_02", 2, "src\\S2_M3_PZ_02_03.png");
+		PuzzleManager::setPuzzleReward("S2_M3_PZ_02", 0, "S2_M1_PZ_KEY");
 		PuzzleManager::setPuzzleConditionItem("S2_M3_PZ_02", 1, "S2_M2_PZ_LIGHTER");
-		//PuzzleManager::setPuzzleSceneDialog("S2_M3_PZ_02", TYPE_CL_DL, 0, "S2_M3_PZ2_DL_00_00");
-		//PuzzleManager::setPuzzleSceneDialog("S2_M3_PZ_02", TYPE_CL_DL, 1, "S2_M3_PZ2_DL_00_01");
-		//PuzzleManager::setPuzzleSceneDialog("S2_M3_PZ_02", TYPE_CL_DL, 2, "S2_M3_PZ2_DL_00_02");
+		PuzzleManager::setPuzzleSceneDialog("S2_M3_PZ_02", TYPE_CL_DL, 0, "S2_M3_PZ2_DL_00_00");
+		PuzzleManager::setPuzzleSceneDialog("S2_M3_PZ_02", TYPE_CL_DL, 0, "S2_M3_PZ2_DL_00_01");
+		PuzzleManager::setPuzzleSceneDialog("S2_M3_PZ_02", TYPE_CL_DL, 1, "S2_M3_PZ2_DL_00_02");
+		PuzzleManager::setPuzzleSceneDialog("S2_M3_PZ_02", TYPE_CL_DL, 1, "S2_M3_PZ2_DL_00_03");
+		PuzzleManager::setPuzzleSceneDialog("S2_M3_PZ_02", TYPE_CL_DL, 2, "S2_M3_PZ2_DL_00_04");
 
 
 		PuzzleManager::createPuzzle("S3_M1_PZ_01", TYPE_NUMBER_PUZZLE);
