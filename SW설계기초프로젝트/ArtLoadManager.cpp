@@ -35,7 +35,49 @@ void ExpandThePuzzleInfo(int _y, int _x, string name, ScreenArray* Array) {
 }
 */
 
-void ExpandThePuzzleInfo(int _y, int _x, string name, IplImage* img, ScreenArray* Array) {
+void ArtLoadManager::resetExpandThePuzzleInfo(Puzzle* p, ScreenArray* Array) {
+    if (p == nullptr) return;
+
+    int init_x = p->getX();
+    int init_y = p->getY();
+    int width = p->getObjectArray()->width / 2;
+    int height = p->getObjectArray()->height;
+
+    for (int y = init_y - height; y < init_y; y++) {
+        for (int x = init_x - width; x < init_x + width; x++) {
+            if (y < 0 || y > cmdHeight - 1 || x < 0 || x > cmdWidth - 1 || (y == init_y && x == init_x))
+                continue;
+
+            Array->ObjectInfo[y][x] = 0;
+        }
+    }
+}
+
+void ArtLoadManager::ExpandThePuzzleInfo(Puzzle* p, ScreenArray* Array){
+    if (p == nullptr) return;
+
+    int init_x = p->getX();
+    int init_y = p->getY();
+    int width = p->getObjectArray()->width / 2;
+    int height = p->getObjectArray()->height;
+
+
+    int ** dar = p->getObjectArray()->drawornotArr;
+    for (int y = init_y - height; y < init_y; y++) {
+        for (int x = init_x - width; x < init_x + width; x++) {
+            if (y < 0 || y > cmdHeight - 1 || x < 0 || x > cmdWidth - 1)
+                continue;
+
+            int y1 = y - (init_y - height); // y가 dar의 0부터 시작하는 인덱스에 매핑
+            int x1 = x - (init_x - width); // x가 dar의 0부터 시작하는 인덱스에 매핑
+
+            if(dar[y1][x1] == 1)
+                Array->ObjectInfo[y][x] = Array->ObjectInfo[init_y][init_x];
+        }
+    }
+}
+
+void ArtLoadManager::ExpandThePuzzleInfo(int _y, int _x, string name, IplImage* img, ScreenArray* Array) {
     CvScalar f1 = cvGet2D(img, _y, _x);
     CvScalar f2 = cvGet2D(img, _y, _x - 1);
     CvScalar f3 = cvGet2D(img, _y, _x + 1);
@@ -48,8 +90,8 @@ void ExpandThePuzzleInfo(int _y, int _x, string name, IplImage* img, ScreenArray
     Puzzle* p = PuzzleManager::getPuzzle(name);
 
     if (p == nullptr) return;
-    int width = p->getWidth() / 2;
-    int height = p->getHeight();
+    int width = p->getObjectArray()->width / 2;
+    int height = p->getObjectArray()->height;
 
     p->SetStartPosition(_x, _y);
 

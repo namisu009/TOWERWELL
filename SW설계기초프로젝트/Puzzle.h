@@ -59,6 +59,7 @@ public:
     void setPuzzleSceneAction(int type, int key, string cmd, ActionType command, int dt);
     void setPuzzleSceneAction(int type, int key, string cmd, ActionType command, int dt, int repeat);
     void setPuzzleSceneDelay(int type, int key, string cmd, int time);
+    void setPuzzleSceneLoop(int type, int key, bool loop);
 
     void SetStartPosition(float init_x, float init_y) {
         setPosition(init_x, init_y);

@@ -1,6 +1,7 @@
 #include "Puzzle.h"
 #include "Scene.h"
 #include "RenderManager.h"
+#include "StageManager.h"
 
 Puzzle::Puzzle(string _id) : GameObject(_id) {
     objectArrayIdx = 0;
@@ -43,12 +44,12 @@ bool Puzzle::isIntermediateSolved() {
 
 // 최종 해결 상태 확인
 bool Puzzle::isPuzzleSolved() {
-    if (!isSolved && currentStep >= puzzleCount) {
+    if (!isSolved && isIntermediateSolved()) {
         isSolved = true;
         eventDispatcher->dispatch(PUZZLE_SOLVED); // 최종 해결 이벤트
     }
-    else if(isSolved && puzzleCLSceneArray[currentStep] != nullptr){ //해결이 다 됐지만 씬이 계속 재생되어도 될 경우
-            puzzleCLSceneArray[cl_sceneArrayIdx]->display();
+    else if(isSolved && puzzleCLSceneArray[cl_sceneArrayIdx] != nullptr) { //해결이 다 됐지만 씬이 계속 재생되어도 될 경우
+        puzzleCLSceneArray[cl_sceneArrayIdx]->display();
     }
     return isSolved;
 }
@@ -61,22 +62,27 @@ bool Puzzle::progressPuzzle() {
         return false; // 이미 최종 해결된 경우
     }
     
-    if (currentStep < puzzleCount && puzzleCLSceneArray[currentStep] != nullptr) {
+    if (currentStep < solvedThreshold && puzzleCLSceneArray[currentStep] != nullptr) {
         puzzleCLSceneArray[cl_sceneArrayIdx]->display(); // 중간 해결 장면 출력
         currentStep++;
 
         // 상태 업데이트
-        if (objectArrayIdx < puzzleCount && puzzleObjectArray[objectArrayIdx + 1] != nullptr) {
+        if (objectArrayIdx < solvedThreshold && puzzleObjectArray[objectArrayIdx + 1] != nullptr) {
+            artLoadManager->resetExpandThePuzzleInfo(this, &StageManager::getCurrentStage()->getCurrentMap()->getScreenArray());
+
             objectArrayIdx++;
+
+            artLoadManager->ExpandThePuzzleInfo(this, &StageManager::getCurrentStage()->getCurrentMap()->getScreenArray());
+
             setWidth(puzzleObjectArray[objectArrayIdx]->width);
             setHeight(puzzleObjectArray[objectArrayIdx]->height);
         }
 
-        if (detailArrayIdx < puzzleCount && puzzleDetailArray[detailArrayIdx + 1] != nullptr) {
+        if (detailArrayIdx < solvedThreshold && puzzleDetailArray[detailArrayIdx + 1] != nullptr) {
             detailArrayIdx++;
         }
 
-        if (cl_sceneArrayIdx < puzzleCount) {
+        if (cl_sceneArrayIdx < solvedThreshold - 1 && cl_sceneArrayIdx < puzzleCount - 1 ) {
             cl_sceneArrayIdx++;
             ncl_sceneArrayIdx++;
         }
@@ -89,8 +95,8 @@ bool Puzzle::progressPuzzle() {
 }
 
 void Puzzle::PuzzleNCLSceneDisplay() {
-     if(puzzleNCLSceneArray[ncl_sceneArrayIdx] != nullptr)
-    puzzleNCLSceneArray[ncl_sceneArrayIdx]->display();
+    if(puzzleNCLSceneArray[ncl_sceneArrayIdx] != nullptr)
+        puzzleNCLSceneArray[ncl_sceneArrayIdx]->display();
 }
 
 bool Puzzle::solvePuzzle() {
@@ -122,8 +128,8 @@ void Puzzle::showPuzzleDetail() {
 }
 
 void Puzzle::setSolvedThreshold(int key) {
-    if (solvedThreshold < key)
-        solvedThreshold = key;
+    if (solvedThreshold < key + 1)
+        solvedThreshold = key + 1;
 }
 
 void Puzzle::setPuzzleObjectASCII(int key, const char* filename) {
@@ -157,14 +163,18 @@ void Puzzle::setPuzzleSceneDialog(int type, int key, string cmd) {
         return;
     }
 
-    if (type == TYPE_CL_DL && puzzleCLSceneArray[key] == nullptr)
+    if (type == TYPE_CL_DL)
     {
-        puzzleCLSceneArray[key] = new Scene();
+        if(puzzleCLSceneArray[key] == nullptr)
+            puzzleCLSceneArray[key] = new Scene();
+       
         puzzleCLSceneArray[key]->setDialog(cmd);
     }
-    else if (type == TYPE_NCL_DL && puzzleNCLSceneArray[key] == nullptr)
+    else if (type == TYPE_NCL_DL)
     {
-        puzzleNCLSceneArray[key] = new Scene();
+        if (puzzleNCLSceneArray[key] == nullptr)
+            puzzleNCLSceneArray[key] = new Scene();
+
         puzzleNCLSceneArray[key]->setDialog(cmd);
     }
 
@@ -176,14 +186,18 @@ void Puzzle::setPuzzleSceneAction(int type, int key, string cmd, ActionType comm
         return;
     }
 
-    if (type == TYPE_CL_DL && puzzleCLSceneArray[key] == nullptr)
+    if (type == TYPE_CL_DL)
     {
-        puzzleCLSceneArray[key] = new Scene();
+        if (puzzleCLSceneArray[key] == nullptr)
+            puzzleCLSceneArray[key] = new Scene();
+
         puzzleCLSceneArray[key]->setAction(cmd, command, dt);
     }
-    else if (type == TYPE_NCL_DL && puzzleNCLSceneArray[key] == nullptr)
+    else if (type == TYPE_NCL_DL)
     {
-        puzzleNCLSceneArray[key] = new Scene();
+        if (puzzleNCLSceneArray[key] == nullptr)
+            puzzleNCLSceneArray[key] = new Scene();
+
         puzzleNCLSceneArray[key]->setAction(cmd, command, dt);
     }
 
@@ -195,19 +209,23 @@ void Puzzle::setPuzzleSceneAction(int type, int key, string cmd, ActionType comm
         return;
     }
 
-    if (type == TYPE_CL_DL && puzzleCLSceneArray[key] == nullptr)
+    if (type == TYPE_CL_DL)
     {
-        puzzleCLSceneArray[key] = new Scene();
+        if (puzzleCLSceneArray[key] == nullptr)
+            puzzleCLSceneArray[key] = new Scene();
+
         puzzleCLSceneArray[key]->setAction(cmd, command, dt, repeat);
     }
-    else if (type == TYPE_NCL_DL && puzzleNCLSceneArray[key] == nullptr)
+    else if (type == TYPE_NCL_DL)
     {
-        puzzleNCLSceneArray[key] = new Scene();
+        if (puzzleNCLSceneArray[key] == nullptr)
+            puzzleNCLSceneArray[key] = new Scene();
+
         puzzleNCLSceneArray[key]->setAction(cmd, command, dt, repeat);
     }
 
     setSolvedThreshold(key);
-    
+
 }
 
 void Puzzle::setPuzzleSceneDelay(int type, int key, string cmd, int time) {
@@ -215,20 +233,47 @@ void Puzzle::setPuzzleSceneDelay(int type, int key, string cmd, int time) {
         return;
     }
 
-    if (type == TYPE_CL_DL && puzzleCLSceneArray[key] == nullptr)
+    if (type == TYPE_CL_DL)
     {
-        puzzleCLSceneArray[key] = new Scene();
+        if (puzzleCLSceneArray[key] == nullptr)
+            puzzleCLSceneArray[key] = new Scene();
+
         puzzleCLSceneArray[key]->setDelay(cmd, time);
     }
-    else if (type == TYPE_NCL_DL && puzzleNCLSceneArray[key] == nullptr)
+    else if (type == TYPE_NCL_DL)
     {
-        puzzleNCLSceneArray[key] = new Scene();
+        if (puzzleNCLSceneArray[key] == nullptr)
+            puzzleNCLSceneArray[key] = new Scene();
+
         puzzleNCLSceneArray[key]->setDelay(cmd, time);
     }
 
     setSolvedThreshold(key);
     
 }
+
+void Puzzle::setPuzzleSceneLoop(int type, int key, bool loop) {
+    if (key < 0 || key >= puzzleCount) {
+        return;
+    }
+
+    if (type == TYPE_CL_DL)
+    {
+        if (puzzleCLSceneArray[key] == nullptr)
+            puzzleCLSceneArray[key] = new Scene();
+
+        puzzleCLSceneArray[key]->setSceneLoop(loop);
+    }
+    else if (type == TYPE_NCL_DL)
+    {
+        if (puzzleNCLSceneArray[key] == nullptr)
+            puzzleNCLSceneArray[key] = new Scene();
+
+        puzzleNCLSceneArray[key]->setSceneLoop(loop);
+    }
+
+}
+
 
 
 RenderArray* Puzzle::getObjectArray() {

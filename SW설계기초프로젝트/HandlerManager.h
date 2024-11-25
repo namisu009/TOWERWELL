@@ -124,6 +124,8 @@ public:
                 else {
                     puzzle->PuzzleNCLSceneDisplay();
                 }
+
+                return;
             }
 
             if (stg->getDoorId(init_x, init_y) != "") {

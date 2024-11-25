@@ -62,32 +62,30 @@ public:
 
     static void setPuzzleObjectASCII(string id, int key, const char* filename) {
         puzzles[id]->setPuzzleObjectASCII(key, filename);
-        puzzles[id]->setSolvedThreshold(key);
     }
 
     static void setPuzzleDetailASCII(string id, int key, const char* filename) {
         puzzles[id]->setPuzzleDetailASCII(key, filename);
-        puzzles[id]->setSolvedThreshold(key);
     }
 
-    static void setPuzzleSceneDialog(string id, int type, int key, string cmd) {
+    static void setPuzzleSceneLoop(string id, int key, int type, bool loop) {
+        puzzles[id]->setPuzzleSceneLoop(type, key, loop);
+    }
+
+    static void setPuzzleSceneDialog(string id, int key, int type, string cmd) {
         puzzles[id]->setPuzzleSceneDialog(type, key, cmd);
-        puzzles[id]->setSolvedThreshold(key);
     }
 
-    static void setPuzzleSceneAction(string id, int type, int key, string cmd, ActionType command, int dt) {
+    static void setPuzzleSceneAction(string id, int key, int type, string cmd, ActionType command, int dt) {
         puzzles[id]->setPuzzleSceneAction(type, key, cmd, command, dt);
-        puzzles[id]->setSolvedThreshold(key);
     }
 
-    static void setPuzzleSceneAction(string id, int type, int key, string cmd, ActionType command, int dt, int repeat) {
+    static void setPuzzleSceneAction(string id, int key, int type, string cmd, ActionType command, int dt, int repeat) {
         puzzles[id]->setPuzzleSceneAction(type, key, cmd, command, dt, repeat);
-        puzzles[id]->setSolvedThreshold(key);
     }
 
-    static void setPuzzleSceneDelay(string id, int type, int key, string cmd, int time) {
+    static void setPuzzleSceneDelay(string id, int key, int type, string cmd, int time) {
         puzzles[id]->setPuzzleSceneDelay(type, key, cmd, time);
-        puzzles[id]->setSolvedThreshold(key);
     }
 
     static void setPuzzleReward(string id, int key, string reward) {
