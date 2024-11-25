@@ -107,12 +107,15 @@ public:
                     getPuzzleDetailHandle(puzzle);
                 }
 
+                if ((GetAsyncKeyState(VK_ESCAPE) & 0x0001))
+                    return;
+
                 // 퍼즐 해결 조건 처리
                 bool puzzleSolved = puzzle->isPuzzleSolved();
                 if (puzzle->getType() == TYPE_ITEM_PUZZLE)
                     puzzleSolved = ((ItemPuzzle*)puzzle)->isSatisfyCondition(obj);
                 else
-                    puzzleSolved = puzzle->isIntermediateSolved();
+                    puzzleSolved = puzzle->isSatisfyCondition();
 
                 if (puzzleSolved) {
                     puzzle->progressPuzzle(); // 중간 해결 진행
@@ -135,7 +138,7 @@ public:
     static void getPuzzleDetailHandle(Puzzle* puzzle) {
         clearKeyMap();
 
-        if (puzzle->getType() == TYPE_NUMBER_PUZZLE) {
+        if (puzzle->getType() == TYPE_NUMBER_PUZZLE && !puzzle->isPuzzleSolved()) {
             getNumberPuzzleHandle(puzzle);
             return;
         }
@@ -164,13 +167,16 @@ public:
         int flag = 1;
         string userInput;
 
+        RenderManager::setRenderDialog(GameObjectManager::getDialog("NUMBER_WINDOW"));
+        RenderManager::renderInputText(userInput, cmdWidth + GameObjectManager::getDialog("NUMBER_WINDOW")->getX(), 1085);
+        /*
         const auto& art = GameObjectManager::getDialog("NUMBER_WINDOW")->getRenderArray(); // ASCII 아트 가져오기
         DoubleBufferManager::ScreenFlipping();
 
         COORD pos = { 0, 0 };
         pos.X = GameObjectManager::getDialog("NUMBER_WINDOW")->getX();
         pos.Y = GameObjectManager::getDialog("NUMBER_WINDOW")->getY();
-
+        */
         // 숫자 키 입력 핸들링
         bindInput(VK_RETURN, [&]() {
             if (!userInput.empty()) {
@@ -205,50 +211,54 @@ public:
                 userInput.pop_back(); // 마지막 문자 삭제
                 RenderManager::renderInputText(userInput, cmdWidth + GameObjectManager::getDialog("NUMBER_WINDOW")->getX(), 1085);    // 화면 갱신
             }
-            });
+        });
 
         // 숫자 키 입력 바인딩
         for (int key = '0'; key <= '9'; ++key) {
             bindInput(key, [&, key]() {
                 userInput += static_cast<char>(key);
-                RenderManager::renderInputText(userInput, cmdWidth + GameObjectManager::getDialog("NUMBER_WINDOW")->getX(), 1085); // 화면 갱신
-                });
+                RenderManager::renderInputText(userInput, cmdWidth + GameObjectManager::getDialog("NUMBER_WINDOW")->getX(), 1085);    // 화면 갱신
+            });
         }
-
+        /*
+        int x = GameObjectManager::getDialog("NUMBER_WINDOW")->getX();
         // 객체의 ASCII 아트를 특정 위치에 렌더링
         for (int y = 0; y < art->height; y++)
         {
-           
-            pos.Y = GameObjectManager::getDialog("NUMBER_WINDOW")->getY() + y;
-            DoubleBufferManager::ScreenPrint(GameObjectManager::getDialog("NUMBER_WINDOW")->getX(), pos.Y, art->ASCIIArtArr[y]);
+            DoubleBufferManager::ScreenPrint(x, pos.Y, art->ASCIIArtArr[y]);
         }
 
+        pos.Y = GameObjectManager::getDialog("NUMBER_WINDOW")->getY();
         DoubleBufferManager::ScreenFlipping();
         Sleep(10);
+        */
+
 
         while (flag) {
- 
-
-            for (int key = '0'; key <= '9'; ++key) {
-                if (GetAsyncKeyState(key) & 0x8000) {
+            if (_kbhit()) { // 키 입력 확인
+                int key = _getch(); // 키 입력 읽기      
+                switch (key) {
+                case VK_BACK:
+                    processInput(VK_BACK); break;
+                case VK_RETURN:
+                    processInput(VK_RETURN); break;
+                case VK_ESCAPE:
+                    processInput(VK_ESCAPE); break;
+                case '0':
+                case '1':
+                case '2':
+                case '3':
+                case '4':
+                case '5':
+                case '6':
+                case '7':
+                case '8':
+                case '9':
                     processInput(key);
+                    break;
                 }
             }
-
-            if (GetAsyncKeyState(VK_BACK) & 0x8000) {
-                processInput(VK_BACK);
-            }
-
-            if (GetAsyncKeyState(VK_RETURN) & 0x8000) {
-                processInput(VK_RETURN);
-            }
-
-            if (GetAsyncKeyState(VK_ESCAPE) & 0x8000) {
-                processInput(VK_ESCAPE);
-            }
-
-            // CPU 부하를 줄이기 위해 짧은 대기 추가
-            this_thread::sleep_for(chrono::milliseconds(50));
+            this_thread::sleep_for(chrono::milliseconds(10));
         }
 
         eventDispatcher->dispatch(CHANGE_MAP_HANDLE);

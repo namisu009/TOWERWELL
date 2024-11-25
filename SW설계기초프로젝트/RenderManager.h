@@ -49,7 +49,7 @@ public:
     static void renderPuzzleDetail(); // 모든 객체 렌더링
     static void renderDialog(); // 대화창 렌더링
     static void clearObject(); //화면에서 객체 지우기 (맵 그리기)
-    static void renderInputText(string& input, int x, int y);
+    static void renderInputText(string& input, int x, int y, int height = 90);
 
     static void renderClear();
 

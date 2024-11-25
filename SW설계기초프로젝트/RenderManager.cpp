@@ -159,6 +159,7 @@ void RenderManager::renderPuzzleDetail () {
         DoubleBufferManager::ScreenPrint(renderPzl_x, pos.Y, art->ASCIIArtArr[y]);
     }
 
+
 }
 
 void RenderManager::renderDialog() {
@@ -167,6 +168,8 @@ void RenderManager::renderDialog() {
         const auto& art = renderLog->getRenderArray(); // ASCII 아트 가져오기
         int renderLog_x = renderLog->getX(); // X 좌표 가져오기
         int renderLog_y = renderLog->getY(); // Y 좌표 가져오기
+        int renderLog_width = renderLog->getWidth(); // Y 좌표 가져오기
+        int renderLog_height = renderLog->getHeight(); // Y 좌표 가져오기
 
         COORD pos = { 0, 0 };
         pos.X = renderLog_x;
@@ -184,18 +187,19 @@ void RenderManager::renderDialog() {
         //DoubleBufferManager::ScreenFlipping();
 
         // 사용자 입력 대기
+
         while (_kbhit()) {
             _getch();  // 입력 버퍼 비우기
         }
 
-        while (1) {
+        while (renderLog->getText() != "") {
             if (_kbhit()) { // 키 입력 확인
-                int key = _getch(); // 키 입력 읽기
+                int key = _getch(); // 키 입력 읽기      
                 if (key == VK_SPACE) {
                     break;
                 }
             }
-             DoubleBufferManager::drawText(stringToWstring(renderLog->getText()), cmdWidth + renderLog_x, 1085, RGB(200, 200, 200), 60);
+             DoubleBufferManager::drawText(stringToWstring(renderLog->getText()), cmdWidth + renderLog_x, 1085);
             //DoubleBufferManager::drawText(L"우선테스트", cmdWidth + renderLog_x, 1080);
         }
 
@@ -206,12 +210,17 @@ void RenderManager::renderDialog() {
 
 }
 
-void RenderManager::renderInputText(string& input, int x, int y) {
+void RenderManager::renderInputText(string& input, int x, int y, int height) {
+    if (renderLog != nullptr)
+    {
+        renderDialog();
+    }
+
+    string my = "비밀번호를 입력하세요: ";
+    my += input;
     DoubleBufferManager::drawText(
-        stringToWstring(input), // 입력 문자열을 렌더링
-        x, y,                  // 시작 좌표
-        RGB(200, 200, 200),    // 텍스트 색상
-        60                     // 텍스트 크기
+        stringToWstring(my), // 입력 문자열을 렌더링
+        x, y                  // 시작 좌표
     );
 }
 
@@ -223,7 +232,11 @@ void RenderManager::render() {
         renderPuzzle();
 
     renderObject();
-    renderPuzzleDetail();
+    if(renderPzl != nullptr){
+        renderPuzzleDetail();
+        DoubleBufferManager::ScreenFlipping();
+        renderPuzzleDetail();
+    }
     renderDialog();
 
 }

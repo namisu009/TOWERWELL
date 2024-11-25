@@ -34,7 +34,7 @@ public:
 		int size = answer.size();
 
 		if (size > correctAnswerIdx) {
-			return false;
+			return true;
 		}
 
 		userAnswerIdx = size;

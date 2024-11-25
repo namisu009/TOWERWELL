@@ -47,8 +47,7 @@ bool Puzzle::isPuzzleSolved() {
         isSolved = true;
         eventDispatcher->dispatch(PUZZLE_SOLVED); // 최종 해결 이벤트
     }
-    else {
-        if (puzzleCLSceneArray[currentStep] != nullptr)
+    else if(isSolved && puzzleCLSceneArray[currentStep] != nullptr){ //해결이 다 됐지만 씬이 계속 재생되어도 될 경우
             puzzleCLSceneArray[cl_sceneArrayIdx]->display();
     }
     return isSolved;
