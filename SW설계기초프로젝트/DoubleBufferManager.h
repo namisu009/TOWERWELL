@@ -90,7 +90,7 @@ public:
         WriteConsoleOutputCharacterA(g_hScreen[g_nScreenIndex], string, strlen(string), CursorPosition, &dw); //<<이녀석
     }
 
-    static void drawText(const std::wstring& text, int x, int y, int fontSize = 60, const std::wstring& fontName = L"맑은 고딕") {
+    static void drawText(const std::wstring& text, int x, int y, int fontSize = 60, const std::wstring& fontName = L"Consolas") {
         // GDI 폰트와 텍스트 크기 설정
         HWND consoleWindow = GetConsoleWindow();
         HDC hdc = GetDC(consoleWindow);
@@ -98,7 +98,7 @@ public:
         RECT rcTextArea = { x, y, x + 500, y + 30 }; // 텍스트가 출력될 영역
         HFONT hFont = CreateFont(fontSize, 0, 0, 0, FW_BOLD, FALSE, FALSE, FALSE,
             DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
-            DEFAULT_PITCH | FF_DONTCARE, fontName.c_str());
+            DEFAULT_PITCH | FF_DONTCARE, fontName.empty() ? L"Consolas" : fontName.c_str());
 
         HFONT oldFont = (HFONT)SelectObject(hdc, hFont);
         SetTextColor(hdc, RGB(150, 150, 150));
