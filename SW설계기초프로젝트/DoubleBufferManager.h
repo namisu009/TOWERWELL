@@ -90,6 +90,28 @@ public:
         WriteConsoleOutputCharacterA(g_hScreen[g_nScreenIndex], string, strlen(string), CursorPosition, &dw); //<<이녀석
     }
 
+    static void drawText(const std::wstring& text, int x, int y, int fontSize = 60, const std::wstring& fontName = L"맑은 고딕") {
+        // GDI 폰트와 텍스트 크기 설정
+        HWND consoleWindow = GetConsoleWindow();
+        HDC hdc = GetDC(consoleWindow);
+
+        RECT rcTextArea = { x, y, x + 500, y + 30 }; // 텍스트가 출력될 영역
+        HFONT hFont = CreateFont(fontSize, 0, 0, 0, FW_BOLD, FALSE, FALSE, FALSE,
+            DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
+            DEFAULT_PITCH | FF_DONTCARE, fontName.c_str());
+
+        HFONT oldFont = (HFONT)SelectObject(hdc, hFont);
+        SetTextColor(hdc, RGB(150, 150, 150));
+        SetBkMode(hdc, TRANSPARENT);
+
+        DrawText(hdc, text.c_str(), -1, &rcTextArea, DT_SINGLELINE | DT_VCENTER | DT_LEFT);
+
+        SelectObject(hdc, oldFont);
+        DeleteObject(hFont);
+        ReleaseDC(consoleWindow, hdc);
+    }
+
+    /*
     static void drawText(wstring text, int x, int y, int width = cmdWidth - 50, int height = 90, COLORREF color = RGB(150, 150, 150), int fontSize = 90, const std::wstring& fontName = L"맑은 고딕") {
         //(type == 0 일 떄 << 숫자 입력X)
         // 활성 콘솔 버퍼의 핸들 가져오기
@@ -126,6 +148,7 @@ public:
         DeleteObject(hFont);
         ReleaseDC(consoleWindow, hdc);
     }
+    */
 };
 
 #endif

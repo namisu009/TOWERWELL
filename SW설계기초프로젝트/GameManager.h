@@ -99,6 +99,9 @@ public:
         RenderManager::render();
 
         //Å×½ºÆ®¾À
+        //
+        //SceneManager::createScene("Afdsafad");
+        //SceneManager::setAaction("Afdsafad", "Sister", ACTION_MOVE_X, 6, 10);
         Scene newScene;
 
         newScene.setAction("Sister", ACTION_MOVE_X, 6, 10);
@@ -130,6 +133,8 @@ public:
         newScene.setAction("Hero", ACTION_MOVE_X, 10, 10);
 
         //newScene.display();
+
+        //StageManager::.setScene("Scene_id_01");
     }
 
     void changeMapHandle() {
