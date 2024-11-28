@@ -23,12 +23,13 @@ public:
     static HANDLE* getHandle() {
         return &g_hScreen[g_nScreenIndex];
     }
+
     static void ScreenInit()
     {
-        COORD size = { cmdWidth + 10, cmdHeight + 10 };
+        COORD size = { cmdWidth , cmdHeight  };
         SetConsoleScreenBufferSize(hOutHandle, size);
 
-        system("mode con: cols=480 lines=170");
+        system("mode");
 
         CONSOLE_CURSOR_INFO cci;
 
@@ -50,6 +51,8 @@ public:
 
     }
 
+    //가로크기 -> cmdWidth * 3;
+    //세로크기 -> cmdHeight * 5;
     static void ScreenFlipping()
     {
         SetConsoleActiveScreenBuffer(g_hScreen[g_nScreenIndex]);
@@ -95,7 +98,24 @@ public:
         HWND consoleWindow = GetConsoleWindow();
         HDC hdc = GetDC(consoleWindow);
 
-        RECT rcTextArea = { x, y, x + 500, y + 30 }; // 텍스트가 출력될 영역
+        HANDLE activeBuffer = g_hScreen[g_nScreenIndex];
+        CONSOLE_SCREEN_BUFFER_INFO csbi;
+        GetConsoleScreenBufferInfo(activeBuffer, &csbi);
+
+        int consoleWidth = 0;
+        int consoleHeight = 0;
+
+        if (GetConsoleScreenBufferInfo(activeBuffer, &csbi)) {
+            consoleWidth = csbi.srWindow.Right - csbi.srWindow.Left + 1;
+            consoleHeight = csbi.srWindow.Bottom - csbi.srWindow.Top + 1;
+        }
+
+
+        int dialogPosX = x;
+        int dialogPosY = y;
+
+
+        RECT rcTextArea = { dialogPosX, dialogPosY, dialogPosX * 10, dialogPosY * 3 }; // 텍스트가 출력될 영역
         HFONT hFont = CreateFont(fontSize, 0, 0, 0, FW_BOLD, FALSE, FALSE, FALSE,
             DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
             DEFAULT_PITCH | FF_DONTCARE, fontName.empty() ? L"Consolas" : fontName.c_str());
@@ -104,7 +124,7 @@ public:
         SetTextColor(hdc, RGB(150, 150, 150));
         SetBkMode(hdc, TRANSPARENT);
 
-        DrawText(hdc, text.c_str(), -1, &rcTextArea, DT_SINGLELINE | DT_VCENTER | DT_LEFT);
+        DrawText(hdc, text.c_str(), -1, &rcTextArea, DT_SINGLELINE | DT_TOP | DT_LEFT);
 
         SelectObject(hdc, oldFont);
         DeleteObject(hFont);

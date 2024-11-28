@@ -200,7 +200,8 @@ void RenderManager::renderDialog() {
                     break;
                 }
             }
-             DoubleBufferManager::drawText(stringToWstring(renderLog->getText()), cmdWidth + renderLog_x, 1085);
+
+             DoubleBufferManager::drawText(stringToWstring(renderLog->getText()), (renderLog_x * 3) + renderLog_x, (renderLog_y * 5) + (renderLog_y));
             //DoubleBufferManager::drawText(L"우선테스트", cmdWidth + renderLog_x, 1080);
         }
 
@@ -208,7 +209,6 @@ void RenderManager::renderDialog() {
     else {
         DoubleBufferManager::ScreenFlipping();
     }
-
 }
 
 void RenderManager::renderInputText(string& input, int x, int y, int height) {

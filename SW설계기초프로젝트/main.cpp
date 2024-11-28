@@ -13,7 +13,7 @@ void setConsoleEncoding() {
 }
 
 int main() {
-    fullscreen();
+    //fullscreen();
     setConsoleEncoding();
     GameManager gameManager;
     gameManager.initialize();
