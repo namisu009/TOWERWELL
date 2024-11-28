@@ -29,7 +29,7 @@ public:
         COORD size = { cmdWidth , cmdHeight  };
         SetConsoleScreenBufferSize(hOutHandle, size);
 
-        system("mode");
+        system("mode con: cols=480 lines=170");
 
         CONSOLE_CURSOR_INFO cci;
 
