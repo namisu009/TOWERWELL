@@ -127,13 +127,16 @@ public:
         WriteConsoleOutputCharacterA(g_hScreen[g_nScreenIndex], string, strlen(string), CursorPosition, &dw); //<<이녀석
     }
 
-    static int GetDpiScaleFactor() {
-        HDC screen = GetDC(NULL);
-        int dpi = GetDeviceCaps(screen, LOGPIXELSX); // 수평 DPI 가져오기
-        ReleaseDC(NULL, screen);
+    static float GetDPIScalingFactor() {
+        HWND hWnd = GetConsoleWindow();
+        HDC hdc = GetDC(hWnd);
 
-        // 기본 DPI(96)를 기준으로 스케일링 비율 반환
-        return dpi / 96;
+        // 기본 DPI 값은 96 (100% 스케일)
+        int dpi = GetDeviceCaps(hdc, LOGPIXELSX);
+
+        ReleaseDC(hWnd, hdc);
+
+        return dpi / 96.0f; // DPI 스케일링 비율 반환
     }
 
     static RECT ConvertArrayToPixelRect(int arrayX, int arrayY, int arrayWidth, int arrayHeight) {
@@ -166,9 +169,9 @@ public:
         return rect;
     }
 
-    static int calculateTextHeight(HDC hdc, const std::string& text, RECT rect, int format) {
+    static int calculateTextHeight(HDC hdc, const std::string& text, RECT rect, int format, int fontSize) {
 
-        HFONT hFont = CreateFont(40, 0, 0, 0, FW_BOLD, FALSE, FALSE, FALSE,
+        HFONT hFont = CreateFont(fontSize, 0, 0, 0, FW_BOLD, FALSE, FALSE, FALSE,
             DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
             DEFAULT_PITCH | FF_DONTCARE, "Consolas");
 
@@ -214,12 +217,12 @@ public:
         CONSOLE_SCREEN_BUFFER_INFO csbi;
         GetConsoleScreenBufferInfo(g_hScreen[g_nScreenIndex], &csbi);
 
-        int dpiScale = GetDpiScaleFactor();
+        int dpiScale = GetDPIScalingFactor();
         int adjustedFontSize = fontSize * dpiScale;
 
         RECT rect = ConvertArrayToPixelRect(x, y, width, height);
 
-        int textHeight = calculateTextHeight(hdc, text, rect, DT_WORDBREAK | DT_CENTER);
+        int textHeight = calculateTextHeight(hdc, text, rect, DT_WORDBREAK | DT_CENTER, adjustedFontSize);
 
         RECT adjustedRect = adjustRectForVerticalCenter(rect, textHeight);
         adjustedRect = AdjustRect(adjustedRect, 0.05, 0);

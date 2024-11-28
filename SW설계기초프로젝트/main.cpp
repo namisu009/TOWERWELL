@@ -5,6 +5,11 @@
 #include <windows.h>
 #include <iostream>
 
+
+void EnableDPIAwareness() {
+    SetProcessDPIAware();
+}
+
 // 창 크기와 위치를 설정하는 함수
 void SetConsoleWindowPosition(int cmdWidth, int cmdHeight) {
     HWND consoleWindow = GetConsoleWindow();
@@ -56,7 +61,7 @@ void setConsoleEncoding() {
 
 int main() {
     //fullscreen();
-
+    EnableDPIAwareness();
     AdjustConsole(cmdWidth, cmdHeight);
 
     setConsoleEncoding();
