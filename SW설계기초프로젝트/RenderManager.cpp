@@ -201,7 +201,7 @@ void RenderManager::renderDialog() {
                 }
             }
 
-             DoubleBufferManager::drawText(stringToWstring(renderLog->getText()), (renderLog_x * 3) + renderLog_x, (renderLog_y * 5) + (renderLog_y));
+             DoubleBufferManager::drawText(renderLog->getText().c_str(), (renderLog_x * 3) + renderLog_x, (renderLog_y * 5) + (renderLog_y));
             //DoubleBufferManager::drawText(L"우선테스트", cmdWidth + renderLog_x, 1080);
         }
 
@@ -220,7 +220,7 @@ void RenderManager::renderInputText(string& input, int x, int y, int height) {
     string my = "비밀번호를 입력하세요: ";
     my += input;
     DoubleBufferManager::drawText(
-        stringToWstring(my), // 입력 문자열을 렌더링
+        my.c_str(), // 입력 문자열을 렌더링
         x, y                  // 시작 좌표
     );
 }

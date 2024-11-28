@@ -119,9 +119,9 @@ void ArtLoadManager::RenderArrayLoad(RenderArray* Array, const char* fileName) {
     Array->ASCIIArtArr = new char* [height];
     Array->drawornotArr = new int* [height];
     for (int y = 0; y < height; y++) {
-        Array->ASCIIArtArr[y] = new char[width];
+        Array->ASCIIArtArr[y] = new char[width + 1];
         Array->drawornotArr[y] = new int[width];
-        memset(Array->ASCIIArtArr[y], '\0', width * sizeof(char));
+        memset(Array->ASCIIArtArr[y], '\0', (width + 1) * sizeof(char));
         memset(Array->drawornotArr[y], 0, width * sizeof(int));
     }
 
