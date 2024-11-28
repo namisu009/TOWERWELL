@@ -221,6 +221,9 @@ public:
         // 숫자 키 입력 바인딩
         for (int key = '0'; key <= '9'; ++key) {
             bindInput(key, [&, key]() {
+                //if (userInput.size() > 4)
+                //    return;
+
                 userInput += static_cast<char>(key);
                 RenderManager::renderInputText(userInput, cmdWidth + GameObjectManager::getDialog("NUMBER_WINDOW")->getX(), 1085);    // 화면 갱신
             });

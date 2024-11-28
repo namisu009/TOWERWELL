@@ -7,7 +7,6 @@ class ReadOnlyPuzzle : public Puzzle
 {
 public: //해결조건 -> 그냥 읽기 (겟퍼즐아이디하면 끝 ㅇㅇ)
 	ReadOnlyPuzzle(string _id) : Puzzle(_id) {
-
 	}
 
 public:

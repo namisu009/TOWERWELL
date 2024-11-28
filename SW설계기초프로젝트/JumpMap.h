@@ -1,6 +1,7 @@
 #ifndef _JUMPMAP_H_
 #define _JUMPMAP_H_
 #include "Map.h"
+#include "Map.h"
 
 class JumpMap : public Map
 {
@@ -8,11 +9,12 @@ public:
 	JumpMap() {
 		setType(TYPE_JUMP);
 	}
-	bool isTrap(int x, int y) {
-		ScreenArray myScreen = getScreenArray();
-		if (myScreen.MapInfo[y + 1][x] == JUMP_TRAP) return true;
-		return false;
-	}
+
+    bool isTrap(int x, int y) {
+        ScreenArray myScreen = getScreenArray();
+        return myScreen.MapInfo[y][x] == JUMP_TRAP;
+    }
+
 };
 
 #endif

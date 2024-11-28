@@ -27,13 +27,11 @@ private:
 
 
 		//Dialoginit
-
-		GameObjectManager::createObejct("Dialog", "SC1_DL_01", "");
-		GameObjectManager::createObejct("Dialog", "SC1_DL_02", "열쇠를 얻었다");
-		GameObjectManager::createObejct("Dialog", "SC1_DL_03", "여동생: 소문이 사실인가봐! 저기 끝에 문이 있는 거 같은데 한 번 가보자.");
-		GameObjectManager::createObejct("Dialog", "PZ_NCL_DL", "히로: 문이 열리지 않아...");
-
-		
+		GameObjectManager::createObejct("Dialog", "NUMBER_WINDOW", "");
+		GameObjectManager::createObejct("Dialog", "PZ_NCL_DL", "문이 열리지 않아...");
+		GameObjectManager::createObejct("Dialog", "SC1_DL_01", "씬 테스트 대사입니다1");
+		GameObjectManager::createObejct("Dialog", "SC1_DL_02", "씬 테스트 대사입니다2");
+	
 		GameObjectManager::createObejct("Dialog", "S1_M1_PZ2_DL_00_00", "히로: 문이 열리지 않아... 열쇠가 필요할 거 같아.");
 		GameObjectManager::createObejct("Dialog", "S1_M1_PZ2_DL_00_01", "열쇠를 사용한다.");
 
@@ -60,6 +58,9 @@ private:
 		GameObjectManager::createObejct("Dialog", "S2_M3_PZ2_DL_00_05", "[물줄기]에 [화분]을 갖다대니 꽃이 폈다.");
 		GameObjectManager::createObejct("Dialog", "S2_M3_PZ2_DL_00_06", "[꽃이 핀 화분]을 얻었다.");
 
+		GameObjectManager::createObejct("Dialog", "S3_M1_PZ1_DL_00_00", "비밀번호가 틀렸습니다.");
+		GameObjectManager::createObejct("Dialog", "S3_M1_PZ1_DL_01_00", "비밀번호가 맞았습니다.");
+
 
 	};
 
@@ -84,7 +85,7 @@ private:
 		PuzzleManager::setPuzzleSceneDialog("S2_M1_PZ_01", 0, TYPE_NCL_DL, "S2_M1_PZ1_DL_00_00");
 		PuzzleManager::setPuzzleSceneDialog("S2_M1_PZ_01", 0, TYPE_CL_DL, "S2_M1_PZ1_DL_00_01");
 		PuzzleManager::setPuzzleSceneDialog("S2_M1_PZ_01", 1, TYPE_CL_DL, "S2_M1_PZ1_DL_00_02");
-		PuzzleManager::setPuzzleSceneDialog("S2_M1_PZ_01", 2, TYPE_CL_DL, "S2_M1_PZ1_DL_00_02");
+		//PuzzleManager::setPuzzleSceneDialog("S2_M1_PZ_01", 2, TYPE_CL_DL, "S2_M1_PZ1_DL_00_02");
 		
 		PuzzleManager::createPuzzle("S2_M2_PZ_01", TYPE_ITEM_PUZZLE); //서랍
 		PuzzleManager::setPuzzleConditionItem("S2_M2_PZ_01", 0, "S2_M1_PZ_KEY");
@@ -128,20 +129,20 @@ private:
 		PuzzleManager::setPuzzleSceneDialog("S2_M3_PZ_02", 2, TYPE_CL_DL, "S2_M3_PZ2_DL_00_06");
 		PuzzleManager::setPuzzleSceneLoop("S2_M3_PZ_02", 2, TYPE_CL_DL, false);
 
-		GameObjectManager::getCharacter("Hero")->addInventory("S2_M2_PZ_FLOWER");
-		GameObjectManager::getCharacter("Hero")->addInventory("S2_M2_PZ_LIGHTER");
-		GameObjectManager::getCharacter("Hero")->addInventory("S2_M2_PZ_POT");
+		//GameObjectManager::getCharacter("Hero")->addInventory("S2_M2_PZ_FLOWER");
+		//GameObjectManager::getCharacter("Hero")->addInventory("S2_M2_PZ_LIGHTER");
+		//GameObjectManager::getCharacter("Hero")->addInventory("S2_M2_PZ_POT");
 
 		PuzzleManager::createPuzzle("S3_M1_PZ_01", TYPE_NUMBER_PUZZLE);
 		PuzzleManager::setPuzzleDetailASCII("S3_M1_PZ_01", 0, "src\\S3_M1_PZ_DT_01_01.png");
 
+		PuzzleManager::setCorrectAnswer("S3_M1_PZ_01", 6);
 		PuzzleManager::setCorrectAnswer("S3_M1_PZ_01", 1);
 		PuzzleManager::setCorrectAnswer("S3_M1_PZ_01", 2);
-		PuzzleManager::setCorrectAnswer("S3_M1_PZ_01", 3);
-		PuzzleManager::setCorrectAnswer("S3_M1_PZ_01", 4);
+		PuzzleManager::setCorrectAnswer("S3_M1_PZ_01", 1);
 
-		//PuzzleManager::setPuzzleSceneDialog("S1_M1_PZ_01", TYPE_CL_DL, 0, "SC1_DL_01");
-		//PuzzleManager::setPuzzleSceneDialog("S1_M1_PZ_01", TYPE_CL_DL, 0, "SC1_DL_03");
+		PuzzleManager::setPuzzleSceneDialog("S3_M1_PZ_01", 0, TYPE_NCL_DL, "S3_M1_PZ1_DL_00_00");
+		PuzzleManager::setPuzzleSceneDialog("S3_M1_PZ_01", 0, TYPE_CL_DL, "S3_M1_PZ1_DL_01_00");
 
 		PuzzleManager::createPuzzle("S3_M1_PZ_02", TYPE_READ_PUZZLE);
 		PuzzleManager::setPuzzleDetailASCII("S3_M1_PZ_02", 0, "src\\S3_M1_PZ_DT_02_01.png");
@@ -149,7 +150,7 @@ private:
 
 	static void MapInit() {
 
-		MapManager::createMap("S2_J_MAP_01", TYPE_JUMP, "src\\S2_J_MAP_01.png", "src\\S2_J_MAP_INFO_01.png");
+		MapManager::createMap("S2_J_MAP_01", TYPE_JUMP, "src\\S3_J_MAP_01.png", "src\\S3_J_MAP_INFO_01.png");
 		MapManager::createMap("S2_P_MAP_01", TYPE_PUZZLE, "src\\S2_P_MAP_01.png", "src\\S2_P_MAP_INFO_01.png");
 		MapManager::createMap("S2_P_MAP_02", TYPE_PUZZLE, "src\\S2_P_MAP_02.png", "src\\S2_P_MAP_INFO_02.png");
 		MapManager::createMap("S2_P_MAP_03", TYPE_PUZZLE, "src\\S2_P_MAP_03.png", "src\\S2_P_MAP_INFO_03.png");
@@ -167,6 +168,7 @@ private:
 		StageManager::addMap(0, MapManager::getMap("S2_J_MAP_01"));
 		StageManager::addMap(0, MapManager::getMap("S3_P_MAP_01"));
 		StageManager::addMap(0, MapManager::getMap("S3_J_MAP_01"));
+
 
 		StageManager::setDoorID(0, "S2_P_MAP_01", MAP_EXIT, "S2_J_MAP_01");
 		StageManager::setDoorID(0, "S2_P_MAP_01", MAP_DOOR_01, "S2_P_MAP_02");

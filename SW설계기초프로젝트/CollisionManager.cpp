@@ -50,3 +50,20 @@ bool CollisionManager::checkFloorCollision(GameObject object, Map map) {
 
     return false; // 바닥과 충돌하지 않음
 }
+
+bool CollisionManager::checkTrapCollision(GameObject object, JumpMap* jumpMap) {
+    if (!jumpMap) return false;
+
+    int objectX = object.getFootX() - object.getWidth() / 2;
+    int objectY = object.getFootY() - object.getHeight() - 3;
+
+    for (int y = 0; y < object.getHeight(); ++y) {
+        for (int x = 0; x < object.getWidth(); ++x) {
+            if (jumpMap->isTrap(objectX + x, objectY + y)) {
+                return true;
+            }
+        }
+    }
+
+    return false;
+}

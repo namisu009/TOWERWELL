@@ -12,7 +12,7 @@ class Character : public GameObject
     bool isDash; // 대쉬 상태 여부
 
     float jumpStrength = -13.0f; // 점프 강도
-    float dashStrength = 11.0f;
+    float dashStrength = 12.0f;
 
     int dash_counter;
 

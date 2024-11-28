@@ -2,6 +2,10 @@
 #include <io.h>
 #include <fcntl.h>
 
+void fullscreen() {
+    SetConsoleDisplayMode(GetStdHandle(STD_OUTPUT_HANDLE), CONSOLE_FULLSCREEN_MODE, 0);
+}
+
 void setConsoleEncoding() {
     // 표준 출력과 입력을 UTF-8로 설정
     _setmode(_fileno(stdout), _O_U8TEXT); // 유니코드 출력
@@ -9,6 +13,7 @@ void setConsoleEncoding() {
 }
 
 int main() {
+    fullscreen();
     setConsoleEncoding();
     GameManager gameManager;
     gameManager.initialize();

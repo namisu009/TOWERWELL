@@ -55,11 +55,11 @@ class GameManager
 
     StageManager stageManager;
 
-    int offset = 16;
+    int offset = 7;
     int threadTime = 32;
     int renderTime = 32;
 
-    float sisterSpeed = 2.5f;
+    float sisterSpeed = 3.0f;
 
     unordered_map<pair<int, int>, playerAction, pair_hash> actionPositions;
     Map* currentMap;
@@ -157,8 +157,6 @@ public:
 
     // 물리 연산 루프5
     void physicsLoop() {
-
-
         chrono::steady_clock::time_point lastJumpTime;
         int jumpCooldown = 500;
 
@@ -202,14 +200,19 @@ public:
 
                 flag = 1;
             }
-            if (GetAsyncKeyState(0x46) & 0x8000) {
-                HandlerManager::processInput(0x46);
+
+            if (_kbhit()) {
+                int key = _getch();
+                if(key == 70 || key == 102)
+                    HandlerManager::processInput(0x46);
             }
 
             playerCharacter->dashState();
 
-
-
+            if (currentMap->getType() == TYPE_JUMP) {
+                handleTrapCollision(playerCharacter);
+                handleTrapCollision(sisterCharacter);
+            }
 
             // 충돌 처리 및 물리 연산
             while (CollisionManager::checkWallCollision(*playerCharacter, *currentMap)) {
@@ -295,6 +298,24 @@ public:
                 ++it;
             }
         }
+    }
+
+    void handleTrapCollision(GameObject * object) {
+        if (CollisionManager::checkTrapCollision(*object, (JumpMap*)currentMap)) {
+            resetPlayerAndSisterPositions();
+        }
+    }
+
+    void resetPlayerAndSisterPositions() {
+        playerCharacter->SetStartPosition(currentMap->getInitX(), currentMap->getInitY());
+        playerCharacter->setDx(0);
+        playerCharacter->setDy(0);
+        playerCharacter->land();
+
+        sisterCharacter->SetStartPosition(currentMap->getInitX() - offset, currentMap->getInitY());
+        sisterCharacter->setDx(0);
+        sisterCharacter->setDy(0);
+        sisterCharacter->land();
     }
 
     // 충돌 발생 시 위치 조정 함수

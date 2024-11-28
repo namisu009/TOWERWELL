@@ -32,7 +32,7 @@ enum MapInfo
 
 enum JumpMapInfo
 {
-	JUMP_TRAP,
+	JUMP_TRAP = 200,
 	JUMP_DOUBLEJUMP,
 };
 
