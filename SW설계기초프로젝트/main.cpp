@@ -5,10 +5,6 @@
 #include <windows.h>
 #include <iostream>
 
-// 문자 셀 크기
-const int CELL_WIDTH = 3;
-const int CELL_HEIGHT = 5;
-
 // 창 크기와 위치를 설정하는 함수
 void SetConsoleWindowPosition(int cmdWidth, int cmdHeight) {
     HWND consoleWindow = GetConsoleWindow();

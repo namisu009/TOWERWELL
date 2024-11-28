@@ -104,6 +104,8 @@ public:
         //SceneManager::setAaction("Afdsafad", "Sister", ACTION_MOVE_X, 6, 10);
         Scene newScene;
 
+        newScene.setDialog("SC1_DL_01");
+
         newScene.setAction("Sister", ACTION_MOVE_X, 6, 10);
 
 
@@ -113,7 +115,7 @@ public:
         newScene.setAction("Sister", ACTION_MOVE_X, 1);
         newScene.setDelay("Sister", 700);
 
-        newScene.setDialog("SC1_DL_01");
+
 
         newScene.setAction("Sister", ACTION_MOVE_X, 4, 6);
         newScene.setAction("Sister", ACTION_MOVE_X, 6, 10);

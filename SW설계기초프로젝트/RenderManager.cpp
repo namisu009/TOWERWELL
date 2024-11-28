@@ -201,7 +201,7 @@ void RenderManager::renderDialog() {
                 }
             }
 
-             DoubleBufferManager::drawText(renderLog->getText().c_str(), (renderLog_x * 3) + renderLog_x, (renderLog_y * 5) + (renderLog_y));
+             DoubleBufferManager::drawText(renderLog->getText().c_str(), renderLog_x, renderLog_y, renderLog_width, renderLog_height);
             //DoubleBufferManager::drawText(L"우선테스트", cmdWidth + renderLog_x, 1080);
         }
 

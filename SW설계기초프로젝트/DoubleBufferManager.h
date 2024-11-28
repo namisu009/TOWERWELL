@@ -19,6 +19,7 @@ private:
     static int g_nScreenIndex;
     static HANDLE g_hScreen[2];
 
+
 public:
     static HANDLE* getHandle() {
         return &g_hScreen[g_nScreenIndex];
@@ -126,30 +127,104 @@ public:
         WriteConsoleOutputCharacterA(g_hScreen[g_nScreenIndex], string, strlen(string), CursorPosition, &dw); //<<이녀석
     }
 
-    static void drawText(const char* text, int x, int y, int fontSize = 40, const char* fontName = "Consolas") {
+    static int GetDpiScaleFactor() {
+        HDC screen = GetDC(NULL);
+        int dpi = GetDeviceCaps(screen, LOGPIXELSX); // 수평 DPI 가져오기
+        ReleaseDC(NULL, screen);
+
+        // 기본 DPI(96)를 기준으로 스케일링 비율 반환
+        return dpi / 96;
+    }
+
+    static RECT ConvertArrayToPixelRect(int arrayX, int arrayY, int arrayWidth, int arrayHeight) {
+        RECT clientRect = GetConsoleClientRect();
+        int clientWidth = clientRect.right - clientRect.left;
+        int clientHeight = clientRect.bottom - clientRect.top;
+
+        // 배열 → 픽셀 변환 비율
+        float scaleX = clientWidth / 470.0f;
+        float scaleY = clientHeight / 169.0f;
+
+        // 픽셀 좌표 계산
+        RECT rect;
+        rect.left = arrayX * scaleX;
+        rect.top = arrayY * scaleY;
+        rect.right = rect.left + arrayWidth * scaleX;
+        rect.bottom = rect.top + arrayHeight * scaleY;
+
+        return rect;
+    }
+
+    static RECT adjustRectForVerticalCenter(RECT rect, int textHeight) {
+        int rectHeight = rect.bottom - rect.top;
+        int verticalOffset = (rectHeight - textHeight) / 2;
+
+        // RECT를 수직으로 이동
+        rect.top += verticalOffset;
+        rect.bottom = rect.top + textHeight;
+
+        return rect;
+    }
+
+    static int calculateTextHeight(HDC hdc, const std::string& text, RECT rect, int format) {
+
+        HFONT hFont = CreateFont(40, 0, 0, 0, FW_BOLD, FALSE, FALSE, FALSE,
+            DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
+            DEFAULT_PITCH | FF_DONTCARE, "Consolas");
+
+        HFONT oldFont = (HFONT)SelectObject(hdc, hFont);
+
+        RECT tempRect = rect;
+        // 텍스트 높이 계산
+        DrawTextA(hdc, text.c_str(), -1, &tempRect, format | DT_CALCRECT);
+
+        return tempRect.bottom - tempRect.top; // 계산된 텍스트 높이 반환
+    }
+
+
+    static RECT AdjustRect(const RECT& baseRect, float horizontalMarginRatio, float verticalMarginRatio) {
+        RECT adjustedRect = baseRect;
+
+        int horizontalMargin = (baseRect.right - baseRect.left) * horizontalMarginRatio;
+        int verticalMargin = (baseRect.bottom - baseRect.top) * verticalMarginRatio;
+
+        // RECT를 줄이는 작업
+        adjustedRect.left += horizontalMargin;
+        adjustedRect.right -= horizontalMargin * 4;
+        adjustedRect.top += verticalMargin;
+        adjustedRect.bottom -= verticalMargin;
+
+        return adjustedRect;
+    }
+
+    static RECT GetConsoleClientRect() {
+        HWND consoleWindow = GetConsoleWindow();
+        RECT clientRect;
+
+        // 클라이언트 영역 크기 가져오기
+        GetClientRect(consoleWindow, &clientRect);
+
+        return clientRect;
+    }
+
+    static void drawText(const char* text, int x, int y, int width = 0, int height = 0, int fontSize = 40, const char* fontName = "Consolas") {
         // GDI 폰트와 텍스트 크기 설정
         HWND consoleWindow = GetConsoleWindow();
         HDC hdc = GetDC(consoleWindow);
-
-        HANDLE activeBuffer = g_hScreen[g_nScreenIndex];
         CONSOLE_SCREEN_BUFFER_INFO csbi;
-        GetConsoleScreenBufferInfo(activeBuffer, &csbi);
+        GetConsoleScreenBufferInfo(g_hScreen[g_nScreenIndex], &csbi);
 
-        int consoleWidth = 0;
-        int consoleHeight = 0;
+        int dpiScale = GetDpiScaleFactor();
+        int adjustedFontSize = fontSize * dpiScale;
 
-        if (GetConsoleScreenBufferInfo(activeBuffer, &csbi)) {
-            consoleWidth = csbi.srWindow.Right - csbi.srWindow.Left + 1;
-            consoleHeight = csbi.srWindow.Bottom - csbi.srWindow.Top + 1;
-        }
+        RECT rect = ConvertArrayToPixelRect(x, y, width, height);
 
+        int textHeight = calculateTextHeight(hdc, text, rect, DT_WORDBREAK | DT_CENTER);
 
-        int dialogPosX = x;
-        int dialogPosY = y;
+        RECT adjustedRect = adjustRectForVerticalCenter(rect, textHeight);
+        adjustedRect = AdjustRect(adjustedRect, 0.05, 0);
 
-
-        RECT rcTextArea = { dialogPosX, dialogPosY, dialogPosX * 10, dialogPosY * 3 }; // 텍스트가 출력될 영역
-        HFONT hFont = CreateFont(fontSize, 0, 0, 0, FW_BOLD, FALSE, FALSE, FALSE,
+        HFONT hFont = CreateFont(adjustedFontSize, 0, 0, 0, FW_BOLD, FALSE, FALSE, FALSE,
             DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
             DEFAULT_PITCH | FF_DONTCARE, "Consolas");
 
@@ -157,7 +232,7 @@ public:
         SetTextColor(hdc, RGB(150, 150, 150));
         SetBkMode(hdc, TRANSPARENT);
 
-        DrawText(hdc, text, -1, &rcTextArea, DT_SINGLELINE | DT_TOP | DT_LEFT);
+        DrawText(hdc, text, -1, &adjustedRect, DT_LEFT | DT_WORDBREAK);
 
         SelectObject(hdc, oldFont);
         DeleteObject(hFont);
