@@ -29,7 +29,7 @@ private:
 		//Dialoginit
 		GameObjectManager::createObejct("Dialog", "NUMBER_WINDOW", "");
 		GameObjectManager::createObejct("Dialog", "PZ_NCL_DL", "문이 열리지 않아...");
-		GameObjectManager::createObejct("Dialog", "SC1_DL_01", "씬 테스트 대사입니다1");
+		GameObjectManager::createObejct("Dialog", "SC1_DL_01", "테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트테스트");
 		GameObjectManager::createObejct("Dialog", "SC1_DL_02", "씬 테스트 대사입니다2");
 	
 		GameObjectManager::createObejct("Dialog", "S1_M1_PZ2_DL_00_00", "히로: 문이 열리지 않아... 열쇠가 필요할 거 같아.");

@@ -61,7 +61,7 @@ void RenderManager::renderMap() {
     RenderArray& renderArray = currentMap->getRenderArray();
 
     int init_x = cmdWidth / 2 - renderArray.width / 2;
-    int init_y = cmdHeight - renderArray.height;
+    int init_y = cmdHeight - renderArray.height - 1;
 
     COORD pos = { 0, 0 };
 
@@ -85,7 +85,7 @@ void RenderManager::renderObject() {
         COORD pos = { 0, 0 };
         pos.X = object_x;
         pos.Y = object_y;
-
+      
         // 객체의 ASCII 아트를 특정 위치에 렌더링
         for (int y = 0; y < art->height; y++)
         {
@@ -102,6 +102,41 @@ void RenderManager::renderObject() {
                 }
             }
         }
+
+        /*
+
+        char** buf;
+        buf = (char**)malloc(sizeof(char*) * art->height);
+        for (int y = 0; y < art->height; y++)
+        {
+            buf[y] = (char*)malloc(sizeof(char) * (art->width + 1));
+            pos.Y = object_y + y;
+            for (int x = 0; x < art->width; x++)
+            {
+                pos.X = object_x + x;
+                buf[y][x] = art->ASCIIArtArr[y][x];
+
+                if (art->drawornotArr[y][x] == 0) {
+                    DWORD charsRead
+                    COORD readCoord = { pos.X, pos.Y };
+                    // 단일 문자를 읽으므로 &buf[y][x] 사용
+                    ReadConsoleOutputCharacterA(DoubleBufferManager::getHandle(), &buf[y][x], 1, readCoord, &charsRead);
+                }
+
+            }
+
+            pos.X = object_x;
+            buf[y][art->width] = '\0';
+            DoubleBufferManager::ScreenPrint(pos.X, pos.Y, buf[y]);
+        }
+
+        for (int y = 0; y < art->height; y++) {
+            free(buf[y]);
+        }
+        free(buf);
+
+        */
+
     }
 }
 
@@ -121,20 +156,33 @@ void RenderManager::renderPuzzle() {
         pos.X = object_x;
         pos.Y = object_y;
 
-        // 객체의 ASCII 아트를 특정 위치에 렌더링
-
+        char ** buf;
+        buf = (char**)malloc(sizeof(char*) * art->height);
         for (int y = 0; y < art->height; y++)
         {
+            buf[y] = (char*)malloc(sizeof(char) * (art->width + 1));
             pos.Y = object_y + y;
             for (int x = 0; x < art->width; x++)
             {
                 pos.X = object_x + x;
-                char buf[2] = { art->ASCIIArtArr[y][x], '\0' };
-
-                if (art->drawornotArr[y][x] == 1)
-                    DoubleBufferManager::ScreenprintAtPosition(pos.X, pos.Y, buf); //현재 화면이 캐릭터가 그려질 곳이 아니라면 맵 그리기
+                buf[y][x] = art->ASCIIArtArr[y][x];
+                if (art->drawornotArr[y][x] == 0)
+                {
+                    RenderArray& renderArray = currentMap->getRenderArray();
+                    buf[y][x] = renderArray.ASCIIArtArr[pos.Y][pos.X];
+                }
 
             }
+
+            pos.X = object_x;
+            buf[y][art->width - 1] = '\0';
+            DoubleBufferManager::ScreenPrint(pos.X, pos.Y, buf[y]);
+            /*
+            DWORD charsRead = 0;   // 읽은 문자 수
+
+            COORD readCoord = { pos.X , pos.Y };
+            ReadConsoleOutputCharacterA(hOutHandle, (LPSTR)buf[y][x], sizeof(char), readCoord, &charsRead);
+            */
         }
 
     }
