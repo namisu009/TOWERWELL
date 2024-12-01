@@ -79,6 +79,10 @@ public:
         eventDispatcher.subscribe(CHANGE_MAP_HANDLE, [this]() {
             changeMapHandle();
             });
+        eventDispatcher.subscribe(STAGE_COMPLETED, [this]() {
+            StageManager::moveToNextStage(); // 다음 스테이지로 이동
+            setMap(StageManager::getCurrentStage()->getCurrentMap());  // 첫 맵 실행
+        });
     }
 
     void initialize() {
@@ -140,13 +144,17 @@ public:
     }
 
     void changeMapHandle() {
-        if (currentMap->getType() == TYPE_PUZZLE) {
+        switch (currentMap->getType()) {
+        case TYPE_PUZZLE:
             HandlerManager::getPuzzleMapHandle(playerCharacter, StageManager::getCurrentStage());
-
             ((PuzzleMap*)currentMap)->addRenderPuzzle();
-        }
-        else if (currentMap->getType() == TYPE_JUMP) {
+            break;
+
+        case TYPE_JUMP:
             HandlerManager::getJumpMapHandle(playerCharacter, StageManager::getCurrentStage());
+            break;
+        default:
+            break;
         }
     }
 
@@ -157,6 +165,10 @@ public:
 
         playerCharacter->SetStartPosition(currentMap->getInitX(), currentMap->getInitY());
         sisterCharacter->SetStartPosition(currentMap->getInitX() - 0, currentMap->getInitY());
+
+        if (StageManager::getCurrentStage()->hasSceneForMap(currentMap->getMapId())) {
+            StageManager::getCurrentStage()->playScene();
+        }
 
         RenderManager::setRenderMap(currentMap);
         RenderManager::render();

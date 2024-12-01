@@ -48,7 +48,6 @@ public:
 		if (getIsSolved())
 			return true;
 
-
 		if (correctAnswerIdx != userAnswerIdx) 
 			return false;
 

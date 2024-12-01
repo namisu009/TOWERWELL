@@ -53,7 +53,7 @@ bool Puzzle::getIsSolved() {
 
 // 최종 해결 상태 확인
 bool Puzzle::isPuzzleSolved() {
-    if (getIsSolved()) //해결이 다 됐지만 씬이 계속 재생되어도 될 경우
+     if (getIsSolved()) //해결이 다 됐지만 씬이 계속 재생되어도 될 경우
         showSolvedState();
 
     return isSolved;

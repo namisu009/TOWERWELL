@@ -13,6 +13,16 @@ private:
     static unordered_map<int, Stage*> stages;
 
 public:
+    static void moveToNextStage() {
+        if (stages.count(currentStageId + 1)) {
+            currentStageId++;
+            stages[currentStageId]->playScene(); // 새로운 스테이지 씬 실행
+        }
+        else {
+            //RenderManager::renderMessage("No more stages!");
+        }
+    }
+
     static void setCurrentStage(int id) {
         currentStageId = id;
     }
@@ -23,7 +33,6 @@ public:
     static void addMap(int id, Map* map) {
         stages[id]->addMap(map);
     }
-
 
     static void setPuzzleId(int id, string key, PuzzleMapInfo colorId, string puzzleId) {
         Map* map = stages[id]->getMap(key);

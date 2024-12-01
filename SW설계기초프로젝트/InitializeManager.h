@@ -61,8 +61,6 @@ private:
 
 		GameObjectManager::createObejct("Dialog", "S3_M1_PZ1_DL_00_00", "비밀번호가 틀렸습니다.");
 		GameObjectManager::createObejct("Dialog", "S3_M1_PZ1_DL_01_00", "비밀번호가 맞았습니다.");
-
-
 	};
 
 	static void SceneInit() {
@@ -112,7 +110,6 @@ private:
 		PuzzleManager::setPuzzleSceneDialog("S2_M3_PZ_01", 1, TYPE_CL_DL, "S2_M3_PZ1_DL_00_02"); //화분을 얻었다.
 
 		PuzzleManager::setCompletedObjectASCII("S2_M3_PZ_01", "src\\S2_M3_PZ_01_03.png");
-
 
 		PuzzleManager::createPuzzle("S2_M3_PZ_02", TYPE_ITEM_PUZZLE); //균열 서랍
 		PuzzleManager::setPuzzleObjectASCII("S2_M3_PZ_02", 0, "src\\S2_M3_PZ_02_01.png");
@@ -164,33 +161,31 @@ private:
 			StageManager::addStage(i, eventDispathcer);
 		}
 
-
 		StageManager::addMap(0, MapManager::getMap("S2_P_MAP_01"));
 		StageManager::addMap(0, MapManager::getMap("S2_P_MAP_02"));
 		StageManager::addMap(0, MapManager::getMap("S2_P_MAP_03"));
 		StageManager::addMap(0, MapManager::getMap("S2_J_MAP_01"));
-		StageManager::addMap(0, MapManager::getMap("S3_P_MAP_01"));
-		StageManager::addMap(0, MapManager::getMap("S3_J_MAP_01"));
-
 
 		StageManager::setDoorID(0, "S2_P_MAP_01", MAP_EXIT, "S2_J_MAP_01");
 		StageManager::setDoorID(0, "S2_P_MAP_01", MAP_DOOR_01, "S2_P_MAP_02");
 		StageManager::setDoorID(0, "S2_P_MAP_01", MAP_DOOR_02, "S2_P_MAP_03");
 		StageManager::setDoorID(0, "S2_P_MAP_02", MAP_DOOR_02, "S2_P_MAP_01");
 		StageManager::setDoorID(0, "S2_P_MAP_03", MAP_DOOR_02, "S2_P_MAP_01");
-		StageManager::setDoorID(0, "S2_J_MAP_01", MAP_EXIT, "S3_P_MAP_01");
-		StageManager::setDoorID(0, "S3_P_MAP_01", MAP_EXIT, "S3_J_MAP_01");
+		StageManager::setDoorID(0, "S2_J_MAP_01", MAP_EXIT, "EXIT");
 
 		StageManager::setPuzzleId(0, "S2_P_MAP_01", PUZZLE_OBJ_01, "S2_M1_PZ_01");
-
 		StageManager::setPuzzleId(0, "S2_P_MAP_02", PUZZLE_OBJ_01, "S2_M2_PZ_01");
 		StageManager::setPuzzleId(0, "S2_P_MAP_02", PUZZLE_OBJ_02, "S2_M2_PZ_02");
-
 		StageManager::setPuzzleId(0, "S2_P_MAP_03", PUZZLE_OBJ_01, "S2_M3_PZ_01");
 		StageManager::setPuzzleId(0, "S2_P_MAP_03", PUZZLE_OBJ_02, "S2_M3_PZ_02");
 
-		StageManager::setPuzzleId(0, "S3_P_MAP_01", PUZZLE_OBJ_01, "S3_M1_PZ_01");
-		StageManager::setPuzzleId(0, "S3_P_MAP_01", PUZZLE_OBJ_02, "S3_M1_PZ_02");
+		StageManager::addMap(1, MapManager::getMap("S3_P_MAP_01"));
+		StageManager::addMap(1, MapManager::getMap("S3_J_MAP_01"));
+
+		StageManager::setDoorID(1, "S3_P_MAP_01", MAP_EXIT, "S3_J_MAP_01");
+
+		StageManager::setPuzzleId(1, "S3_P_MAP_01", PUZZLE_OBJ_01, "S3_M1_PZ_01");
+		StageManager::setPuzzleId(1, "S3_P_MAP_01", PUZZLE_OBJ_02, "S3_M1_PZ_02");
 
 		MapManager::setMapASCII("S2_P_MAP_01");
 		MapManager::setMapASCII("S2_P_MAP_02");
@@ -199,6 +194,7 @@ private:
 		MapManager::setMapASCII("S3_J_MAP_01");
 		MapManager::setMapASCII("S3_P_MAP_01");
 	};
+
 public:
 	static void init(EventDispatcher* eventDispatcher) {
 		Iteminit();
@@ -207,7 +203,6 @@ public:
 		PuzzleInit();
 		MapInit();
 		StageInit(eventDispatcher);
-
 		//순서
 		//오브젝트 생성
 		//씬 생성

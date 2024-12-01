@@ -89,8 +89,19 @@ public:
         return isCleared;
     }
 
+    bool hasSceneForMap(const string& mapId) const {
+        return scenes.count(mapId) > 0;
+    }
+
     void playScene() {
-        
+        if (!hasSceneForMap(currentMapId)) {
+            return;  // 현재 맵에 연결된 씬이 없으면 즉시 반환
+        }
+
+        Scene* scene = scenes[currentMapId];
+        if (scene) {
+            scene->display();
+        }
     }
 
     void onPuzzleSolved() {
@@ -99,7 +110,9 @@ public:
         pz->solvePuzzle();
 
         if (pz->isAllPuzzlesSolved())
+        {
             isCleared = true;
+        }
     }
 };
 

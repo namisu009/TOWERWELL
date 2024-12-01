@@ -68,9 +68,12 @@ public:
             int init_y = object->getFootY() - object->getHeight() / 2;
 
             if (stage->getDoorId(init_x, init_y) != "") {
-                stage->onMoveMap(init_x, init_y);
+                if (stage->getIsCleared()) {
+                    eventDispatcher->dispatch(STAGE_COMPLETED);
+                }
+                //stage->onMoveMap(init_x, init_y);
             }
-            });
+        });
     }
 
     static void getPuzzleMapHandle(Character* object, Stage* stage) {
@@ -111,7 +114,7 @@ public:
                     return;
 
                 // 퍼즐 해결 조건 처리
-                bool puzzleSolved = false;
+                bool puzzleSolved = puzzle->isPuzzleSolved();
 
                 if (puzzle->getType() == TYPE_ITEM_PUZZLE)
                     puzzleSolved = ((ItemPuzzle*)puzzle)->isSatisfyCondition(obj);
