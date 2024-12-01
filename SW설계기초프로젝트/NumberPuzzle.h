@@ -45,20 +45,42 @@ public:
 	}
 
 	bool isSatisfyCondition() {
-		int cnt = 0;
+		if (getIsSolved())
+			return true;
+
+
 		if (correctAnswerIdx != userAnswerIdx) 
 			return false;
 
-		for(int i = 0; i < correctAnswerIdx; i++) {
+		int cnt = 0;
+
+		for (int i = 0; i < correctAnswerIdx; i++) {
 			if (correctAnswer[i] == userAnswer[i])
 				cnt++;
 		}
+
+		userAnswerIdx = 0;
 
 		if (cnt == correctAnswerIdx)
 			return true;
 		else
 			return false;
+	}
 
+	bool isIntermediateSolved() {
+		int cnt = 0;
+
+		for (int i = 0; i < correctAnswerIdx; i++) {
+			if (correctAnswer[i] == userAnswer[i])
+				cnt++;
+		}
+
+		userAnswerIdx = 0;
+
+		if (cnt == correctAnswerIdx)
+			return true;
+		else
+			return false;
 	}
 };
 

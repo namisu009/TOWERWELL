@@ -92,6 +92,30 @@ public:
         puzzles[id]->setPuzzleReward(key, reward);
     }
 
+    static void setCompletedObjectASCII(string id, const char* filename) {
+        puzzles[id]->setCompletedObjectASCII(filename);
+    }
+
+    static void setCompletedDetailASCII(string id, const char* filename) {
+        puzzles[id]->setCompletedDetailASCII(filename);
+    }
+
+    static void setCompletedSceneDialog(string id, string cmd) {
+        puzzles[id]->setCompletedSceneDialog(cmd);
+    }
+    static void setCompletedSceneAction(string id, string cmd, ActionType command, int dt) {
+        puzzles[id]->setCompletedSceneAction(cmd, command, dt);
+    }
+    static void setCompletedSceneAction(string id, string cmd, ActionType command, int dt, int repeat) {
+        puzzles[id]->setCompletedSceneAction(cmd, command, dt, repeat);
+    }
+    static void setCompletedSceneDelay(string id, string cmd, int time) {
+        puzzles[id]->setCompletedSceneDelay(cmd, time);
+    }
+    static void setCompletedSceneLoop(string id, bool loop) {
+        puzzles[id]->setCompletedSceneLoop(loop);
+    }
+
     static void setPuzzleConditionItem(string id, int key, string name) {
         if (puzzles[id]->getType() == TYPE_ITEM_PUZZLE) {
             ((ItemPuzzle*)puzzles[id])->setPuzzleConditionItem(key, name);

@@ -32,7 +32,7 @@ public:
 	bool isSatisfyCondition(Character* player) {
 		//해당 이름의 아이템이 플레이어에게 존재하는지 확인하고 있으면 true
 		//없으면 false
-		if (itemArrayIdx >= puzzleCount)
+ 		if (itemArrayIdx >= puzzleCount)
 			return true;
 
 		string name = puzzleItemArray[itemArrayIdx];

@@ -188,7 +188,6 @@ void RenderManager::renderPuzzle() {
     }
 }
 
-
 void RenderManager::renderPuzzleDetail () {
     if (renderPzl == nullptr)
         return;
@@ -207,8 +206,6 @@ void RenderManager::renderPuzzleDetail () {
         pos.Y = renderPzl_y + y;
         DoubleBufferManager::ScreenPrint(renderPzl_x, pos.Y, art->ASCIIArtArr[y]);
     }
-
-
 }
 
 void RenderManager::renderDialog() {
@@ -267,9 +264,17 @@ void RenderManager::renderInputText(string& input, int x, int y, int height) {
 
     string my = "비밀번호를 입력하세요: ";
     my += input;
+
+    const auto& art = renderLog->getRenderArray(); // ASCII 아트 가져오기
+    int renderLog_x = renderLog->getX(); // X 좌표 가져오기
+    int renderLog_y = renderLog->getY(); // Y 좌표 가져오기
+    int renderLog_width = renderLog->getWidth(); // Y 좌표 가져오기
+    int renderLog_height = renderLog->getHeight(); // Y 좌표 가져오기
+
+
     DoubleBufferManager::drawText(
         my.c_str(), // 입력 문자열을 렌더링
-        x, y                  // 시작 좌표
+        renderLog_x, renderLog_y, renderLog_width, renderLog_height
     );
 }
 

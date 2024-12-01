@@ -65,7 +65,10 @@ public:
 
     void setPuzzleId(PuzzleMapInfo colorId, string PuzzleId) { //색상과 퍼즐id 매핑
         PuzzleMapping[(int)colorId] = PuzzleId;
-        puzzleCount++;
+
+        Puzzle* puzzle = PuzzleManager::getPuzzle(PuzzleId);
+        if(!puzzle->getIsSolved())
+            puzzleCount++;
 
         RenderManager::addPuzzle(PuzzleManager::getPuzzle(PuzzleId));
     }

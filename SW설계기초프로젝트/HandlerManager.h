@@ -111,7 +111,8 @@ public:
                     return;
 
                 // 퍼즐 해결 조건 처리
-                bool puzzleSolved = puzzle->isPuzzleSolved();
+                bool puzzleSolved = false;
+
                 if (puzzle->getType() == TYPE_ITEM_PUZZLE)
                     puzzleSolved = ((ItemPuzzle*)puzzle)->isSatisfyCondition(obj);
                 else

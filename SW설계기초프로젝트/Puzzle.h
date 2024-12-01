@@ -12,8 +12,11 @@ class Puzzle : public GameObject {
 private:
     RenderArray* puzzleObjectArray[3];
     RenderArray* puzzleDetailArray[3];
+
     Scene* puzzleCLSceneArray[3];
     Scene* puzzleNCLSceneArray[3]; //클리어 전 씬
+    
+
     string puzzleRewardArray[3];
 
     int objectArrayIdx;
@@ -28,8 +31,14 @@ private:
 
     bool isSolved;            // 최종 해결 여부
 
-protected:
+protected:    
+    
+    RenderArray* solvedObjectArray;
+    RenderArray* solvedDetailArray;
+    Scene* completedScene;         // 퍼즐 전체 완료 후 보여줄 Scene
+
     static const int puzzleCount = 3;
+
 
 public:
     // 생성자 및 소멸자
@@ -37,14 +46,14 @@ public:
     ~Puzzle();
 
     // 상태 확인 메서드
-    bool isIntermediateSolved();  // 중간 해결 조건 충족 여부 확인
-    bool isPuzzleSolved();        // 최종 해결 여부 확인
+    virtual bool isIntermediateSolved();  // 중간 해결 조건 충족 여부 확인
 
     // 퍼즐 진행 메서드
     bool progressPuzzle();        // 중간 해결 진행
     bool solvePuzzle();           // 최종 해결
+    bool isPuzzleSolved();        // 최종 해결 여부 확인
+    bool getIsSolved();        // 최종 해결 여부 확인
     void PuzzleNCLSceneDisplay(); //해결 못했을 때 보여줘야할 씬
-
 
     // 퍼즐 디테일 및 보상 관리
     void showPuzzleDetail();
@@ -64,6 +73,16 @@ public:
     void SetStartPosition(float init_x, float init_y) {
         setPosition(init_x, init_y);
     }
+
+    void setCompletedObjectASCII(const char* filename);
+    void setCompletedDetailASCII(const char* filename);
+    void setCompletedSceneDialog(string cmd);
+    void setCompletedSceneAction(string cmd, ActionType command, int dt);
+    void setCompletedSceneAction(string cmd, ActionType command, int dt, int repeat);
+    void setCompletedSceneDelay(string cmd, int time);
+    void setCompletedSceneLoop(bool loop);
+
+    void showSolvedState();
 
     // 조건 확인 및 해결
     virtual bool isSatisfyCondition() { return false; }; // 조건 만족 여부 확인
