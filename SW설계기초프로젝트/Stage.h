@@ -7,7 +7,9 @@
 #include "Puzzle.h"
 #include "Map.h"
 #include "PuzzleMap.h"
+#include "MapManager.h"
 #include "Scene.h"
+#include "SceneMananger.h"
 
 using namespace std;
 
@@ -23,9 +25,10 @@ private:
 
 public:
     Stage(){}
-    Stage(EventDispatcher* _eventDispatcher) : Stage() {
+    Stage(int id, EventDispatcher* _eventDispatcher) : Stage() {
         currentMapId = "";
         isCleared = false;
+        stageId = id;
         eventDispatcher = _eventDispatcher;
         StageEventDispatcher = new EventDispatcher();
         StageEventDispatcher->subscribe(PUZZLE_SOLVED, [this]() { this->onPuzzleSolved(); });
@@ -86,11 +89,18 @@ public:
     }
 
     bool getIsCleared() {
+        string mapKey = "S" + to_string(stageId) + "_P_MAP_01";
+        PuzzleMap* pz = MapManager::getPuzzleMap(mapKey);
+        if (pz->isAllPuzzlesSolved())
+        {
+            isCleared = true;
+        }
+
         return isCleared;
     }
 
-    bool hasSceneForMap(const string& mapId) const {
-        return scenes.count(mapId) > 0;
+    bool hasSceneForMap(const string& mapId) {
+        return scenes.count(mapId) > 0 && scenes[mapId]->getCmdSize() > 0;
     }
 
     void setScene(string id, Scene* scene) {
@@ -113,7 +123,7 @@ public:
 
     void onPuzzleSolved() {
         string mapKey = "S" + to_string(stageId + 1) + "_P_MAP_01";
-        PuzzleMap* pz = (PuzzleMap*) maps[currentMapId];
+        PuzzleMap* pz = (PuzzleMap*) maps[mapKey];
         pz->solvePuzzle();
 
         if (pz->isAllPuzzlesSolved())

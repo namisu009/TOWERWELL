@@ -91,7 +91,7 @@ public:
         playerCharacter = GameObjectManager::getCharacter("Hero");
         sisterCharacter = GameObjectManager::getCharacter("Sister");
         currentMap = StageManager::getCurrentStage()->getCurrentMap();
-        setMap(currentMap);
+
         playerCharacter->SetStartPosition(currentMap->getInitX(), currentMap->getInitY());
         sisterCharacter->SetStartPosition(currentMap->getInitX() - 0, currentMap->getInitY());
         RenderManager::ScreenInit();
@@ -100,7 +100,7 @@ public:
         RenderManager::addObject(playerCharacter);
         RenderManager::addObject(sisterCharacter);
 
-        RenderManager::render();
+        setMap(currentMap);
 
         //테스트씬
         //
@@ -187,9 +187,14 @@ public:
         playerCharacter->SetStartPosition(currentMap->getInitX(), currentMap->getInitY());
         sisterCharacter->SetStartPosition(currentMap->getInitX() - 0, currentMap->getInitY());
 
+        RenderManager::setRenderMap(currentMap);
+        RenderManager::render();
+
         if (StageManager::getCurrentStage()->hasSceneForMap(currentMap->getMapId())) {
             StageManager::getCurrentStage()->playScene();
         }
+
+        actionPositions.clear();
 
         RenderManager::setRenderMap(currentMap);
         RenderManager::render();
@@ -207,38 +212,67 @@ public:
             playerCharacter->setDx(0);
 
 
-            if (GetAsyncKeyState(VK_RIGHT) & 0x8000) {
-                HandlerManager::processInput(VK_RIGHT);
-                flag = 1;
+            playerCharacter->setDx(0);
+            if (playerCharacter->getIsWallClimbing()) {
+                if (GetAsyncKeyState(VK_UP) & 0x8000) {
+                    playerCharacter->climbUp();
+                }
+                else if (GetAsyncKeyState(VK_DOWN) & 0x8000) {
+                    playerCharacter->climbDown();
+                }
+                else if (!(GetAsyncKeyState(0x46) & 0x8000) ||
+                    GetAsyncKeyState(VK_LEFT) & 0x8000 ||
+                    GetAsyncKeyState(VK_RIGHT) & 0x8000) {
+                    playerCharacter->stopWallClimbing();
+                    sisterCharacter->stopWallClimbing();
+                }
             }
-            if (GetAsyncKeyState(VK_LEFT) & 0x8000) {
-                HandlerManager::processInput(VK_LEFT);
-                flag = 1;
-            }
-            if (GetAsyncKeyState(VK_UP) & 0x8000) {
+            else {
+                if (GetAsyncKeyState(0x46) & 0x8000) {
+                    int x = playerCharacter->getFootX();
+                    int y = playerCharacter->getFootY();
+
+                    if (currentMap->getType() == TYPE_JUMP && CollisionManager::checkWallAdjacent(*playerCharacter, (JumpMap*)currentMap)) {
+                        playerCharacter->startWallClimbing();
+                        sisterCharacter->startWallClimbing();
+                    }
+                }
+                if (GetAsyncKeyState(VK_RIGHT) & 0x8000) {
+                    HandlerManager::processInput(VK_RIGHT);
+                    flag = 1;
+                }
+                if (GetAsyncKeyState(VK_LEFT) & 0x8000) {
+                    HandlerManager::processInput(VK_LEFT);
+                    flag = 1;
+                }
+                if (GetAsyncKeyState(VK_UP) & 0x8000) {
 
 
-                auto now = chrono::steady_clock::now();
-                int elapsed = chrono::duration_cast<chrono::milliseconds>(now - lastJumpTime).count();
+                    auto now = chrono::steady_clock::now();
+                    int elapsed = chrono::duration_cast<chrono::milliseconds>(now - lastJumpTime).count();
+                    if (elapsed >= jumpCooldown) {
+                        HandlerManager::processInput(VK_UP);
+                        lastJumpTime = now;
 
-                if (elapsed >= jumpCooldown) {
-                    // 쿨타임이 지나면 점프
-                    HandlerManager::processInput(VK_UP);
-                    lastJumpTime = now;
+                        if ((playerCharacter->getisJumping() || playerCharacter->getCanDoubleJump()) && elapsed <= 900) {
+                            HandlerManager::processInput(VK_UP);
+                            lastJumpTime = now;
+
+                        }
+                        if (currentMap->getType() == TYPE_JUMP)
+                            actionPositions[{playerCharacter->getFootX(), playerCharacter->getFootY()}] = { ACTION_JUMP, playerCharacter->getDx() };
+                    }
+
+                    flag = 1;
+                }
+                if (GetAsyncKeyState(VK_SPACE) & 0x8000) {
+                    HandlerManager::processInput(VK_SPACE);
 
                     if (currentMap->getType() == TYPE_JUMP)
-                        actionPositions[{playerCharacter->getFootX(), playerCharacter->getFootY()}] = { ACTION_JUMP, playerCharacter->getDx() };
+                        actionPositions[{playerCharacter->getFootX(), playerCharacter->getFootY()}] = { ACTION_DASH, playerCharacter->getDx() };
+
+                    flag = 1;
                 }
-
-                flag = 1;
-            }
-            if (GetAsyncKeyState(VK_SPACE) & 0x8000) {
-                HandlerManager::processInput(VK_SPACE);
-
-                if (currentMap->getType() == TYPE_JUMP)
-                    actionPositions[{playerCharacter->getFootX(), playerCharacter->getFootY()}] = { ACTION_DASH, playerCharacter->getDx() };
-
-                flag = 1;
             }
 
             if (_kbhit()) {
@@ -325,7 +359,10 @@ public:
             if (abs(sisterX - actionX) <= offset && abs(sisterY - actionY) <= offset / 2) {
                 sisterCharacter->setDx(it->second.direction * 1.2);
                 if (it->second.actionType == ACTION_JUMP) {
-                    sisterCharacter->jump();
+                    sisterCharacter->jump(true);
+                }
+                if (it->second.actionType == ACTION_CLIMB) {
+                    sisterCharacter->jump(true);
                 }
                 else if (it->second.actionType == ACTION_DASH) {
                     sisterCharacter->dash();
@@ -351,7 +388,7 @@ public:
         playerCharacter->setDy(0);
         playerCharacter->land();
 
-        sisterCharacter->SetStartPosition(currentMap->getInitX() - offset, currentMap->getInitY());
+        sisterCharacter->SetStartPosition(currentMap->getInitX() - 0, currentMap->getInitY());
         sisterCharacter->setDx(0);
         sisterCharacter->setDy(0);
         sisterCharacter->land();

@@ -54,7 +54,7 @@ public:
 
         // 점프
         bindInput(VK_UP, [object]() {
-            object->jump();
+            object->jump(true);
             });
 
         // 대시

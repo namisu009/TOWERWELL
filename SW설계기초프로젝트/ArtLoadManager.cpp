@@ -183,10 +183,13 @@ void ArtLoadManager::ScreenArrayLoad(int type, Map* map, const char* fileName) {
             }
             else if (f1.val[2] == 0 && f1.val[1] == 255 && f1.val[0] == 255)
                 Array->MapInfo[y][x] = MAP_EXIT;
+
             if (type == TYPE_JUMP)
             {
                 if (f1.val[2] == 255 && f1.val[1] == 0 && f1.val[0] == 0)
                     Array->MapInfo[y][x] = JUMP_TRAP;
+                else if (f1.val[2] == 100 && f1.val[1] == 0 && f1.val[0] == 100)
+                    Array->MapInfo[y][x] = JUMP_WALL;
             }
 
             if (type == TYPE_PUZZLE) {

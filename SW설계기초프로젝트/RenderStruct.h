@@ -34,6 +34,7 @@ enum JumpMapInfo
 {
 	JUMP_TRAP = 200,
 	JUMP_DOUBLEJUMP,
+	JUMP_WALL
 };
 
 enum PuzzleMapInfo
@@ -73,6 +74,7 @@ enum ActionType {
 	ACTION_MOVE_Y,
 	ACTION_JUMP,
 	ACTION_DASH,
+	ACTION_CLIMB,
 };
 
 enum PuzzleSceneType {

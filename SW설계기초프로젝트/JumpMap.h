@@ -15,6 +15,11 @@ public:
         return myScreen.MapInfo[y][x] == JUMP_TRAP;
     }
 
+    bool isClimbWall(int x, int y) {
+        ScreenArray myScreen = getScreenArray();
+        return myScreen.MapInfo[y][x] == JUMP_WALL;
+    }
+
 };
 
 #endif

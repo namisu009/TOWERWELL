@@ -17,7 +17,7 @@ public:
     static void moveToNextStage() {
         if (stages.count(currentStageId + 1)) {
             currentStageId++;
-            stages[currentStageId]->playScene(); // 새로운 스테이지 씬 실행
+            //stages[currentStageId]->playScene(); // 새로운 스테이지 씬 실행
         }
         else {
             //RenderManager::renderMessage("No more stages!");
@@ -28,7 +28,7 @@ public:
         currentStageId = id;
     }
     static void addStage(int id, EventDispatcher* eventDispatcher) {
-        stages[id] = new Stage(eventDispatcher); // Stage 객체를 동적으로 생성
+        stages[id] = new Stage(id, eventDispatcher); // Stage 객체를 동적으로 생성
     }
 
     static void addMap(int id, Map* map) {

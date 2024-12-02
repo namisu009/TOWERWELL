@@ -95,36 +95,27 @@ private:
         GameObjectManager::createObject("Dialog", "S1_SC1_DL_03", "벽에 걸려있는 그림과 상호작용하려면 F 키를 눌러보세요.");
 
         S1_SC1.setAction("Sister", ACTION_MOVE_X, 6, 10);
-
         S1_SC1.setDelay("Sister", 64);
         S1_SC1.setAction("Sister", ACTION_MOVE_X, -1);
         S1_SC1.setDelay("Sister", 700);
         S1_SC1.setAction("Sister", ACTION_MOVE_X, 1);
         S1_SC1.setDelay("Sister", 700);
-
-        S1_SC1.setDetail("src\\export.png");
         S1_SC1.setDelay("Sister", 1000);
 
         S1_SC1.setDialog("S1_SC1_DL_01");
         S1_SC1.setDialog("S1_SC1_DL_02");
         S1_SC1.setDialog("S1_SC1_DL_03");
-        S1_SC1.setDetail("");
-
-        //S1_SC2 퍼즐1층 씬 (석판을 보고난 후)
-        GameObjectManager::createObject("Dialog", "S1_SC2_DL_01", "리안: 소문이 사실인가봐. 저기 끝에 문이 있는거 같은데 가보자!");
-
-        S1_SC2.setDialog("S1_SC2_DL_01");
 
         //S1_SC3 점프1층 씬
         GameObjectManager::createObject("Dialog", "S1_SC3_DL_01", "리안: 여긴 뭐야. 엄청 위험해보이잖아.");
         GameObjectManager::createObject("Dialog", "S1_SC3_DL_02", "리안: 잠시만, 이걸 그냥 맨몸으로 지나가겠다고 ? ");
-        GameObjectManager::createObject("Dialog", "S1_SC3_DL_03", "리안: 자 이러면 안전하게   갈 수 있을거야.");
+        GameObjectManager::createObject("Dialog", "S1_SC3_DL_03", "리안: 자 이러면 안전하게 갈 수 있을거야.");
         GameObjectManager::createObject("Dialog", "S1_SC3_DL_04", "상하좌우와 스페이스바로 이동과 점프, 그리고 대쉬를 할 수 있습니다.");
 
         S1_SC3.setDelay("Sister", 700);
         S1_SC3.setDialog("S1_SC3_DL_01");
         S1_SC3.setDialog("S1_SC3_DL_02");
-        S1_SC3.setAction("Sister", ACTION_MOVE_X, 2, 4);
+        S1_SC3.setAction("Sister", ACTION_MOVE_X, 2, 1);
         //S1_SC3 얼음 작렬
         S1_SC3.setDialog("S1_SC3_DL_03");
         S1_SC3.setDialog("S1_SC3_DL_04");
@@ -142,8 +133,8 @@ private:
         GameObjectManager::createObject("Dialog", "S2_SC1_DL_02", "리안: 성이라고 하기엔 관리가 제대로 안 된 것 같아.");
         GameObjectManager::createObject("Dialog", "S2_SC1_DL_03", "리안: 자, 어서 가보자!");
 
-        S1_SC3.setDelay("Sister", 700);
-        S1_SC3.setAction("Sister", ACTION_MOVE_X, 6, 15); //석상 앞에 여동생이 가게끔 조정
+        S2_SC1.setDelay("Sister", 700);
+        S2_SC1.setAction("Sister", ACTION_MOVE_X, 6, 15); //석상 앞에 여동생이 가게끔 조정
         S2_SC1.setDialog("S2_SC1_DL_01");
         S2_SC1.setDialog("S2_SC1_DL_02");
         S2_SC1.setDialog("S2_SC1_DL_03");
@@ -306,8 +297,10 @@ private:
 
     static void PuzzleInit() {
 
+        GameObjectManager::createObject("Dialog", "S1_SC2_DL_01", "리안: 소문이 사실인가봐. 저기 끝에 문이 있는거 같은데 가보자!");
         PuzzleManager::createPuzzle("S1_M1_PZ_01", TYPE_READ_PUZZLE); //석판
-        PuzzleManager::setCompletedObjectASCII("S1_M1_PZ_01", "src\\S6_M1_PZ_DT_01.png");
+        PuzzleManager::setCompletedDetailASCII("S1_M1_PZ_01", "src\\S6_M1_PZ_DT_01.png");
+        PuzzleManager::setCompletedSceneDialog("S1_M1_PZ_01", "S1_SC2_DL_01");
 
         PuzzleManager::createPuzzle("S2_M1_PZ_01", TYPE_READ_PUZZLE); //석상에 가로막힌 문
         PuzzleManager::setCompletedSceneDialog("S2_M1_PZ_01", "S7_M1_PZ1_DL_00_02");
@@ -418,6 +411,7 @@ private:
         for (int i = 1; i < 10; i++) {
             StageManager::addStage(i, eventDispathcer);
         }
+
         //E_S1
         StageManager::addMap(1, MapManager::getMap("S1_P_MAP_01"));
         StageManager::addMap(1, MapManager::getMap("S1_J_MAP_01"));
@@ -426,6 +420,10 @@ private:
         StageManager::setDoorID(1, "S1_J_MAP_01", MAP_EXIT, "EXIT");
 
         StageManager::setPuzzleId(1, "S1_P_MAP_01", PUZZLE_OBJ_02, "S1_M1_PZ_01");
+        //S1_SC2 퍼즐1층 씬 (석판을 보고난 후)
+
+        StageManager::setScene(1, "S1_P_MAP_01", "S1_SC1");
+        StageManager::setScene(1, "S1_J_MAP_01", "S1_SC3");
 
         //E_S2
         StageManager::addMap(2, MapManager::getMap("S2_P_MAP_01"));
@@ -435,6 +433,9 @@ private:
         StageManager::setDoorID(2, "S2_J_MAP_01", MAP_EXIT, "EXIT");
 
         StageManager::setPuzzleId(2, "S2_P_MAP_01", PUZZLE_OBJ_01, "S2_M1_PZ_01");
+
+        StageManager::setScene(2, "S2_P_MAP_01", "S2_SC1");
+        StageManager::setScene(2, "S2_J_MAP_01", "S2_SC2");
 
         //E_S3
         StageManager::addMap(3, MapManager::getMap("S3_P_MAP_01"));

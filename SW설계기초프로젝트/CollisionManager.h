@@ -13,6 +13,7 @@ public:
     static bool checkFloorCollision(GameObject object, Map map);
     static bool checkWallCollision(GameObject object, Map map);
     static bool checkTrapCollision(GameObject object, JumpMap* jumpMap);
+    static bool checkWallAdjacent(GameObject object, JumpMap* map);
 
 };
 

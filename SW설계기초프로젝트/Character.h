@@ -3,6 +3,9 @@
 #include "GameObject.h"
 #include "AnimationManager.h"
 #include "ItemManager.h"
+#include <chrono>
+
+using namespace std;
 
 class Character : public GameObject
 {
@@ -10,19 +13,35 @@ class Character : public GameObject
 
     bool isJumping; // 점프 상태 여부
     bool isDash; // 대쉬 상태 여부
-
+    bool canDoubleJump = false;
+    bool isWallClimbing = false;
     float jumpStrength = -13.0f; // 점프 강도
     float dashStrength = 12.0f;
 
     int dash_counter;
 
     AnimationManager* animationManager;
+    chrono::steady_clock::time_point lastJumpTime;
+    const int doubleJumpTimeWindow = 900;
+
+
 
 public:
     Character(string _id) : GameObject(_id) {
         dash_counter = 0;
-        isJumping = false; isDash = false;
+        isJumping = false; isDash = false;        
         animationManager = new AnimationManager();
+        lastJumpTime = chrono::steady_clock::now();
+    }
+
+    bool getCanDoubleJump() const { return canDoubleJump; }
+    bool getIsJumping() const { return isJumping; }
+    void enableDoubleJump() {
+        canDoubleJump = true;
+    }
+
+    void disableDoubleJump() {
+        canDoubleJump = false;
     }
 
     void initializeFromASCII(const char* filename)
@@ -95,13 +114,31 @@ public:
         GameObject::setDx(_dx);
 
     }
-
 	void jump() {
 		if (!isJumping && !isDash) { // 점프 중이지 않으면 점프 시작
 			setDy(jumpStrength); // 위로 이동하는 속도 설정
 			isJumping = true; // 점프 상태 설정
 		}
 	}
+
+    void jump(bool t) {
+        auto now = chrono::steady_clock::now();
+        int elapsed = chrono::duration_cast<chrono::milliseconds>(now - lastJumpTime).count();
+
+        if (!isJumping && !isDash) { // 점프 중이지 않으면 점프 시작
+            setDy(jumpStrength);
+            isJumping = true;
+            canDoubleJump = true;
+
+        }
+        else if (elapsed <= doubleJumpTimeWindow && canDoubleJump) {
+            setDy(jumpStrength * 1.1f);
+            canDoubleJump = false;
+        }
+        lastJumpTime = now;
+
+    }
+
 
     void dash() {
         if (!isDash && isJumping) { // 점프 중이지 않으면 점프 시작
@@ -125,7 +162,32 @@ public:
     void land() {
         isJumping = false; // 점프 상태 종료
         //dy = 0; // Y축 속도 초기화
+        canDoubleJump = false;
     }
+    
+    void startWallClimbing() {
+        setDx(0);
+        setDy(0);
+        isWallClimbing = true;
+
+    }
+
+    void stopWallClimbing() {
+        isWallClimbing = false;
+    }
+
+    void climbUp() {
+        setDy(-1);
+    }
+
+    void climbDown() {
+        setDy(1);
+    }
+
+    bool getIsWallClimbing() const {
+        return isWallClimbing;
+    }
+
 
 };
 
