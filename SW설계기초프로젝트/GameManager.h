@@ -108,6 +108,45 @@ public:
         //SceneManager::setAaction("Afdsafad", "Sister", ACTION_MOVE_X, 6, 10);
         Scene newScene;
 
+        GameObjectManager::createObejct("Dialog", "S6_SC1_DL_01", "히로: … 흔적들… 일기장… 그리고 이 탑.");
+        GameObjectManager::createObejct("Dialog", "S6_SC1_DL_02", "???: 많은 이들이 이곳에 발을 들였지.저마다 자신의 바람을 이루기 위해.");
+        GameObjectManager::createObejct("Dialog", "S6_SC1_DL_03", "히로: 넌 그걸 모두 지켜보고 있었겠지.");
+        GameObjectManager::createObejct("Dialog", "S6_SC1_DL_04", "???: 선택의 순간은 언제나 흥미롭지.희망과 절망이 교차하는 찰나를 보는 것만큼 흥미로운 일은 없으니까.");
+        GameObjectManager::createObejct("Dialog", "S6_SC1_DL_05", "히로: 기사… 그의 기록을 읽었어.그는 결국 이 탑을 떠나지 못했지.");
+
+
+        newScene.setDetail("src\\sc6\\sc01.png");
+        newScene.setDelay("Sister", 700);
+        newScene.setDialog("S6_SC1_DL_01");
+        //newScene.setDetail("src\\sc6\\sc02.png");
+        newScene.setDetail("src\\sc6\\sc03.png");
+        //newScene.setDetail("src\\sc6\\sc04.png");
+        newScene.setDetail("src\\sc6\\sc05.png");
+        //newScene.setDetail("src\\sc6\\sc06.png");
+        newScene.setDetail("src\\sc6\\sc07.png");
+        //newScene.setDetail("src\\sc6\\sc08.png");
+        newScene.setDetail("src\\sc6\\sc09.png");
+        //newScene.setDetail("src\\sc6\\sc10.png");
+        newScene.setDetail("src\\sc6\\sc11.png");
+        //newScene.setDetail("src\\sc6\\sc12.png");
+        newScene.setDetail("src\\sc6\\sc13.png");
+        newScene.setDelay("Sister", 700);
+        newScene.setDialog("S6_SC1_DL_02");
+        newScene.setDetail("src\\sc6\\sc14.png");
+        newScene.setDetail("src\\sc6\\sc15.png");
+        newScene.setDetail("src\\sc6\\sc16.png");
+        newScene.setDetail("src\\sc6\\sc17.png");
+        newScene.setDetail("src\\sc6\\sc18.png");
+        newScene.setDetail("src\\sc6\\sc19.png");
+        newScene.setDetail("src\\sc6\\sc20.png");
+        newScene.setDetail("src\\sc6\\sc21.png");
+        newScene.setDetail("src\\sc6\\sc22.png");
+        newScene.setDelay("Sister", 700);
+        newScene.setDialog("S6_SC1_DL_03");
+        newScene.setDialog("S6_SC1_DL_02");
+        newScene.setDetail("");
+
+        /*
         newScene.setScreen("src\\testani01.png");
         newScene.setScreen("src\\testani02.png");
         newScene.setScreen("src\\testani03.png");
@@ -129,21 +168,7 @@ public:
         newScene.setDialog("SC1_DL_02");
         newScene.setDetail("");
 
-
-        newScene.setAction("Sister", ACTION_MOVE_X, 4, 6);
-        newScene.setAction("Sister", ACTION_MOVE_X, 6, 10);
-        newScene.setAction("Sister", ACTION_MOVE_X, -1);
-        newScene.setAction("Sister", ACTION_MOVE_X, 0);
-        newScene.setDelay("Sister", 300);
-        newScene.setAction("Sister", ACTION_MOVE_Y, -3);
-        newScene.setAction("Sister", ACTION_MOVE_Y, 3);
-        newScene.setAction("Sister", ACTION_MOVE_Y, -3);
-        newScene.setAction("Sister", ACTION_MOVE_Y, 3);
-        newScene.setAction("Sister", ACTION_MOVE_Y, 0);
-
-        newScene.setDelay("Sister", 800);
-        newScene.setDelay("Sister", 800);
-
+        */
 
         newScene.display();
 

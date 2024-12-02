@@ -56,7 +56,7 @@ public:
 	void setDetail(const char* key) {
 		Command cmd;
 
-		GameObject* obj;
+		GameObject* obj = nullptr;
 
 		if (key != "")
 		{
@@ -173,10 +173,11 @@ public:
 			else if (cmd.getType() == TYPE_DETAIL) {
 				if (cmd.getObject() == nullptr && !sceneLoop)
 				{
-					delete RenderManager::getRenderDetail();
+					//delete RenderManager::getRenderDetail();
 				}
 
 				RenderManager::setRenderDetail(cmd.getObject());
+				Sleep(10);
 			}
 
 			RenderManager::render();
