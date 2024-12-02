@@ -11,7 +11,7 @@ Map* RenderManager::currentMap = nullptr;
 unordered_map<string, GameObject*> RenderManager::objectMap;
 unordered_map<string, Puzzle*> RenderManager::puzzleMap;
 Dialog* RenderManager::renderLog = nullptr;
-Puzzle * RenderManager::renderPzl = nullptr;
+GameObject * RenderManager::renderDetail = nullptr;
 EventDispatcher* RenderManager::eventDispatcher;
 
 using namespace std;
@@ -39,8 +39,12 @@ void RenderManager::removePuzzle(Puzzle* puzzle) {
     puzzleMap.erase(puzzle->getId());
 }
 
-void RenderManager::setRenderPuzzleDetail(string key) {
-    renderPzl = puzzleMap[key];
+void RenderManager::setRenderDetail(GameObject * object) {
+    renderDetail = object;
+}
+
+void RenderManager::setRenderDetail(string key) {
+    renderDetail = puzzleMap[key];
 }
 
 void RenderManager::setRenderDialog(Dialog* dialog) {
@@ -51,9 +55,18 @@ void RenderManager::ClearRenderDialog() {
     renderLog = nullptr;
 }
 
-void RenderManager::ClearRenderPuzzleDetail() {
-    renderPzl = nullptr;
+void RenderManager::ClearRenderDetail() {
+    renderDetail = nullptr;
 }
+
+GameObject* RenderManager::getRenderDetail() {
+    return renderDetail;
+}
+
+Map* RenderManager::getRenderMap() {
+    return currentMap;
+}
+
 
 void RenderManager::renderMap() {
     //DoubleBufferManager::ScreenClear();
@@ -188,23 +201,23 @@ void RenderManager::renderPuzzle() {
     }
 }
 
-void RenderManager::renderPuzzleDetail () {
-    if (renderPzl == nullptr)
+void RenderManager::renderScreenDetail () {
+    if (renderDetail == nullptr)
         return;
 
-    const auto& art = renderPzl->getDetailArray(); // ASCII 아트 가져오기
-    int renderPzl_x = renderPzl->getX(); // X 좌표 가져오기
-    int renderPzl_y = renderPzl->getY(); // Y 좌표 가져오기
+    const auto& art = renderDetail->getDetailArray(); // ASCII 아트 가져오기
+    int renderDetail_x = renderDetail->getX(); // X 좌표 가져오기
+    int renderDetail_y = renderDetail->getY(); // Y 좌표 가져오기
 
     COORD pos = { 0, 0 };
-    pos.X = renderPzl_x;
-    pos.Y = renderPzl_y;
+    pos.X = renderDetail_x;
+    pos.Y = renderDetail_y;
 
     // 객체의 ASCII 아트를 특정 위치에 렌더링
     for (int y = 0; y < art->height; y++)
     {
-        pos.Y = renderPzl_y + y;
-        DoubleBufferManager::ScreenPrint(renderPzl_x, pos.Y, art->ASCIIArtArr[y]);
+        pos.Y = renderDetail_y + y;
+        DoubleBufferManager::ScreenPrint(renderDetail_x, pos.Y, art->ASCIIArtArr[y]);
     }
 }
 
@@ -280,17 +293,24 @@ void RenderManager::renderInputText(string& input, int x, int y, int height) {
 
 void RenderManager::render() {
     renderClear();
+
+    if (renderDetail != nullptr) {
+        renderScreenDetail();
+        DoubleBufferManager::ScreenFlipping();
+        renderScreenDetail();
+
+        renderDialog();
+
+        return;
+    }
+
     renderMap();
 
     if (currentMap->getType() == TYPE_PUZZLE)
         renderPuzzle();
 
     renderObject();
-    if(renderPzl != nullptr){
-        renderPuzzleDetail();
-        DoubleBufferManager::ScreenFlipping();
-        renderPuzzleDetail();
-    }
+
     renderDialog();
 
 }

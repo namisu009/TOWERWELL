@@ -101,7 +101,10 @@ public:
         Scene* scene = scenes[currentMapId];
         if (scene) {
             scene->display();
+
+            RenderManager::setRenderMap(maps[currentMapId]);
         }
+
     }
 
     void onPuzzleSolved() {

@@ -23,7 +23,7 @@ private:
     static Map* currentMap; //Áö±Ý ±×·Á¾ßÇÒ ¸Ê
     static unordered_map<string, GameObject*> objectMap; // ·»´õ¸µÇÒ °´Ã¼ ¸®½ºÆ®
     static unordered_map<string, Puzzle*> puzzleMap; // ·»´õ¸µÇÒ °´Ã¼ ¸®½ºÆ®
-    static Puzzle* renderPzl;
+    static GameObject* renderDetail;
     static Dialog * renderLog;
     static EventDispatcher* eventDispatcher;
 
@@ -38,15 +38,16 @@ public:
     static void addPuzzle(Puzzle* puzzle); // ·»´õ¸µÇÒ ÆÛÁñ Ãß°¡
     static void removePuzzle(Puzzle* puzzle); // ·»´õ¸µÇÒ ÆÛÁñ Á¦°Å
 
-    static void setRenderPuzzleDetail(string key);
+    static void setRenderDetail(string key);
+    static void setRenderDetail(GameObject* object);
     static void setRenderDialog(Dialog* dialog);
     static void ClearRenderDialog();
-    static void ClearRenderPuzzleDetail();
+    static void ClearRenderDetail();
 
     static void renderMap();
     static void renderObject(); // ¸ðµç °´Ã¼ ·»´õ¸µ
     static void renderPuzzle(); // ¸ðµç °´Ã¼ ·»´õ¸µ
-    static void renderPuzzleDetail(); // ¸ðµç °´Ã¼ ·»´õ¸µ
+    static void renderScreenDetail(); // ¸ðµç °´Ã¼ ·»´õ¸µ
     static void renderDialog(); // ´ëÈ­Ã¢ ·»´õ¸µ
     static void clearObject(); //È­¸é¿¡¼­ °´Ã¼ Áö¿ì±â (¸Ê ±×¸®±â)
     static void renderInputText(string& input, int x, int y, int height = 90);
@@ -58,6 +59,9 @@ public:
     static void puzzleClear(); // ·»´õ¸µ Å¥ ÃÊ±âÈ­
     static void ScreenInit(); //È­¸éÃÊ±âÈ­
     static void setRenderMap(Map* map);
+
+    static GameObject* getRenderDetail();
+    static Map* getRenderMap();
 };
 
 

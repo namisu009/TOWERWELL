@@ -108,10 +108,13 @@ public:
         //SceneManager::setAaction("Afdsafad", "Sister", ACTION_MOVE_X, 6, 10);
         Scene newScene;
 
-        newScene.setDialog("SC1_DL_01");
+        newScene.setScreen("src\\testani01.png");
+        newScene.setScreen("src\\testani02.png");
+        newScene.setScreen("src\\testani03.png");
+        newScene.setScreen("src\\testani04.png");
+        newScene.setScreen("src\\testani05.png");
 
         newScene.setAction("Sister", ACTION_MOVE_X, 6, 10);
-
 
         newScene.setDelay("Sister", 64);
         newScene.setAction("Sister", ACTION_MOVE_X, -1);
@@ -119,6 +122,12 @@ public:
         newScene.setAction("Sister", ACTION_MOVE_X, 1);
         newScene.setDelay("Sister", 700);
 
+        newScene.setDetail("src\\export.png");
+        newScene.setDelay("Sister", 1000);
+
+        newScene.setDialog("SC1_DL_01");
+        newScene.setDialog("SC1_DL_02");
+        newScene.setDetail("");
 
 
         newScene.setAction("Sister", ACTION_MOVE_X, 4, 6);
@@ -133,13 +142,12 @@ public:
         newScene.setAction("Sister", ACTION_MOVE_Y, 0);
 
         newScene.setDelay("Sister", 800);
+        newScene.setDelay("Sister", 800);
 
-        newScene.setDialog("SC1_DL_02");
 
-        newScene.setAction("Hero", ACTION_MOVE_X, 10, 10);
+        newScene.display();
 
-        //newScene.display();
-
+        RenderManager::setRenderMap(currentMap);
         //StageManager::.setScene("Scene_id_01");
     }
 
@@ -281,7 +289,6 @@ public:
 
         while (CollisionManager::checkWallCollision(*sisterCharacter, *currentMap)) {
             adjustPositionForCollision(sisterCharacter);
-
         }
 
         PhysicsManager::applyGravity(sisterCharacter, currentMap);

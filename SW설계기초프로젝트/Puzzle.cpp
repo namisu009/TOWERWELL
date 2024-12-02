@@ -135,7 +135,7 @@ string Puzzle::getPuzzleReward() {
 }
 
 void Puzzle::showPuzzleDetail() {
-    RenderManager::setRenderPuzzleDetail(getId());
+    RenderManager::setRenderDetail(getId());
     RenderManager::render();
 }
 

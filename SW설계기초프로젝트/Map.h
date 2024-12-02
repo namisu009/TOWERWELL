@@ -61,8 +61,6 @@ public:
         init_y = screenArray.init_y;
     }
 
-
-
     void initializeFromASCII(const char* filename)// 맵 초기화 // 파일명 넣으면 ArtLoadManager << 의 RenderArray를 불러서 맵 초기화
     {
         artLoadManager->RenderArrayLoad(&renderArray, filename);

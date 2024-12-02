@@ -53,6 +53,8 @@ enum MapType {
 enum GameObjectType {
 	TYPE_CHARACTER,
 	TYPE_DIALOG,
+	TYPE_SCREEN,
+	TYPE_DETAIL,
 };
 
 enum PuzzleType {

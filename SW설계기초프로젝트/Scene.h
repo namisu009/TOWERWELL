@@ -18,7 +18,7 @@ class Scene
 	queue<Command> commands;
 public:
 	Scene() {
-		sceneLoop = true;
+		sceneLoop = false;
 	}
 
 	void setSceneLoop(bool _b) {
@@ -32,6 +32,42 @@ public:
 	void setDialog(string key) {
 		Command cmd;
 		cmd.setObject(GameObjectManager::getDialog(key));
+		commands.push(cmd);
+	}
+
+	void setScreen(const char* key) {
+		Command cmd;
+
+		Map* map;
+		map = new Map();
+		map->initializeFromASCII(key);
+		map->setMapId("SCREEN");
+
+		cmd.setMap(map);
+		cmd.setType(TYPE_SCREEN);
+
+		cmd.setAction([cmd]() mutable {
+			RenderManager::setRenderMap(cmd.getMap());
+		});
+
+		commands.push(cmd);
+	}
+
+	void setDetail(const char* key) {
+		Command cmd;
+
+		GameObject* obj;
+
+		if (key != "")
+		{
+			obj = new GameObject("Detail");
+			obj->initializeFromASCII(key);
+			obj->SetStartPosition(0, 0);
+			obj->setType(TYPE_DETAIL);
+			cmd.setObject(obj);
+		}
+
+		cmd.setType(TYPE_DETAIL);
 		commands.push(cmd);
 	}
 
@@ -87,7 +123,6 @@ public:
 			setAction(key1, key2, command, dt);
 	}
 
-
 	void setDelay(string key, int time) {
 		Command cmd;
 		cmd.setObject(GameObjectManager::getCharacter(key));
@@ -99,8 +134,9 @@ public:
 		Command cmd = commands.front();
 		commands.pop();
 
-		if (sceneLoop)
+		if (sceneLoop){
 			commands.push(cmd);
+		}
 
 		return cmd;
 	}
@@ -117,19 +153,42 @@ public:
 		while (size) {
 			Command cmd = popCommand();
 			
-			if (cmd.getType() == TYPE_CHARACTER) {
+			if (cmd.getType() == TYPE_CHARACTER || cmd.getType() == TYPE_SCREEN) {
+				if (!sceneLoop && cmd.getType() == TYPE_SCREEN && RenderManager::getRenderMap()->getMapId() == "SCREEN")
+				{
+					delete RenderManager::getRenderMap();
+				}
+
 				cmd.getAction()();
+
+				if (cmd.getType() == TYPE_SCREEN) {
+					Sleep(100);
+				}
 				Sleep(10);
 			}
 			else if (cmd.getType() == TYPE_DIALOG) {
 				RenderManager::setRenderDialog((Dialog*)cmd.getObject());
 				clearInputBuffer();
 			}
+			else if (cmd.getType() == TYPE_DETAIL) {
+				if (cmd.getObject() == nullptr && !sceneLoop)
+				{
+					delete RenderManager::getRenderDetail();
+				}
+
+				RenderManager::setRenderDetail(cmd.getObject());
+			}
 
 			RenderManager::render();
 			RenderManager::setRenderDialog(nullptr);  // 대화창 내용 초기화
+
+			if (!sceneLoop) {
+				if (cmd.getType() == TYPE_DIALOG)
+					delete cmd.getObject();
+			}
 			size--;
 		}
+
 	}
 };
 

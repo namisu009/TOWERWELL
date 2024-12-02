@@ -8,6 +8,7 @@
 class Command
 {
 	GameObject* object;
+	Map* map;
 	function<void()> cmd;
 	int type;
 
@@ -20,8 +21,17 @@ public:
 		object = _object;
 		type = object->getType();
 	}
+
+	void setMap(Map* _map) {
+		map = _map;
+	}
+
 	void setAction(const function<void()>& action) {
 		cmd = action;
+	}
+
+	void setType(int _type) {
+		type = _type;
 	}
 
 	int getType() {
@@ -32,6 +42,10 @@ public:
 	}
 	GameObject* getObject() {
 		return object;
+	}
+
+	Map* getMap() {
+		return map;
 	}
 };
 

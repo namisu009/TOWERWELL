@@ -13,6 +13,10 @@ public:
 	string getText() {
 		return text;
 	}
+
+	string setText(string _text) {
+		text = _text;
+	}
 };
 
 #endif

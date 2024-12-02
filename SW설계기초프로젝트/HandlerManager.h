@@ -73,6 +73,10 @@ public:
                 }
                 //stage->onMoveMap(init_x, init_y);
             }
+            });
+
+        bindInput(0x43, [object, stage]() {
+            //eventDispatcher->dispatch(MOVE_MAP);
         });
     }
 
@@ -154,7 +158,7 @@ public:
 
         int flag = 1;
         bindInput(VK_SPACE, []() {
-            RenderManager::ClearRenderPuzzleDetail();
+            RenderManager::ClearRenderDetail();
             eventDispatcher->dispatch(CHANGE_MAP_HANDLE);
         });
 
@@ -201,7 +205,7 @@ public:
                 // 퍼즐에 입력값 전달
                 if (numberPuzzle->setAnswer(answer)) {
                     RenderManager::setRenderDialog(nullptr);
-                    RenderManager::ClearRenderPuzzleDetail();
+                    RenderManager::ClearRenderDetail();
                     flag = 0; // 핸들링 종료
                 }
 
@@ -211,7 +215,7 @@ public:
 
         bindInput(VK_ESCAPE, [&]() {
             RenderManager::setRenderDialog(nullptr);
-            RenderManager::ClearRenderPuzzleDetail();
+            RenderManager::ClearRenderDetail();
             flag = 0; // 핸들링 종료
         });
 
