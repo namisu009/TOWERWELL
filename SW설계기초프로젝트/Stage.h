@@ -93,6 +93,10 @@ public:
         return scenes.count(mapId) > 0;
     }
 
+    void setScene(string id, Scene* scene) {
+        scenes[id] = scene;
+    }
+
     void playScene() {
         if (!hasSceneForMap(currentMapId)) {
             return;  // 현재 맵에 연결된 씬이 없으면 즉시 반환

@@ -19,7 +19,7 @@ public:
 	static void setEventDispatcher(EventDispatcher* dispatcher) {
 		eventDispatcher = dispatcher;
 	}
-	static void createObejct(const char* type, string id, const char* filename) {
+	static void createObject(const char* type, string id, const char* filename) {
 		GameObject* object = NULL;
 		if (type == "Character") {
 			object = new Character(id);

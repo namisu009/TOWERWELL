@@ -67,7 +67,7 @@ public:
             int init_x = object->getFootX();
             int init_y = object->getFootY() - object->getHeight() / 2;
 
-            if (stage->getDoorId(init_x, init_y) != "") {
+            if (stage->getDoorId(init_x, init_y) == "EXIT") {
                 if (stage->getIsCleared()) {
                     eventDispatcher->dispatch(STAGE_COMPLETED);
                 }

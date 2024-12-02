@@ -3,6 +3,7 @@
 
 #include <unordered_map>
 #include "Stage.h"
+#include "SceneMananger.h"
 #include "Map.h"
 
 using namespace std;
@@ -32,6 +33,10 @@ public:
 
     static void addMap(int id, Map* map) {
         stages[id]->addMap(map);
+    }
+
+    static void setScene(int id, string mapid, string sceneid) {
+        stages[id]->setScene(mapid, SceneMananger::getScene(sceneid));
     }
 
     static void setPuzzleId(int id, string key, PuzzleMapInfo colorId, string puzzleId) {

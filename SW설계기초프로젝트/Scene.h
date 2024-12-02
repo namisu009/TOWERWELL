@@ -175,9 +175,8 @@ public:
 				{
 					//delete RenderManager::getRenderDetail();
 				}
-
 				RenderManager::setRenderDetail(cmd.getObject());
-				Sleep(10);
+				Sleep(100);
 			}
 
 			RenderManager::render();

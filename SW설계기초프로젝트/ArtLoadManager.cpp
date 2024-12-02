@@ -89,7 +89,7 @@ void ArtLoadManager::ExpandThePuzzleInfo(int _y, int _x, string name, IplImage* 
 
     Puzzle* p = PuzzleManager::getPuzzle(name);
 
-    if (p == nullptr) return;
+    if (p->getObjectArray() == nullptr) return;
     int width = p->getObjectArray()->width / 2;
     int height = p->getObjectArray()->height;
 
@@ -195,7 +195,6 @@ void ArtLoadManager::ScreenArrayLoad(int type, Map* map, const char* fileName) {
                     Array->MapInfo[y][x] = MAP_DOOR_01;
                 else if (f1.val[2] == 0 && f1.val[1] == 200 && f1.val[0] == 200)
                     Array->MapInfo[y][x] = MAP_DOOR_02;
-
                 else if (f1.val[2] == 0 && f1.val[1] == 0 && f1.val[0] == 50){
                     Array->ObjectInfo[y][x] = PUZZLE_OBJ_01; flag = 1;
                 }
@@ -205,8 +204,26 @@ void ArtLoadManager::ScreenArrayLoad(int type, Map* map, const char* fileName) {
                 else if (f1.val[2] == 0 && f1.val[1] == 0 && f1.val[0] == 150){
                     Array->ObjectInfo[y][x] = PUZZLE_OBJ_03; flag = 1;
                 }
-                else if (f1.val[0] == 0 && f1.val[1] == 0 && f1.val[0] == 200){
+                else if (f1.val[2] == 0 && f1.val[1] == 0 && f1.val[0] == 200){
                     Array->ObjectInfo[y][x] = PUZZLE_OBJ_04; flag = 1;
+                }
+                else if (f1.val[2] == 0 && f1.val[1] == 0 && f1.val[0] == 5) {
+                    Array->ObjectInfo[y][x] = PUZZLE_OBJ_05; flag = 1;
+                }
+                else if (f1.val[2] == 0 && f1.val[1] == 0 && f1.val[0] == 10) {
+                    Array->ObjectInfo[y][x] = PUZZLE_OBJ_06; flag = 1;
+                }
+                else if (f1.val[2] == 0 && f1.val[1] == 0 && f1.val[0] == 15) {
+                    Array->ObjectInfo[y][x] = PUZZLE_OBJ_07; flag = 1;
+                }
+                else if (f1.val[2] == 0 && f1.val[1] == 0 && f1.val[0] == 20) {
+                    Array->ObjectInfo[y][x] = PUZZLE_OBJ_08; flag = 1;
+                }
+                else if (f1.val[2] == 0 && f1.val[1] == 0 && f1.val[0] == 25) {
+                    Array->ObjectInfo[y][x] = PUZZLE_OBJ_09; flag = 1;
+                }
+                else if (f1.val[2] == 0 && f1.val[1] == 0 && f1.val[0] == 30) {
+                    Array->ObjectInfo[y][x] = PUZZLE_OBJ_10; flag = 1;
                 }
 
                 if(flag){
