@@ -37,6 +37,11 @@ public:
 	int getType() {
 		return type;
 	}
+
+	void setPosition() {
+
+	}
+
 	function<void()> getAction() {
 		return cmd;
 	}

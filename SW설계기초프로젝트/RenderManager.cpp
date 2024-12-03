@@ -263,6 +263,7 @@ void RenderManager::renderDialog() {
             //DoubleBufferManager::drawText(L"우선테스트", cmdWidth + renderLog_x, 1080);
         }
 
+
     }
     else {
         DoubleBufferManager::ScreenFlipping();
@@ -294,15 +295,7 @@ void RenderManager::renderInputText(string& input, int x, int y, int height) {
 void RenderManager::render() {
     renderClear();
 
-    if (renderDetail != nullptr) {
-        renderScreenDetail();
-        DoubleBufferManager::ScreenFlipping();
-        renderScreenDetail();
 
-        renderDialog();
-
-        return;
-    }
 
     renderMap();
 
@@ -310,6 +303,15 @@ void RenderManager::render() {
         renderPuzzle();
 
     renderObject();
+
+    if (renderDetail != nullptr) {
+        renderScreenDetail();
+        DoubleBufferManager::ScreenFlipping();
+        renderScreenDetail();
+        //renderDialog();
+
+        //return;
+    }
 
     renderDialog();
 

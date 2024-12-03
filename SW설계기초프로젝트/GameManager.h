@@ -108,31 +108,94 @@ public:
         //SceneManager::setAaction("Afdsafad", "Sister", ACTION_MOVE_X, 6, 10);
         Scene newScene;
 
-        GameObjectManager::createObject("Dialog", "S6_SC1_DL_01", "테슻트1");
-        GameObjectManager::createObject("Dialog", "S6_SC1_DL_02", "테슻트2");
-        GameObjectManager::createObject("Dialog", "S6_SC1_DL_03", "테슻트3");
-        GameObjectManager::createObject("Dialog", "S6_SC1_DL_04", "테슻트4");
-        GameObjectManager::createObject("Dialog", "S6_SC1_DL_05", "테슻트5");
-
-        newScene.setDetail("src\\sc6\\sc13.png");
-
-        newScene.setDetail("src\\sc6\\sc01.png");
-        newScene.setDialog("S6_SC1_DL_01");
+        GameObjectManager::createObject("Character", "Hood", "src\\hero_idle_right_01.png");
+        GameObjectManager::getCharacter("Hood")->setAnimation("IDLE_RIGHT", 1, "src\\hero_idle_right_02.png");
+        GameObjectManager::getCharacter("Hood")->setAnimation("IDLE_LEFT", "src\\hero_idle_left_01.png", "src\\hero_idle_left_02.png");
+        GameObjectManager::getCharacter("Hood")->setAnimation("RIGHT", "src\\hero_right_01.png", "src\\hero_right_02.png");
+        GameObjectManager::getCharacter("Hood")->setAnimation("LEFT", "src\\hero_left_01.png", "src\\hero_left_02.png");
         newScene.setDelay("Sister", 700);
-        newScene.setDialog("S6_SC1_DL_02");
-        newScene.setDetail("src\\sc6\\sc14.png");
-        newScene.setDetail("src\\sc6\\sc15.png");
-        newScene.setDetail("src\\sc6\\sc16.png");
-        newScene.setDetail("src\\sc6\\sc17.png");
-        newScene.setDetail("src\\sc6\\sc18.png");
-        newScene.setDetail("src\\sc6\\sc19.png");
-        newScene.setDetail("src\\sc6\\sc20.png");
-        newScene.setDetail("src\\sc6\\sc21.png");
-        newScene.setDetail("src\\sc6\\sc22.png");   
+        GameObjectManager::createObject("Dialog", "S5_SC1_DL_01", "리안: 드디어 우물이 보인다!");
+        newScene.setDialog("S5_SC1_DL_01");
+
+        newScene.setAction("Sister", ACTION_MOVE_X, 3, 7);
+        GameObjectManager::createObject("Dialog", "S5_SC1_DL_02", "리안: 정말 신비롭다… 이렇게 가까이 오다니 믿기지 않아.");
+        newScene.setDialog("S5_SC1_DL_02");
+
+        //복면 움직이기
+        newScene.setCharacterPosition("Hood", 200, GameObjectManager::getCharacter("Hero")->getY());
+        newScene.setRenderCharacter("Hood");
+        newScene.setAction("Hood", ACTION_MOVE_X, -3, 2);
+        newScene.setDelay("Hood", 700);
+        GameObjectManager::createObject("Dialog", "S5_SC1_DL_03", "히로: 여동생한테 누군가 있다고 말하는 대화창");
+        newScene.setDialog("S5_SC1_DL_03");
+
+        //두리번 거리는 여동생
         newScene.setDelay("Sister", 700);
-        newScene.setDialog("S6_SC1_DL_03");
-        newScene.setDialog("S6_SC1_DL_02");
+        newScene.setAction("Sister", ACTION_MOVE_X, -1, 1);
+        newScene.setDelay("Sister", 700);
+        newScene.setAction("Sister", ACTION_MOVE_X, 1, 1);
+        newScene.setDelay("Sister", 700);
+        newScene.setAction("Sister", ACTION_MOVE_X, -1, 1);
+        newScene.setDelay("Sister", 700);
+        GameObjectManager::createObject("Dialog", "S5_SC1_DL_04", "리안: 뭐? 어디?");
+        newScene.setDialog("S5_SC1_DL_04");
+
+        newScene.setDelay("Hood", 700);
+        GameObjectManager::createObject("Dialog", "S5_SC1_DL_05", "???: ……");
+        newScene.setDialog("S5_SC1_DL_05");
+        // (갑자기 빠르게 다가오는 복면녀. 히로는 앞을 막아서 하려 하지만 복면녀는 이를 단숨에 제치고 리안을 찌른다.)
+        //씬 디테일
+
+        newScene.setAction("Hood", ACTION_MOVE_X, -18, 5);
+        //newScene.setAction("Hero", ACTION_MOVE_X, 5, 5);
+        newScene.setAction("Sister", ACTION_MOVE_X, -1, 3);
+        newScene.setAction("Hood", ACTION_MOVE_X, -3);
+        newScene.setDelay("Hood", 100);
+        newScene.setDetail("src\\testsc.png");
+        newScene.setDelay("Hood", 700);
+        GameObjectManager::createObject("Dialog", "S5_SC1_DL_06", "리안: (비명)");
+        GameObjectManager::createObject("Dialog", "S5_SC1_DL_07", "히로: 리안!! 안 돼!!");
+        newScene.setDialog("S5_SC1_DL_06");
+        newScene.setDialog("S5_SC1_DL_07");
+        //(복면녀는 주인공이 놀란 사이 어디론가 도망치듯 사라진다) setAction
         newScene.setDetail("");
+
+        newScene.setAction("Hood", ACTION_MOVE_X, 12, 6);
+        newScene.removeRenderCharacter("Hood");
+
+        newScene.setDelay("Hood", 700);
+
+
+        //리안 죽은 장면
+        newScene.setDetail("src\\testsc2.png");
+        newScene.setDelay("Hood", 700);
+
+        GameObjectManager::createObject("Dialog", "S5_SC1_DL_08", "리안: … ");
+        GameObjectManager::createObject("Dialog", "S5_SC1_DL_09", "히로: 리안… 제발 일어나줘… 눈을 떠봐!");
+        newScene.setDialog("S5_SC1_DL_08");
+        newScene.setDialog("S5_SC1_DL_09");
+        newScene.setDetail("");
+
+        GameObjectManager::createObject("Dialog", "S5_SC1_DL_10", "???: 딱하기도 하지.");
+        GameObjectManager::createObject("Dialog", "S5_SC1_DL_11", "???: 딱하기도 하지.");
+        GameObjectManager::createObject("Dialog", "S5_SC1_DL_12", "우물에서 신비로우나 공허한 목소리가 들려온다.");
+        GameObjectManager::createObject("Dialog", "S5_SC1_DL_13", "히로: 거짓말하지 마! 네가 꾸민 짓이잖아! 그 두건은 또 뭐야?!");
+        GameObjectManager::createObject("Dialog", "S5_SC1_DL_14", "???: 나는 오래전부터 이 옥상에 존재했던 우물일 뿐이다.");
+        GameObjectManager::createObject("Dialog", "S5_SC1_DL_15", "우물: 그리고 나는 그저 소원을 들어주는 우물로서 여기에 있을 뿐이다.");
+        GameObjectManager::createObject("Dialog", "S5_SC1_DL_16", "히로: 그딴 말 말고, 당장 리안을 살려내!");
+        GameObjectManager::createObject("Dialog", "S5_SC1_DL_17", "우물: 모든 소원에는 대가가 따른다. 네 여동생을 살리고 싶다면…");
+        GameObjectManager::createObject("Dialog", "S5_SC1_DL_18", "우물: 탑에서 가장 빛나는 것을 가지고 우물 앞으로 가져오게.");
+        GameObjectManager::createObject("Dialog", "S5_SC1_DL_19", "우물: 그리하면 내가 응답할 것이다.");
+        GameObjectManager::createObject("Dialog", "S5_SC1_DL_20", "히로: 대가… 탑에서 가장 빛나는 것…?");
+        GameObjectManager::createObject("Dialog", "S5_SC1_DL_21", "히로: 네가 없는 세상은 의미가 없어. 어떤 대가라도 치르겠어.");
+
+        for (int i = 10; i <= 21;i++)
+        {
+            string c = "S5_SC1_DL_";
+            c += to_string(i);
+            newScene.setDialog(c.c_str());
+        }
+        
 
         /*
         newScene.setScreen("src\\testani01.png");
@@ -158,7 +221,7 @@ public:
 
         */
 
-        //newScene.display();
+        newScene.display();
 
         RenderManager::setRenderMap(currentMap);
         //StageManager::.setScene("Scene_id_01");

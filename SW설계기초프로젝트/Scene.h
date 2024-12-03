@@ -29,6 +29,22 @@ public:
 		return commands.size();
 	}
 
+	void setRenderCharacter(string key) {
+		Command cmd;
+		cmd.setObject(GameObjectManager::getCharacter(key));
+		cmd.setAction([cmd, key]() mutable { RenderManager::addObject(GameObjectManager::getCharacter(key));});
+		commands.push(cmd);
+
+	}
+
+	void removeRenderCharacter(string key) {
+		Command cmd;
+		cmd.setObject(GameObjectManager::getCharacter(key));
+		cmd.setAction([cmd, key]() mutable { RenderManager::removeObject(GameObjectManager::getCharacter(key));});
+		commands.push(cmd);
+
+	}
+
 	void setDialog(string key) {
 		Command cmd;
 		cmd.setObject(GameObjectManager::getDialog(key));
@@ -69,6 +85,14 @@ public:
 
 		cmd.setType(TYPE_DETAIL);
 		commands.push(cmd);
+	}
+
+	void setCharacterPosition(string key, int x, int y) {
+		Command cmd;
+		cmd.setObject(GameObjectManager::getCharacter(key));
+		cmd.setAction([cmd, x, y]() mutable {cmd.getObject()->setPosition(x, y); });
+		commands.push(cmd);
+
 	}
 
 	void setAction(string key, ActionType command, int dt, int repeat) { //setDx, setDy, dx, dy
@@ -148,7 +172,6 @@ public:
 	}
 
 	void display() {
-
 		int size = commands.size();
 		while (size) {
 			Command cmd = popCommand();
@@ -156,7 +179,7 @@ public:
 			if (cmd.getType() == TYPE_CHARACTER || cmd.getType() == TYPE_SCREEN) {
 				if (!sceneLoop && cmd.getType() == TYPE_SCREEN && RenderManager::getRenderMap()->getMapId() == "SCREEN")
 				{
-					delete RenderManager::getRenderMap();
+					//delete RenderManager::getRenderMap();
 				}
 
 				cmd.getAction()();
@@ -182,10 +205,12 @@ public:
 			RenderManager::render();
 			RenderManager::setRenderDialog(nullptr);  // 대화창 내용 초기화
 
+			/*
 			if (!sceneLoop) {
 				if (cmd.getType() == TYPE_DIALOG)
 					delete cmd.getObject();
 			}
+			*/
 			size--;
 		}
 

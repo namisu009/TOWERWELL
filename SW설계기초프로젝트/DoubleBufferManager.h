@@ -229,7 +229,7 @@ public:
 
         HFONT hFont = CreateFont(adjustedFontSize, 0, 0, 0, FW_BOLD, FALSE, FALSE, FALSE,
             DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
-            DEFAULT_PITCH | FF_DONTCARE, "Consolas");
+            DEFAULT_PITCH | FF_DONTCARE, "¸¼Àº °íµñ");
 
         HFONT oldFont = (HFONT)SelectObject(hdc, hFont);
         SetTextColor(hdc, RGB(150, 150, 150));
