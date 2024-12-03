@@ -95,12 +95,17 @@ void ArtLoadManager::ExpandThePuzzleInfo(int _y, int _x, string name, IplImage* 
 
     p->SetStartPosition(_x, _y);
 
+    int** dar = p->getObjectArray()->drawornotArr;
     for (int y = _y - height; y < _y; y++) {
         for (int x = _x - width; x < _x + width; x++) {
             if (y < 0 || y > cmdHeight - 1 || x < 0 || x > cmdWidth - 1)
                 continue;
 
-            Array->ObjectInfo[y][x] = Array->ObjectInfo[_y][_x];
+            int y1 = y - (_y - height); // y가 dar의 0부터 시작하는 인덱스에 매핑
+            int x1 = x - (_x - width); // x가 dar의 0부터 시작하는 인덱스에 매핑
+
+            if(dar[y1][x1] == 1)
+                Array->ObjectInfo[y][x] = Array->ObjectInfo[_y][_x];
         }
     }
 

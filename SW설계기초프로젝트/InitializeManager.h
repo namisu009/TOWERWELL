@@ -141,7 +141,7 @@ private:
 
 
         //S2_SC2 점프2층 씬
-        GameObjectManager::createObject("Dialog", "S2_SC2_DL_01", "리안: 여기도 상당히 위험   하네.");
+        GameObjectManager::createObject("Dialog", "S2_SC2_DL_01", "리안: 여기도 상당히 위험하네.");
         GameObjectManager::createObject("Dialog", "S2_SC2_DL_02", "특정 벽은 \"키\"로 벽타기를 할 수 있습니다.");
         S2_SC2.setDelay("Sister", 700);
         S2_SC2.setDialog("S2_SC2_DL_01");
@@ -303,7 +303,9 @@ private:
         PuzzleManager::setCompletedSceneDialog("S1_M1_PZ_01", "S1_SC2_DL_01");
 
         PuzzleManager::createPuzzle("S2_M1_PZ_01", TYPE_READ_PUZZLE); //석상에 가로막힌 문
+        PuzzleManager::setCompletedObjectASCII("S2_M1_PZ_01", "src\\S2_M1_PZ_01_02.png"); //석상에 가로막힌 문
         PuzzleManager::setCompletedSceneDialog("S2_M1_PZ_01", "S7_M1_PZ1_DL_00_02");
+        PuzzleManager::setCompletedSceneLoop("S2_M1_PZ_01", true);
 
         PuzzleManager::createPuzzle("S3_M1_PZ_01", TYPE_READ_PUZZLE); //피아노 보여주기
         PuzzleManager::setCompletedDetailASCII("S3_M1_PZ_01", "src\\S8_M1_PZ_DT_02_01.png");

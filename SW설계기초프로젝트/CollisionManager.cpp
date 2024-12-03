@@ -21,13 +21,19 @@ bool CollisionManager::checkMapCollision(GameObject object, Map map) {
     return false;
 }
 
-bool CollisionManager::checkWallCollision(GameObject object, Map map) {
-    int objectX = object.getX() + object.getDx();
-    int objectY = object.getY() + object.getDy();
+bool CollisionManager::checkWallCollision(GameObject* object, Map map) {
+    int objectX = object->getX() + object->getDx();
+    int objectY = object->getY() + object->getDy();
 
-    for (int y = 0; y < object.getHeight(); ++y) {
-        for (int x = 0; x < object.getWidth(); ++x) {
+    object->setColX(0);
+    object->setColY(0);
+
+    for (int y = 0; y < object->getHeight(); ++y) {
+        for (int x = 0; x < object->getWidth(); ++x) {
             if (map.isWall(objectX + x, objectY + y)) {
+                object->setColX(objectX + x);
+                object->setColY(objectY + y);
+
                 return true;
             }
         }
@@ -36,13 +42,18 @@ bool CollisionManager::checkWallCollision(GameObject object, Map map) {
 }
 
 
-bool CollisionManager::checkFloorCollision(GameObject object, Map map) {
-    int objectX = object.getX() + object.getDx();
-    int objectY = object.getY() + object.getDy();
+bool CollisionManager::checkFloorCollision(GameObject* object, Map map) {
+    int objectX = object->getX() + object->getDx();
+    int objectY = object->getY() + object->getDy();
 
-    for (int y = 0; y < object.getHeight(); ++y) {
-        for (int x = 0; x < object.getWidth(); ++x) {
+    object->setColX(0);
+    object->setColY(0);
+
+    for (int y = 0; y < object->getHeight(); ++y) {
+        for (int x = 0; x < object->getWidth(); ++x) {
             if (map.isFloor(objectX + x, objectY + y)) {
+                object->setColX(objectX + x);
+                object->setColY(objectY + y);
                 return true;
             }
         }

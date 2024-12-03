@@ -289,14 +289,16 @@ public:
             }
 
             // 충돌 처리 및 물리 연산
-            while (CollisionManager::checkWallCollision(*playerCharacter, *currentMap)) {
+            while (CollisionManager::checkWallCollision(playerCharacter, *currentMap)) {
+
+                //&& CollisionManager::checkWallAdjacent(*playerCharacter, (JumpMap*)currentMap) && playerCharacter->getIsWallClimbing()
                 adjustPositionForCollision(playerCharacter);
                 //playerCharacter->setDx(0);
                 //playerCharacter->setDy(0);
             }
             PhysicsManager::applyGravity(playerCharacter, currentMap);
 
-            while (CollisionManager::checkFloorCollision(*playerCharacter, *currentMap)) {
+            while (CollisionManager::checkFloorCollision(playerCharacter, *currentMap)) {
                 adjustPositionForCollision(playerCharacter);
                 //playerCharacter->setDx(0);
                 //playerCharacter->setDy(0);
@@ -334,13 +336,13 @@ public:
 
         sisterCharacter->dashState();
 
-        while (CollisionManager::checkWallCollision(*sisterCharacter, *currentMap)) {
+        while (CollisionManager::checkWallCollision(sisterCharacter, *currentMap)) {
             adjustPositionForCollision(sisterCharacter);
         }
 
         PhysicsManager::applyGravity(sisterCharacter, currentMap);
 
-        while (CollisionManager::checkFloorCollision(*sisterCharacter, *currentMap)) {
+        while (CollisionManager::checkFloorCollision(sisterCharacter, *currentMap)) {
             adjustPositionForCollision(sisterCharacter);
         }
 
@@ -393,6 +395,48 @@ public:
         sisterCharacter->setDy(0);
         sisterCharacter->land();
     }
+
+
+    /*
+    void adjustPositionForCollision(Character* character) {
+        int colX = character->getColX();
+        int colY = character->getColY();
+        int range = 15; // 검사 범위 (픽셀 단위)
+        int width = character->getWidth();
+        int height = character->getHeight();
+
+        int moveLeft = range + 1;  // 초기화: 검사 범위를 넘어가도록 설정
+        int moveRight = range + 1;
+
+        // 좌측 검사
+        for (int x = 1; x <= range; ++x) {
+            if (!currentMap->isWall(colX - x, colY)) {
+                moveLeft = x;
+                break;
+            }
+        }
+
+        // 우측 검사
+        for (int x = 1; x <= range; ++x) {
+            if (!currentMap->isWall(colX + x, colY)) {
+                moveRight = x;
+                break;
+            }
+        }
+
+        // 최소 이동 거리 계산
+        if (moveLeft <= moveRight) {
+            character->setX(colX - moveLeft); // 왼쪽으로 이동
+        }
+        else {
+            character->setX(colX + moveRight); // 오른쪽으로 이동
+        }
+
+        // dx와 dy를 초기화
+        character->setDx(0);
+        character->setDy(0);
+    }
+    */
 
     // 충돌 발생 시 위치 조정 함수
     void adjustPositionForCollision(Character* character) {

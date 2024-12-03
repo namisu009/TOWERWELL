@@ -20,6 +20,8 @@ private:
 	int height;
 	float x, y;
 	float dx, dy;
+	int colX = 0;
+	int colY = 0;
 public:
 
 	EventDispatcher* eventDispatcher;
@@ -55,6 +57,15 @@ public:
 
 	int getType() { return type; }
 
+
+	int getColX() {
+		return colX;
+	}
+
+	int getColY() {
+		return colY;
+	}
+
 	string getId() { return id; }
 
 	RenderArray* getRenderArray() { return renderArray; }
@@ -68,6 +79,16 @@ public:
 
 	virtual void setDx(float _dx) { dx = _dx; }
 	void setDy(float _dy) { dy = _dy; }
+
+
+	void setColX(int x) {
+		colX = x;
+	}
+
+	void setColY(int y) {
+		colY = y;
+	}
+
 
 	void setWidth(int w) { width = w; }
 	void setHeight(int h) { height = h; }

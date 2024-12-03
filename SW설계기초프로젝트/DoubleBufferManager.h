@@ -193,7 +193,7 @@ public:
 
         // RECT를 줄이는 작업
         adjustedRect.left += horizontalMargin;
-        adjustedRect.right -= horizontalMargin * 4;
+        adjustedRect.right += horizontalMargin;
         adjustedRect.top += verticalMargin;
         adjustedRect.bottom -= verticalMargin;
 
@@ -210,7 +210,7 @@ public:
         return clientRect;
     }
 
-    static void drawText(const char* text, int x, int y, int width = 0, int height = 0, int fontSize = 40, const char* fontName = "Consolas") {
+    static void drawText(const char* text, int x, int y, int width = 0, int height = 0, int fontSize = 30) {
         // GDI 폰트와 텍스트 크기 설정
         HWND consoleWindow = GetConsoleWindow();
         HDC hdc = GetDC(consoleWindow);
@@ -234,6 +234,7 @@ public:
         HFONT oldFont = (HFONT)SelectObject(hdc, hFont);
         SetTextColor(hdc, RGB(150, 150, 150));
         SetBkMode(hdc, TRANSPARENT);
+        //SetBkMode(hdc, OPAQUE);
 
         DrawText(hdc, text, -1, &adjustedRect, DT_LEFT | DT_WORDBREAK);
 

@@ -136,7 +136,6 @@ public:
             canDoubleJump = false;
         }
         lastJumpTime = now;
-
     }
 
 
