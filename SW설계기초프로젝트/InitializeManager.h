@@ -477,7 +477,7 @@ private:
         PuzzleManager::setCompletedObjectASCII("S1_M1_DPZ_01", "src\\maps\\S1\\dummy_S1_01.png");
         PuzzleManager::setCompletedSceneDialog("S1_M1_DPZ_01", "S1_M1_DPZ1_DL_00_00");
         PuzzleManager::setCompletedSceneDialog("S1_M1_DPZ_01", "S1_M1_DPZ1_DL_00_01");
-        PuzzleManager::setCompletedObjectASCII("S1_M1_DPZ_02", "src\\maps\\S1\\dummy_S1_02.png");
+        //PuzzleManager::setCompletedObjectASCII("S1_M1_DPZ_02", "src\\maps\\S1\\dummy_S1_02.png");
         PuzzleManager::setCompletedSceneDialog("S1_M1_DPZ_02", "S1_M1_DPZ2_DL_00_00");
         PuzzleManager::setCompletedDetailASCII("S1_M1_PZ_01", "src\\maps\\S1\\S1_M1_PZ_DT_01.png");
         PuzzleManager::setCompletedSceneDialog("S1_M1_PZ_01", "S1_SC2_DL_01");
@@ -526,8 +526,7 @@ private:
         PuzzleManager::setCompletedObjectASCII("S6_M1_DPZ_01", "src\\maps\\S6\\dummy_S6_01.png");
 
         PuzzleManager::createPuzzle("S6_M1_DPZ_02", TYPE_READ_PUZZLE);
-        PuzzleManager::setCompletedObjectASCII("S6_M1_DPZ_02", "src\\maps\\S6\\dummy_S6_02.png");
-
+        //PuzzleManager::setCompletedObjectASCII("S6_M1_DPZ_02", "src\\maps\\S6\\dummy_S6_02.png");
 
         //H_S2_P
         PuzzleManager::createPuzzle("S7_M1_PZ_01", TYPE_ITEM_PUZZLE); //¼®»ó
@@ -627,7 +626,7 @@ private:
         MapManager::createMap("S4_J_MAP_01", TYPE_JUMP, "src\\maps\\S4\\S4_J_MAP_01.png", "src\\maps\\S4\\S4_J_MAP_INFO_01.png");
         MapManager::createMap("S5_P_MAP_01", TYPE_PUZZLE, "src\\maps\\S5\\S5_MAP_01.png", "src\\maps\\S5\\S5_MAP_INFO_01_TEST.png");
         MapManager::createMap("S6_P_MAP_00", TYPE_PUZZLE, "src\\maps\\S0\\S0_MAP.png", "src\\maps\\S0\\S0_MAP_INFO.png");
-        MapManager::createMap("S6_P_MAP_01", TYPE_PUZZLE, "src\\maps\\S6\\S6_P_MAP_01.png", "src\\maps\\S6\\S6_P_MAP_01_INFO_01.png");
+        MapManager::createMap("S6_P_MAP_01", TYPE_PUZZLE, "src\\maps\\S6\\S6_P_MAP_01.png", "src\\maps\\S6\\S6_P_MAP_INFO_01.png");
         MapManager::createMap("S6_J_MAP_01", TYPE_JUMP, "src\\maps\\S6\\S6_J_MAP_01.png", "src\\maps\\S6\\S6_J_MAP_INFO_01.png");
         MapManager::createMap("S7_P_MAP_01", TYPE_PUZZLE, "src\\maps\\S7\\S7_P_MAP_01.png", "src\\maps\\S7\\S7_P_MAP_INFO_01.png");
         MapManager::createMap("S7_P_MAP_02", TYPE_PUZZLE, "src\\maps\\S7\\S7_P_MAP_02.png", "src\\maps\\S7\\S7_P_MAP_INFO_02.png");

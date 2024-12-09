@@ -18,7 +18,7 @@ class PuzzleMap : public Map
 public:
     PuzzleMap() : Map() {
         setType(TYPE_PUZZLE);
-        for (int i = PUZZLE_OBJ_01; i <= PUZZLE_OBJ_05; i++)
+        for (int i = PUZZLE_OBJ_01; i <= PUZZLE_OBJ_10; i++)
             PuzzleMapping[i] = "X";
 
         puzzleCount = 0;
@@ -29,7 +29,7 @@ public:
     string getPuzzleId(int x, int y) {
         ScreenArray myScreen = getScreenArray();
         int key = myScreen.ObjectInfo[y][x];
-        if (key < PUZZLE_OBJ_01 || key > PUZZLE_OBJ_05) {
+        if (key < PUZZLE_OBJ_01 || key > PUZZLE_OBJ_10) {
             return ""; // ÆÛÁñ ¾øÀ½
         }
 
