@@ -658,7 +658,6 @@ private:
 
         //H_S0
 
-
         //H_S1
         StageManager::addMap(6, MapManager::getMap("S6_P_MAP_00"));
         StageManager::addMap(6, MapManager::getMap("S6_P_MAP_01"));
@@ -718,7 +717,7 @@ private:
         StageManager::setDoorID(9, "S9_P_MAP_01", MAP_EXIT, "S9_J_MAP_01");
         StageManager::setDoorID(9, "S9_P_MAP_03_0", MAP_DOOR_01, "S9_P_MAP_03_1");
         StageManager::setDoorID(9, "S9_P_MAP_03_1", MAP_DOOR_01, "S9_P_MAP_03_2");
-        StageManager::setDoorID(9, "S9_P_MAP_03_2", MAP_DOOR_01, "S9_P_MAP_03_5");
+        StageManager::setDoorID(9, "S9_P_MAP_03_2", MAP_DOOR_01, "S9_P_MAP_05");
         StageManager::setDoorID(9, "S9_P_MAP_03_0", MAP_DOOR_02, "S9_P_MAP_01");
         StageManager::setDoorID(9, "S9_P_MAP_03_1", MAP_DOOR_02, "S9_P_MAP_01");
         StageManager::setDoorID(9, "S9_P_MAP_03_2", MAP_DOOR_02, "S9_P_MAP_01");
@@ -770,8 +769,6 @@ private:
         MapManager::setMapASCII("S9_J_MAP_01");
         MapManager::setMapASCII("S10_P_MAP_01");
     };
-
-
 
 public:
     static void init(EventDispatcher* eventDispatcher) {
