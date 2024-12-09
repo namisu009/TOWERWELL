@@ -136,11 +136,19 @@ public:
                 return;
             }
 
-            if (stg->getDoorId(init_x, init_y) != "") {
+            if (stg->getDoorId(init_x, init_y) != "EXIT" && stg->getDoorId(init_x, init_y) != "") {
                 if (!stg->getCurrentMap()->isExitDoor(init_x, init_y)) {
                     stg->getCurrentMap()->setInitPosition(init_x, obj->getFootY());
                 }
                 stg->onMoveMap(init_x, init_y);
+                return;
+            }
+
+            if (stage->getDoorId(init_x, init_y) == "EXIT") {
+                if (stage->getIsCleared()) {
+                    eventDispatcher->dispatch(STAGE_COMPLETED);
+                }
+                //stage->onMoveMap(init_x, init_y);
             }
         });
 

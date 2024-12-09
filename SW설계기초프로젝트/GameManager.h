@@ -221,7 +221,7 @@ public:
 
         */
 
-        newScene.display();
+        //newScene.display();
 
         RenderManager::setRenderMap(currentMap);
         //StageManager::.setScene("Scene_id_01");
