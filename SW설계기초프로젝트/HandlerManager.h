@@ -146,9 +146,9 @@ public:
 
             if (stage->getDoorId(init_x, init_y) == "EXIT") {
                 if (stage->getIsCleared()) {
-                    eventDispatcher->dispatch(STAGE_COMPLETED);
+                    stage->onMoveMap(init_x, init_y);
+                    //eventDispatcher->dispatch(STAGE_COMPLETED);
                 }
-                //stage->onMoveMap(init_x, init_y);
             }
         });
 

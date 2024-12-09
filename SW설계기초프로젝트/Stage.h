@@ -123,11 +123,24 @@ public:
 
     void onPuzzleSolved() {
         string mapKey = "S" + to_string(stageId) + "_P_MAP_01";
-        PuzzleMap* pz = (PuzzleMap*) maps[mapKey];
+        if (maps[currentMapId]->getType() != TYPE_PUZZLE)
+            return;
+        
+        PuzzleMap* pz = (PuzzleMap*) maps[currentMapId];
+
         pz->solvePuzzle();
 
-        if (pz->isAllPuzzlesSolved())
-        {
+        int cnt1 = 0, cnt2 = 0;
+        for(auto& m : maps){
+            if (m.second->getType() == TYPE_PUZZLE) {
+                cnt1++;
+                if (((PuzzleMap*)m.second)->isAllPuzzlesSolved()) {
+                    cnt2++;
+                }
+            }
+        }
+
+        if (cnt1 == cnt2){
             isCleared = true;
         }
     }
