@@ -210,7 +210,7 @@ public:
         return clientRect;
     }
 
-    static void drawText(const char* text, int x, int y, int width = 0, int height = 0, int fontSize = 30) {
+    static void drawText(const char* text, int x, int y, int width = 0, int height = 0, int fontSize = 35) {
         // GDI 폰트와 텍스트 크기 설정
         HWND consoleWindow = GetConsoleWindow();
         HDC hdc = GetDC(consoleWindow);

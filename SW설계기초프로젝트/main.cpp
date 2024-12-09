@@ -66,7 +66,6 @@ int main() {
 
     setConsoleEncoding();
     GameManager gameManager;
-    gameManager.initialize();
     gameManager.start();
     return 0;
 }

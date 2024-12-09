@@ -180,7 +180,7 @@ void ArtLoadManager::ScreenArrayLoad(int type, Map* map, const char* fileName) {
             else if (f1.val[2] >= 250 && f1.val[1] == 0 && f1.val[0] >= 250)
                 Array->MapInfo[y][x] = MAP_WALL;
             else if (f1.val[2] == 0 && f1.val[1] == 255 && f1.val[0] == 0)
-                Array->MapInfo[y][x] = MAP_BACKGROUND;
+                Array->MapInfo[y][x] = MAP_FIRST_OBJECT;
             else if (f1.val[2] == 0 && f1.val[1] == 0 && f1.val[0] == 255) {
                 Array->MapInfo[y][x] = MAP_START;
                 Array->init_x = x;

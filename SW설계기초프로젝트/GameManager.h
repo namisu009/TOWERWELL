@@ -309,11 +309,13 @@ public:
         sisterCharacter->SetStartPosition(currentMap->getInitX() - 0, currentMap->getInitY());
 
         RenderManager::setRenderMap(currentMap);
-        RenderManager::render();
 
         if (StageManager::getCurrentStage()->hasSceneForMap(currentMap->getMapId())) {
             StageManager::getCurrentStage()->playScene();
         }
+
+        RenderManager::render();
+
 
         actionPositions.clear();
 
@@ -559,6 +561,7 @@ public:
     // 게임 시작
     void start() {
         // 물리 연산 및 렌더링 스레드 시작
+        initialize();
         thread physicsThread(&GameManager::physicsLoop, this);
         thread renderThread(&GameManager::renderLoop, this);
 

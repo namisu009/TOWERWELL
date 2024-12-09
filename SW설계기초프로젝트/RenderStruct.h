@@ -28,6 +28,7 @@ enum MapInfo
 	MAP_DOOR_01,
 	MAP_DOOR_02,
 	MAP_START,
+	MAP_FIRST_OBJECT,
 }; 
 
 enum JumpMapInfo

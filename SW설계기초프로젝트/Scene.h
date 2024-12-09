@@ -10,6 +10,7 @@
 #include <thread>
 
 class Puzzle; // 전방 선언
+class MapManager;
 
 using namespace std;
 class Scene
@@ -34,7 +35,6 @@ public:
 		cmd.setObject(GameObjectManager::getCharacter(key));
 		cmd.setAction([cmd, key]() mutable { RenderManager::addObject(GameObjectManager::getCharacter(key));});
 		commands.push(cmd);
-
 	}
 
 	void removeRenderCharacter(string key) {
@@ -50,6 +50,18 @@ public:
 		cmd.setObject(GameObjectManager::getDialog(key));
 		commands.push(cmd);
 	}
+
+	/*
+	void setClearedPuzzle(string key) {
+		Command cmd;
+		cmd.setObject(GameObjectManager::getCharacter("Hero"));
+		MapManager::getPuzzleMap(key);
+		cmd.setAction([cmd, key]() mutable {
+
+			});
+		commands.push(cmd);
+	}
+	*/
 
 	void setScreen(const char* key) {
 		Command cmd;
@@ -87,12 +99,22 @@ public:
 		commands.push(cmd);
 	}
 
+
+
 	void setCharacterPosition(string key, int x, int y) {
 		Command cmd;
+		
 		cmd.setObject(GameObjectManager::getCharacter(key));
-		cmd.setAction([cmd, x, y]() mutable {cmd.getObject()->setPosition(x, y); });
-		commands.push(cmd);
+		cmd.setAction([cmd, key, x, y]() mutable {
+			if (y == 0 && key == "Hood")
+				y = GameObjectManager::getCharacter("Hero")->getY();
+			else if(y == 0)
+				y = GameObjectManager::getCharacter(key)->getY();
 
+			cmd.getObject()->setPosition(x, y); 
+			
+		});
+		commands.push(cmd);
 	}
 
 	void setAction(string key, ActionType command, int dt, int repeat) { //setDx, setDy, dx, dy

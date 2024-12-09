@@ -108,7 +108,10 @@ void RenderManager::renderObject() {
                 pos.X = object_x + x;
                 char buf[2] = { art->ASCIIArtArr[y][x], '\0' };
 
-                if (art->drawornotArr[y][x] == 1) {
+                if (art->drawornotArr[y][x] == 1 && (
+                    currentMap->getMapId() == "SCREEN" || (
+                    currentMap->getMapId() != "SCREEN"
+                    && currentMap->getScreenArray().MapInfo[pos.Y][pos.X] != MAP_FIRST_OBJECT))) {
                     COORD CursorPosition;
                     //SetConsoleCursorPosition(DoubleBufferManager::getHandle(), CursorPosition);
                     DoubleBufferManager::ScreenprintAtPosition(pos.X, pos.Y, buf); //현재 화면이 캐릭터가 그려질 곳이 아니라면 맵 그리기
@@ -171,6 +174,7 @@ void RenderManager::renderPuzzle() {
 
         char** buf;
         buf = (char**)malloc(sizeof(char*) * art->height);
+
         for (int y = 0; y < art->height; y++)
         {
             buf[y] = (char*)malloc(sizeof(char) * (art->width + 1));
@@ -179,7 +183,7 @@ void RenderManager::renderPuzzle() {
             {
                 pos.X = object_x + x;
                 buf[y][x] = art->ASCIIArtArr[y][x];
-                if (art->drawornotArr[y][x] == 0)
+                if (art->drawornotArr[y][x] == 0 || currentMap->getScreenArray().MapInfo[y][x] == MAP_FIRST_OBJECT)
                 {
                     RenderArray& renderArray = currentMap->getRenderArray();
                     buf[y][x] = renderArray.ASCIIArtArr[pos.Y][pos.X];

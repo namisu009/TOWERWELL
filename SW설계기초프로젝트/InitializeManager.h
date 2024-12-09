@@ -95,16 +95,56 @@ private:
         GameObjectManager::createObject("Dialog", "S0_SC1_DL_06", "허나 한 사람에게는 이 오래된 전설이 마지막 희망이었으니..");
         GameObjectManager::createObject("Dialog", "S0_SC1_DL_07", "저 거대한 문이 천천히 열리고, 운명을 바꿀 여정이 시작된다.");
         GameObjectManager::createObject("Dialog", "S0_SC1_DL_08", "히로: 나는 어머니를 위해 끝까지 올라갈 거야.");
+        GameObjectManager::createObject("Dialog", "S0_SC1_DL_09", "히로: 여기가 탑의 입구인가…");
+        GameObjectManager::createObject("Dialog", "S0_SC1_DL_10", "???: 잠깐만!!");
+        GameObjectManager::createObject("Dialog", "S0_SC1_DL_11", "히로: 리안!? 너 왜 여기에…");
+        GameObjectManager::createObject("Dialog", "S0_SC1_DL_12", "리안: 언니, 이게 무슨 짓이야?! 혼자 여기까지 온 거야?");
+        GameObjectManager::createObject("Dialog", "S0_SC1_DL_13", "히로: 리안, 너 여기 오면 안 돼. 이 탑은 너무 위험할지도 모른다고 했잖아.");
+        GameObjectManager::createObject("Dialog", "S0_SC1_DL_14", "리안: 언니 혼자선 보낼 수 없어. 둘이서라면 해낼 수 있을 거야.");
+        GameObjectManager::createObject("Dialog", "S0_SC1_DL_15", "히로: 좋아, 같이 가자.");
+        GameObjectManager::createObject("Dialog", "S0_SC1_DL_16", "리안: 응! 같이 가자, 언니!");
 
+
+        S0_SC1.setCharacterPosition("Sister", 310, 0);
+        S0_SC1.setCharacterPosition("Hero", 50, 0);
+        
         S0_SC1.setDetail("src\\scene\\S0_SC1\\S0_SC1_00.png");
-        S0_SC1.setDialog("S0_SC1_DL_01");
-        S0_SC1.setDialog("S0_SC1_DL_02");
-        S0_SC1.setDialog("S0_SC1_DL_03");
-        S0_SC1.setDialog("S0_SC1_DL_04");
-        S0_SC1.setDialog("S0_SC1_DL_05");
-        S0_SC1.setDialog("S0_SC1_DL_06");
-        S0_SC1.setDialog("S0_SC1_DL_07");
+
+        for (int i = 1; i <= 7; i++)
+        {
+            string s = "S0_SC1_DL_0" + to_string(i);
+            S0_SC1.setDialog(s);
+        }
+
+        S0_SC1.setDetail("");
+
+        S0_SC1.setAction("Hero", ACTION_MOVE_X, 3, 9);
+        S0_SC1.setDelay("Hero", 1000);
         S0_SC1.setDialog("S0_SC1_DL_08");
+
+        S0_SC1.setAction("Hero", ACTION_MOVE_X, 4, 30);
+        S0_SC1.setDelay("Hero", 1000);
+
+        S0_SC1.setDialog("S0_SC1_DL_09");
+        S0_SC1.setDelay("Hero", 1000);
+        S0_SC1.setAction("Hero", ACTION_MOVE_X, 4, 3);
+        S0_SC1.setDelay("Hero", 1000);
+
+        S0_SC1.setDialog("S0_SC1_DL_10");
+
+        S0_SC1.setDelay("Sister", 1000);
+        S0_SC1.setAction("Sister", ACTION_MOVE_X, -3, 2);
+        S0_SC1.setDelay("Sister", 1500);
+        S0_SC1.setAction("Sister", ACTION_MOVE_X, -3, 9);
+        S0_SC1.setDelay("Sister", 2000);
+
+        for (int i = 11; i <= 16; i++)
+        {
+            string s = "S0_SC1_DL_" + to_string(i);
+            S0_SC1.setDialog(s);
+        }
+
+
 
         //S0_SC2.setDetail("src\\S0_SC2_00.png"); //여기는 탑의 입구임. 이거 그려야해
 
@@ -135,13 +175,33 @@ private:
         GameObjectManager::createObject("Dialog", "S1_SC3_DL_03", "리안: 자 이러면 안전하게 갈 수 있을거야.");
         GameObjectManager::createObject("Dialog", "S1_SC3_DL_04", "상하좌우와 스페이스바로 이동과 점프, 그리고 대쉬를 할 수 있습니다.");
 
+        S1_SC3.setScreen("src\\scene\\S1_SC3\\S1_SC3_01.png");
+
         S1_SC3.setDelay("Sister", 700);
         S1_SC3.setDialog("S1_SC3_DL_01");
         S1_SC3.setDialog("S1_SC3_DL_02");
-        S1_SC3.setAction("Sister", ACTION_MOVE_X, 2, 1);
+        S1_SC3.setAction("Sister", ACTION_MOVE_X, 2, 6);
         //S1_SC3 얼음 작렬
+        S1_SC3.setScreen("src\\scene\\S1_SC3\\S1_SC3_01.png");
+        S1_SC3.setDelay("Sister", 50);
+        S1_SC3.setScreen("src\\scene\\S1_SC3\\S1_SC3_02.png");
+        S1_SC3.setDelay("Sister", 50);
+        S1_SC3.setScreen("src\\scene\\S1_SC3\\S1_SC3_03.png");
+        S1_SC3.setDelay("Sister", 50);
+        S1_SC3.setScreen("src\\scene\\S1_SC3\\S1_SC3_04.png");
+        S1_SC3.setDelay("Sister", 50);
+        S1_SC3.setScreen("src\\scene\\S1_SC3\\S1_SC3_05.png");
+        S1_SC3.setDelay("Sister", 50);
+        S1_SC3.setScreen("src\\scene\\S1_SC3\\S1_SC3_06.png");
+        S1_SC3.setDelay("Sister", 50);
+        S1_SC3.setScreen("src\\scene\\S1_SC3\\S1_SC3_07.png");
+        S1_SC3.setDelay("Sister", 50);
+        S1_SC3.setScreen("src\\scene\\S1_SC3\\S1_SC3_08.png");
+        S1_SC3.setDelay("Sister", 50);
+
         S1_SC3.setDialog("S1_SC3_DL_03");
         S1_SC3.setDialog("S1_SC3_DL_04");
+
 
         //S1_SC4 계단층 씬
         GameObjectManager::createObject("Dialog", "S1_SC4_DL_01", "리안: 왜 성 안에 저런 길이 있을까? 어쨌든 내가 있으니 걱정하지마.");
@@ -164,11 +224,29 @@ private:
 
 
         //S2_SC2 점프2층 씬
-        GameObjectManager::createObject("Dialog", "S2_SC2_DL_01", "리안: 여기도 상당히 위험하네.");
-        GameObjectManager::createObject("Dialog", "S2_SC2_DL_02", "특정 벽은 \"키\"로 벽타기를 할 수 있습니다.");
+        S2_SC2.setScreen("src\\scene\\S2_SC2\\S2_SC2_01.png");
         S2_SC2.setDelay("Sister", 700);
+        GameObjectManager::createObject("Dialog", "S2_SC2_DL_01", "리안: 여기도 상당히 위험하네.");
         S2_SC2.setDialog("S2_SC2_DL_01");
+
+        S2_SC2.setDelay("Sister", 1000);
+
+
+        for (int i = 1; i <= 7; i++)
+        {
+            string s = "src\\scene\\S2_SC2\\S2_SC2_0"+to_string(i);
+            s += ".png";
+            S2_SC2.setScreen(s.c_str());
+            S2_SC2.setDelay("Sister", 50);
+        }
+
+        GameObjectManager::createObject("Dialog", "S2_SC2_DL_02", "리안: 자, 이러면 가기 쉬울거야.");
+        GameObjectManager::createObject("Dialog", "S2_SC2_DL_03", "특정 벽은 \"키\"로 벽타기를 할 수 있습니다.");
+        S2_SC2.setDelay("Sister", 700);
         S2_SC2.setDialog("S2_SC2_DL_02");
+        S2_SC2.setDialog("S2_SC2_DL_03");
+
+       
 
         //S2_SC3 점프2층 씬
         GameObjectManager::createObject("Dialog", "S2_SC3_DL_01", "리안: 우물로 가면 정말 소원을 들어주는 거 맞겠지?");
@@ -312,8 +390,74 @@ private:
 
 
         //S4_SC4
+         //S4_SC4
+        GameObjectManager::createObject("Dialog", "S4_SC4_DL_01", "히로: … 흔적들… 일기장… 그리고 이 탑.");
+        GameObjectManager::createObject("Dialog", "S4_SC4_DL_02", "???: 많은 이들이 이곳에 발을 들였지. 저마다 자신의 바람을 이루기 위해.");
+        GameObjectManager::createObject("Dialog", "S4_SC4_DL_03", "히로: 넌 그걸 모두 지켜보고 있었겠지.");
+        GameObjectManager::createObject("Dialog", "S4_SC4_DL_04", "???: 선택의 순간은 언제나 흥미롭지. 희망과 절망이 교차하는 찰나를 보는 것만큼 흥미로운 일은 없으니까.");
+        GameObjectManager::createObject("Dialog", "S4_SC4_DL_05", "히로: 기사… 그의 기록을 읽었어. 그는 결국 이 탑을 떠나지 못했지.");
+        GameObjectManager::createObject("Dialog", "S4_SC4_DL_06", "???: 그는 떠날 수 없었던 게 아니라, 떠나지 않기를 선택했을 뿐이다.");
+        GameObjectManager::createObject("Dialog", "S4_SC4_DL_07", "히로: 그의 선택… 넌 그 선택을 비틀지 않았다고 말할 수 있어?");
+        GameObjectManager::createObject("Dialog", "S4_SC4_DL_08", "???: 선택은 강요되지 않는다. 나는 단지 길을 비출 뿐이다.");
+        GameObjectManager::createObject("Dialog", "S4_SC4_DL_09", "히로: 그 길이 비극으로 이어졌다면? 그건 네 책임 아니야?");
+        GameObjectManager::createObject("Dialog", "S4_SC4_DL_10", "???: 비극이라… 그것은 네가 붙인 이름일 뿐. 선택의 결과는 언제나 받아들인 자에게 달려 있다.");
+        GameObjectManager::createObject("Dialog", "S4_SC4_DL_11", "히로: 받아들인다… 선택의 결과를?");
+        GameObjectManager::createObject("Dialog", "S4_SC4_DL_12", "???: 그렇다. 모든 선택은 대가를 요구한다. 소중한 것을 지키려면 더 소중한 것을 내놓아야 할 때도 있지.");
+        GameObjectManager::createObject("Dialog", "S4_SC4_DL_13", "히로: 대가라니. 소중한 것을 잃지 않고는 리안을 구할 수 없다는 거야?");
+        GameObjectManager::createObject("Dialog", "S4_SC4_DL_14", "???: 그것을 결정하는 것은 너다. 나는 진실을 드러낼 뿐, 답을 내리지는 않는다.");
+        GameObjectManager::createObject("Dialog", "S4_SC4_DL_15", "히로: 그럼 두건을 쓴 여자는… 그녀는 대체 누구지?");
+        GameObjectManager::createObject("Dialog", "S4_SC4_DL_16", "???: 네가 묻는 그 질문이야말로 답으로 가는 첫걸음이다. 탑은 너의 진짜 모습을 비추는 거울이다.");
+        GameObjectManager::createObject("Dialog", "S4_SC4_DL_17", "히로: 진짜 모습이라니… 그게 무슨 의미야.");
+        GameObjectManager::createObject("Dialog", "S4_SC4_DL_18", "???: 진실은 네가 그것을 직면할 준비가 되었을 때 드러난다.");
+        GameObjectManager::createObject("Dialog", "S4_SC4_DL_19", "히로: 리안을 구하기 위해서라면 어떤 대가도 치를 거야. 너의 말이 무엇을 감추고 있든.");
+        GameObjectManager::createObject("Dialog", "S4_SC4_DL_20", "???: 그렇다면 가라. 탑에서 [가장 빛나는 것]을 찾아라. 그것이 너의 소원을 이루는 열쇠다.");
+        GameObjectManager::createObject("Dialog", "S4_SC4_DL_21", "???은 눈 앞에서 사라졌다…");
 
-
+        S4_SC4.setDialog("S4_SC4_DL_01");
+        S4_SC4.setDialog("S4_SC4_DL_02");
+        S4_SC4.setDetail("src\\scene\\S4_SC4\\sc01.png");
+        S4_SC4.setDetail("src\\scene\\S4_SC4\\sc02.png");
+        S4_SC4.setDetail("src\\scene\\S4_SC4\\sc03.png");
+        S4_SC4.setDetail("src\\scene\\S4_SC4\\sc04.png");
+        S4_SC4.setDetail("src\\scene\\S4_SC4\\sc05.png");
+        S4_SC4.setDetail("src\\scene\\S4_SC4\\sc06.png");
+        S4_SC4.setDetail("src\\scene\\S4_SC4\\sc07.png");
+        S4_SC4.setDetail("src\\scene\\S4_SC4\\sc08.png");
+        S4_SC4.setDetail("src\\scene\\S4_SC4\\sc09.png");
+        S4_SC4.setDetail("src\\scene\\S4_SC4\\sc10.png");
+        S4_SC4.setDialog("S4_SC4_DL_03");
+        S4_SC4.setDialog("S4_SC4_DL_04");
+        S4_SC4.setDialog("S4_SC4_DL_05");
+        S4_SC4.setDialog("S4_SC4_DL_06");
+        S4_SC4.setDialog("S4_SC4_DL_07");
+        S4_SC4.setDialog("S4_SC4_DL_08");
+        S4_SC4.setDialog("S4_SC4_DL_09");
+        S4_SC4.setDialog("S4_SC4_DL_10");
+        S4_SC4.setDialog("S4_SC4_DL_11");
+        S4_SC4.setDialog("S4_SC4_DL_12");
+        S4_SC4.setDialog("S4_SC4_DL_13");
+        S4_SC4.setDialog("S4_SC4_DL_14");
+        S4_SC4.setDialog("S4_SC4_DL_15");
+        S4_SC4.setDialog("S4_SC4_DL_16");
+        S4_SC4.setDialog("S4_SC4_DL_17");
+        S4_SC4.setDetail("src\\scene\\S4_SC4\\sc11.png");
+        S4_SC4.setDetail("src\\scene\\S4_SC4\\sc12.png");
+        S4_SC4.setDetail("src\\scene\\S4_SC4\\sc13.png");
+        S4_SC4.setDetail("src\\scene\\S4_SC4\\sc14.png");
+        S4_SC4.setDetail("src\\scene\\S4_SC4\\sc15.png");
+        S4_SC4.setDetail("src\\scene\\S4_SC4\\sc16.png");
+        S4_SC4.setDetail("src\\scene\\S4_SC4\\sc17.png");
+        S4_SC4.setDetail("src\\scene\\S4_SC4\\sc18.png");
+        S4_SC4.setDetail("src\\scene\\S4_SC4\\sc19.png");
+        S4_SC4.setDetail("src\\scene\\S4_SC4\\sc20.png");
+        S4_SC4.setDetail("src\\scene\\S4_SC4\\sc21.png");
+        S4_SC4.setDetail("src\\scene\\S4_SC4\\sc22.png");
+        S4_SC4.setDialog("S4_SC4_DL_18");
+        S4_SC4.setDialog("S4_SC4_DL_19");
+        S4_SC4.setDialog("S4_SC4_DL_20");
+        S4_SC4.setDialog("S4_SC4_DL_21");
+        S4_SC4.setDetail("");
+        //S4_SC4.setClearedPuzzle("S9_P_MAP_")
         //S5_SC3
         // S5_SC3: 과거의 시간으로 돌아온 히로, 옥상의 우물에서
         GameObjectManager::createObject("Dialog", "S5_SC3_DL_01", "히로: 우물이 원하는 게 대체 뭘까…");
@@ -456,8 +600,6 @@ private:
         SceneMananger::addScene("S5_SC3", S5_SC3);
     }
 
-
-
     static void Iteminit() {
         ItemManager::addItems("S7_M1_PZ_KEY", 1);
         ItemManager::addItems("S7_M2_PZ_SEED", 1);
@@ -496,7 +638,6 @@ private:
         PuzzleManager::setCompletedSceneDialog("S2_M1_DPZ_01", "S2_M1_DPZ1_DL_00_01");
         PuzzleManager::setCompletedSceneLoop("S2_M1_PZ_01", true);
         PuzzleManager::setCompletedSceneLoop("S2_M1_DPZ_01", true);
-
 
         //E_S3_P
         PuzzleManager::createPuzzle("S3_M1_PZ_01", TYPE_READ_PUZZLE); //피아노 보여주기
@@ -655,7 +796,7 @@ private:
         StageManager::addMap(0, MapManager::getMap("S0_P_MAP_01"));
 
         StageManager::setDoorID(0, "S0_P_MAP_01", MAP_EXIT, "EXIT");
-
+        StageManager::setScene(0, "S0_P_MAP_01", "S0_SC1");
         //E_S1
         StageManager::addMap(1, MapManager::getMap("S1_P_MAP_01"));
         StageManager::addMap(1, MapManager::getMap("S1_J_MAP_01"));
@@ -781,7 +922,7 @@ private:
         StageManager::setDoorID(9, "S9_P_MAP_01", MAP_EXIT, "S9_J_MAP_01");
         StageManager::setDoorID(9, "S9_P_MAP_03_0", MAP_DOOR_01, "S9_P_MAP_03_1");
         StageManager::setDoorID(9, "S9_P_MAP_03_1", MAP_DOOR_01, "S9_P_MAP_03_2");
-        StageManager::setDoorID(9, "S9_P_MAP_03_2", MAP_DOOR_01, "S9_P_MAP_03_5");
+        StageManager::setDoorID(9, "S9_P_MAP_03_2", MAP_DOOR_01, "S9_P_MAP_05");
         StageManager::setDoorID(9, "S9_P_MAP_03_0", MAP_DOOR_02, "S9_P_MAP_01");
         StageManager::setDoorID(9, "S9_P_MAP_03_1", MAP_DOOR_02, "S9_P_MAP_01");
         StageManager::setDoorID(9, "S9_P_MAP_03_2", MAP_DOOR_02, "S9_P_MAP_01");

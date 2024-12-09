@@ -150,6 +150,9 @@ public:
         if (cnt1 == cnt2) {
             isCleared = true;
         }
+
+
+        getIsCleared();
     }
 };
 
