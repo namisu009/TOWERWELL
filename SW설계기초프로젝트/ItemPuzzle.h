@@ -37,7 +37,7 @@ public:
 
 		string name = puzzleItemArray[itemArrayIdx];
  		if (name == "" || name != "" && player->getisItem(name)) { //사용자에게 있을 때 또는 아이템 조건이 없을 때
-			player->uesItem(name); //아이템 사용하게 하기
+			player->useItem(name); //아이템 사용하게 하기
 			itemArrayIdx++; //다음 문제의 필요한 아이템으로 넘어가기
 			return true;
 		}

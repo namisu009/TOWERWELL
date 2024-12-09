@@ -118,7 +118,7 @@ public:
 
             RenderManager::setRenderMap(maps[currentMapId]);
         }
-
+    
     }
 
     void onPuzzleSolved() {

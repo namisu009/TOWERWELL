@@ -221,7 +221,7 @@ public:
 
         */
 
-        newScene.display();
+       //newScene.display();
 
         RenderManager::setRenderMap(currentMap);
         //StageManager::.setScene("Scene_id_01");
@@ -272,72 +272,50 @@ public:
             mtx.lock();
             int flag = 0;
 
-            playerCharacter->setDx(0);
 
 
             playerCharacter->setDx(0);
             if (playerCharacter->getIsWallClimbing()) {
+                playerCharacter->setDy(0);
+
                 if (GetAsyncKeyState(VK_UP) & 0x8000) {
                     playerCharacter->climbUp();
                 }
-                else if (GetAsyncKeyState(VK_DOWN) & 0x8000) {
+                if (GetAsyncKeyState(VK_DOWN) & 0x8000) {
                     playerCharacter->climbDown();
                 }
-                else if (!(GetAsyncKeyState(0x46) & 0x8000) ||
-                    GetAsyncKeyState(VK_LEFT) & 0x8000 ||
-                    GetAsyncKeyState(VK_RIGHT) & 0x8000) {
+                
+                if (!(GetAsyncKeyState(0x46) & 0x8000) || // F키에서 손 뗌
+                    !(GetAsyncKeyState(VK_LEFT) & 0x8000) ||
+                    !(GetAsyncKeyState(VK_RIGHT) & 0x8000)) {
                     playerCharacter->stopWallClimbing();
-                    sisterCharacter->stopWallClimbing();
                 }
             }
+            // 벽타기 활성화 조건 확인
             else {
-                if (GetAsyncKeyState(0x46) & 0x8000) {
-                    int x = playerCharacter->getFootX();
-                    int y = playerCharacter->getFootY();
-
-                    if (currentMap->getType() == TYPE_JUMP && CollisionManager::checkWallAdjacent(*playerCharacter, (JumpMap*)currentMap)) {
+                if (GetAsyncKeyState(0x46) & 0x8000) { // F키 누름
+                    if (currentMap->getType() == TYPE_JUMP &&
+                        CollisionManager::checkWallAdjacent(*playerCharacter, (JumpMap*)currentMap)) { // 특정 벽 확인
                         playerCharacter->startWallClimbing();
-                        sisterCharacter->startWallClimbing();
                     }
                 }
+                // 일반 이동 처리
                 if (GetAsyncKeyState(VK_RIGHT) & 0x8000) {
                     HandlerManager::processInput(VK_RIGHT);
-                    flag = 1;
                 }
                 if (GetAsyncKeyState(VK_LEFT) & 0x8000) {
                     HandlerManager::processInput(VK_LEFT);
-                    flag = 1;
                 }
                 if (GetAsyncKeyState(VK_UP) & 0x8000) {
-
-
                     auto now = chrono::steady_clock::now();
                     int elapsed = chrono::duration_cast<chrono::milliseconds>(now - lastJumpTime).count();
+
                     if (elapsed >= jumpCooldown) {
                         HandlerManager::processInput(VK_UP);
                         lastJumpTime = now;
-
-                        if ((playerCharacter->getisJumping() || playerCharacter->getCanDoubleJump()) && elapsed <= 900) {
-                            HandlerManager::processInput(VK_UP);
-                            lastJumpTime = now;
-
-                        }
-                        if (currentMap->getType() == TYPE_JUMP)
-                            actionPositions[{playerCharacter->getFootX(), playerCharacter->getFootY()}] = { ACTION_JUMP, playerCharacter->getDx() };
                     }
-
-                    flag = 1;
-                }
-                if (GetAsyncKeyState(VK_SPACE) & 0x8000) {
-                    HandlerManager::processInput(VK_SPACE);
-
-                    if (currentMap->getType() == TYPE_JUMP)
-                        actionPositions[{playerCharacter->getFootX(), playerCharacter->getFootY()}] = { ACTION_DASH, playerCharacter->getDx() };
-
-                    flag = 1;
                 }
             }
-
             if (_kbhit()) {
                 int key = _getch();
                 if(key == 70 || key == 102)
