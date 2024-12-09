@@ -12,29 +12,29 @@ class InitializeManager
 private:
     static void ObjectInit() {
         // 캐릭터 생성 및 초기화
-        GameObjectManager::createObject("Character", "Hero", "src\\hero_idle_right_01.png");
-        GameObjectManager::getCharacter("Hero")->setAnimation("IDLE_RIGHT", 1, "src\\hero_idle_right_02.png");
-        GameObjectManager::getCharacter("Hero")->setAnimation("IDLE_LEFT", "src\\hero_idle_left_01.png", "src\\hero_idle_left_02.png");
-        GameObjectManager::getCharacter("Hero")->setAnimation("RIGHT", "src\\hero_right_01.png", "src\\hero_right_02.png");
-        GameObjectManager::getCharacter("Hero")->setAnimation("LEFT", "src\\hero_left_01.png", "src\\hero_left_02.png");
-        GameObjectManager::getCharacter("Hero")->setAnimation("CLIMB_LEFT", "src\\hero_climb_left_01.png", "src\\hero_climb_left_02.png");
-        GameObjectManager::getCharacter("Hero")->setAnimation("CLIMB_RIGHT", "src\\hero_climb_right_01.png", "src\\hero_climb_right_02.png");
+        GameObjectManager::createObject("Character", "Hero", "src\\characters\\hero_idle_right_01.png");
+        GameObjectManager::getCharacter("Hero")->setAnimation("IDLE_RIGHT", 1, "src\\characters\\hero_idle_right_02.png");
+        GameObjectManager::getCharacter("Hero")->setAnimation("IDLE_LEFT", "src\\characters\\hero_idle_left_01.png", "src\\characters\\hero_idle_left_02.png");
+        GameObjectManager::getCharacter("Hero")->setAnimation("RIGHT", "src\\characters\\hero_right_01.png", "src\\characters\\hero_right_02.png");
+        GameObjectManager::getCharacter("Hero")->setAnimation("LEFT", "src\\characters\\hero_left_01.png", "src\\characters\\hero_left_02.png");
+        GameObjectManager::getCharacter("Hero")->setAnimation("CLIMB_RIGHT", "src\\characters\\hero_climb_right_01.png", "src\\characters\\hero_climb_right_02.png");
+        GameObjectManager::getCharacter("Hero")->setAnimation("CLIMB_LEFT", "src\\characters\\hero_climb_left_01.png", "src\\characters\\hero_climb_left_02.png");
 
 
-        GameObjectManager::createObject("Character", "Sister", "src\\sister_idle_right_01.png");
-        GameObjectManager::getCharacter("Sister")->setAnimation("IDLE_RIGHT", 1, "src\\sister_idle_right_02.png");
-        GameObjectManager::getCharacter("Sister")->setAnimation("IDLE_LEFT", "src\\sister_idle_left_01.png", "src\\sister_idle_left_02.png");
-        GameObjectManager::getCharacter("Sister")->setAnimation("RIGHT", "src\\sister_right_01.png", "src\\sister_right_02.png");
-        GameObjectManager::getCharacter("Sister")->setAnimation("LEFT", "src\\sister_left_01.png", "src\\sister_left_02.png");
-        GameObjectManager::getCharacter("Sister")->setAnimation("CLIMB_LEFT", "src\\sister_climb_left_01.png", "src\\sister_climb_left_02.png");
-        GameObjectManager::getCharacter("Sister")->setAnimation("CLIMB_RIGHT", "src\\sister_climb_right_01.png", "src\\sister_climb_right_02.png");
+        GameObjectManager::createObject("Character", "Sister", "src\\characters\\sister_idle_right_01.png");
+        GameObjectManager::getCharacter("Sister")->setAnimation("IDLE_RIGHT", 1, "src\\characters\\sister_idle_right_02.png");
+        GameObjectManager::getCharacter("Sister")->setAnimation("IDLE_LEFT", "src\\characters\\sister_idle_left_01.png", "src\\characters\\sister_idle_left_02.png");
+        GameObjectManager::getCharacter("Sister")->setAnimation("RIGHT", "src\\characters\\sister_right_01.png", "src\\characters\\sister_right_02.png");
+        GameObjectManager::getCharacter("Sister")->setAnimation("LEFT", "src\\characters\\sister_left_01.png", "src\\characters\\sister_left_02.png");
+        GameObjectManager::getCharacter("Sister")->setAnimation("CLIMB_RIGHT", "src\\characters\\sister_climb_right_01.png", "src\\characters\\sister_climb_right_02.png");
+        GameObjectManager::getCharacter("Sister")->setAnimation("CLIMB_LEFT", "src\\characters\\sister_climb_left_01.png", "src\\characters\\sister_climb_left_02.png");
 
 
-        GameObjectManager::createObject("Character", "Hood", "src\\hood_idle_right_01.png");
-        GameObjectManager::getCharacter("Hood")->setAnimation("IDLE_RIGHT", 1, "src\\hood_idle_right_02.png");
-        GameObjectManager::getCharacter("Hood")->setAnimation("IDLE_LEFT", "src\\hood_idle_left_01.png", "src\\hood_idle_left_02.png");
-        GameObjectManager::getCharacter("Hood")->setAnimation("RIGHT", "src\\hood_right_01.png", "src\\hood_right_02.png");
-        GameObjectManager::getCharacter("Hood")->setAnimation("LEFT", "src\\hood_left_01.png", "src\\hood_left_02.png");
+        GameObjectManager::createObject("Character", "Hood", "src\\characters\\hood_idle_right_01.png");
+        GameObjectManager::getCharacter("Hood")->setAnimation("IDLE_RIGHT", 1, "src\\characters\\hood_idle_right_02.png");
+        GameObjectManager::getCharacter("Hood")->setAnimation("IDLE_LEFT", "src\\characters\\hood_idle_left_01.png", "src\\characters\\hood_idle_left_02.png");
+        GameObjectManager::getCharacter("Hood")->setAnimation("RIGHT", "src\\characters\\hood_right_01.png", "src\\characters\\hood_right_02.png");
+        GameObjectManager::getCharacter("Hood")->setAnimation("LEFT", "src\\characters\\hood_left_01.png", "src\\characters\\hood_left_02.png");
 
 
 
@@ -42,6 +42,13 @@ private:
 
         GameObjectManager::createObject("Dialog", "NUMBER_WINDOW", "");
         GameObjectManager::createObject("Dialog", "PZ_NCL_DL", "문이 열리지 않아...");
+
+        GameObjectManager::createObject("Dialog", "S1_M1_DPZ1_DL_00_00", "먼지가 수북이 쌓인 책장이다.");
+        GameObjectManager::createObject("Dialog", "S1_M1_DPZ1_DL_00_01", "이 탑의 주인은 청소에는 관심이 없었나보다...");
+        GameObjectManager::createObject("Dialog", "S1_M1_DPZ2_DL_00_00", "아름답게 빛나는 랜턴이다.");
+
+        GameObjectManager::createObject("Dialog", "S2_M1_DPZ1_DL_00_00", "회전 목마 모형이 여기 왜 있을까?");
+        GameObjectManager::createObject("Dialog", "S2_M1_DPZ1_DL_00_01", "버튼을 눌러보니 돌아가다 곧 꺼진다...");
 
         GameObjectManager::createObject("Dialog", "S6_M1_PZ2_DL_00_00", "히로: 문이 열리지 않아... 열쇠가 필요할 거 같아.");
         GameObjectManager::createObject("Dialog", "S6_M1_PZ2_DL_00_01", "열쇠를 사용한다.");
@@ -89,7 +96,7 @@ private:
         GameObjectManager::createObject("Dialog", "S0_SC1_DL_07", "저 거대한 문이 천천히 열리고, 운명을 바꿀 여정이 시작된다.");
         GameObjectManager::createObject("Dialog", "S0_SC1_DL_08", "히로: 나는 어머니를 위해 끝까지 올라갈 거야.");
 
-        S0_SC1.setDetail("src\\S0_SC1_00.png");
+        S0_SC1.setDetail("src\\scene\\S0_SC1\\S0_SC1_00.png");
         S0_SC1.setDialog("S0_SC1_DL_01");
         S0_SC1.setDialog("S0_SC1_DL_02");
         S0_SC1.setDialog("S0_SC1_DL_03");
@@ -250,7 +257,7 @@ private:
         S5_SC1.setDialog("S5_SC1_DL_04");
         S5_SC1.setDialog("S5_SC1_DL_05");
         S5_SC1.setDialog("S5_SC1_DL_07");
-        S5_SC1.setDetail("src\\S5_SC1.png");
+        S5_SC1.setDetail("src\\scene\\S5_SC1\\S5_SC1.png");
         S5_SC1.setDialog("S5_SC1_DL_08");
         S5_SC1.setDialog("S5_SC1_DL_09");
         S5_SC1.setDialog("S5_SC1_DL_10");
@@ -272,6 +279,7 @@ private:
         GameObjectManager::createObject("Dialog", "S5_SC2_DL_03", "많은 정보들이 머리 속을 헤집는 느낌이다.");
         GameObjectManager::createObject("Dialog", "S5_SC2_DL_04", "내 여동생을 구해야만 해… 반드시… 리안…");
         GameObjectManager::createObject("Dialog", "S5_SC2_DL_05", "깊은 고요 속에서 주인공은 정신을 잃는다.");
+
         // 우물 안에서 고통받는 주인공이 나왔으면 좋겠어요.
         S5_SC2.setDialog("S5_SC2_DL_01");
         S5_SC2.setDialog("S5_SC2_DL_02");
@@ -332,39 +340,39 @@ private:
         GameObjectManager::createObject("Dialog", "S5_SC3_DL_22", "히로는 칼을 뽑아들고 리안에게 다가간다.");
         GameObjectManager::createObject("Dialog", "S5_SC3_DL_23", "리안: 언니, 뭐 하는…?");
         GameObjectManager::createObject("Dialog", "S5_SC3_DL_24", "리안: 꺄아악!!!");
-		GameObjectManager::createObject("Dialog", "S5_SC3_DL_25", "탑에서 [가장 빛나는 것]을 획득했다.");
+        GameObjectManager::createObject("Dialog", "S5_SC3_DL_25", "탑에서 [가장 빛나는 것]을 획득했다.");
         GameObjectManager::createObject("Dialog", "S5_SC3_DL_26", "과거의 히로: 리안!! 안 돼!!");
         GameObjectManager::createObject("Dialog", "S5_SC3_DL_27", "???: 네 선택은 끝났다.약속대로 이제 소원은 이루어진다.");
         GameObjectManager::createObject("Dialog", "S5_SC3_DL_28", "히로: 리안… 내가 갈게…");
 
-		S5_SC3.setDialog("S5_SC3_DL_01");
-		S5_SC3.setDialog("S5_SC3_DL_02");
-		S5_SC3.setDialog("S5_SC3_DL_03");
-		S5_SC3.setDialog("S5_SC3_DL_04");
-		S5_SC3.setDialog("S5_SC3_DL_05");
-		S5_SC3.setDialog("S5_SC3_DL_06");
-		S5_SC3.setDialog("S5_SC3_DL_07");
-		S5_SC3.setDialog("S5_SC3_DL_08");
-		S5_SC3.setDialog("S5_SC3_DL_09");
-		S5_SC3.setDialog("S5_SC3_DL_10");
-		S5_SC3.setDialog("S5_SC3_DL_11");
-		S5_SC3.setDialog("S5_SC3_DL_12");
-		S5_SC3.setDialog("S5_SC3_DL_13");
-		S5_SC3.setDialog("S5_SC3_DL_14");
-		S5_SC3.setDialog("S5_SC3_DL_15");
-		S5_SC3.setDialog("S5_SC3_DL_16");
-		S5_SC3.setDialog("S5_SC3_DL_17");
-		S5_SC3.setDialog("S5_SC3_DL_18");
-		S5_SC3.setDialog("S5_SC3_DL_19");
-		S5_SC3.setDialog("S5_SC3_DL_20");
-		S5_SC3.setDialog("S5_SC3_DL_21");
-		S5_SC3.setDialog("S5_SC3_DL_22");
-		S5_SC3.setDialog("S5_SC3_DL_23");
-		S5_SC3.setDialog("S5_SC3_DL_24");
-		S5_SC3.setDialog("S5_SC3_DL_25");
-		S5_SC3.setDialog("S5_SC3_DL_26");
-		S5_SC3.setDialog("S5_SC3_DL_27");
-		S5_SC3.setDialog("S5_SC3_DL_28");
+        S5_SC3.setDialog("S5_SC3_DL_01");
+        S5_SC3.setDialog("S5_SC3_DL_02");
+        S5_SC3.setDialog("S5_SC3_DL_03");
+        S5_SC3.setDialog("S5_SC3_DL_04");
+        S5_SC3.setDialog("S5_SC3_DL_05");
+        S5_SC3.setDialog("S5_SC3_DL_06");
+        S5_SC3.setDialog("S5_SC3_DL_07");
+        S5_SC3.setDialog("S5_SC3_DL_08");
+        S5_SC3.setDialog("S5_SC3_DL_09");
+        S5_SC3.setDialog("S5_SC3_DL_10");
+        S5_SC3.setDialog("S5_SC3_DL_11");
+        S5_SC3.setDialog("S5_SC3_DL_12");
+        S5_SC3.setDialog("S5_SC3_DL_13");
+        S5_SC3.setDialog("S5_SC3_DL_14");
+        S5_SC3.setDialog("S5_SC3_DL_15");
+        S5_SC3.setDialog("S5_SC3_DL_16");
+        S5_SC3.setDialog("S5_SC3_DL_17");
+        S5_SC3.setDialog("S5_SC3_DL_18");
+        S5_SC3.setDialog("S5_SC3_DL_19");
+        S5_SC3.setDialog("S5_SC3_DL_20");
+        S5_SC3.setDialog("S5_SC3_DL_21");
+        S5_SC3.setDialog("S5_SC3_DL_22");
+        S5_SC3.setDialog("S5_SC3_DL_23");
+        S5_SC3.setDialog("S5_SC3_DL_24");
+        S5_SC3.setDialog("S5_SC3_DL_25");
+        S5_SC3.setDialog("S5_SC3_DL_26");
+        S5_SC3.setDialog("S5_SC3_DL_27");
+        S5_SC3.setDialog("S5_SC3_DL_28");
 
         /*GameObjectManager::createObejct("Dialog", "S6_SC1_DL_01", "히로: … 흔적들… 일기장… 그리고 이 탑.");
         GameObjectManager::createObejct("Dialog", "S6_SC1_DL_02", "???: 많은 이들이 이곳에 발을 들였지.저마다 자신의 바람을 이루기 위해.");
@@ -461,23 +469,47 @@ private:
     static void PuzzleInit() {
 
         GameObjectManager::createObject("Dialog", "S1_SC2_DL_01", "리안: 소문이 사실인가봐. 저기 끝에 문이 있는거 같은데 가보자!");
+
+        //E_S1_P
         PuzzleManager::createPuzzle("S1_M1_PZ_01", TYPE_READ_PUZZLE); //석판
-        PuzzleManager::setCompletedDetailASCII("S1_M1_PZ_01", "src\\S6_M1_PZ_DT_01.png");
+        PuzzleManager::createPuzzle("S1_M1_DPZ_01", TYPE_READ_PUZZLE);//더미1
+        PuzzleManager::createPuzzle("S1_M1_DPZ_02", TYPE_READ_PUZZLE);//더미2
+        PuzzleManager::setCompletedObjectASCII("S1_M1_DPZ_01", "src\\maps\\S1\\dummy_S1_01.png");
+        PuzzleManager::setCompletedSceneDialog("S1_M1_DPZ_01", "S1_M1_DPZ1_DL_00_00");
+        PuzzleManager::setCompletedSceneDialog("S1_M1_DPZ_01", "S1_M1_DPZ1_DL_00_01");
+        PuzzleManager::setCompletedObjectASCII("S1_M1_DPZ_02", "src\\maps\\S1\\dummy_S1_02.png");
+        PuzzleManager::setCompletedSceneDialog("S1_M1_DPZ_02", "S1_M1_DPZ2_DL_00_00");
+        PuzzleManager::setCompletedDetailASCII("S1_M1_PZ_01", "src\\maps\\S1\\S1_M1_PZ_DT_01.png");
         PuzzleManager::setCompletedSceneDialog("S1_M1_PZ_01", "S1_SC2_DL_01");
+        PuzzleManager::setCompletedSceneLoop("S1_M1_DPZ_01", true);
+        PuzzleManager::setCompletedSceneLoop("S1_M1_DPZ_02", true);
+
+        //E_S2_P
 
         PuzzleManager::createPuzzle("S2_M1_PZ_01", TYPE_READ_PUZZLE); //석상에 가로막힌 문
-        PuzzleManager::setCompletedObjectASCII("S2_M1_PZ_01", "src\\S2_M1_PZ_01_02.png"); //석상에 가로막힌 문
+        PuzzleManager::setCompletedObjectASCII("S2_M1_PZ_01", "src\\maps\\S2\\S2_M1_PZ_01_02.png"); //석상에 가로막힌 문
         PuzzleManager::setCompletedSceneDialog("S2_M1_PZ_01", "S7_M1_PZ1_DL_00_02");
+
+        PuzzleManager::createPuzzle("S2_M1_DPZ_01", TYPE_READ_PUZZLE);//더미 회전목마
+        PuzzleManager::setCompletedObjectASCII("S2_M1_DPZ_01", "src\\maps\\S2\\dummy_S2_01.png");
+        PuzzleManager::setCompletedSceneDialog("S2_M1_DPZ_01", "S2_M1_DPZ1_DL_00_00");
+        PuzzleManager::setCompletedSceneDialog("S2_M1_DPZ_01", "S2_M1_DPZ1_DL_00_01");
         PuzzleManager::setCompletedSceneLoop("S2_M1_PZ_01", true);
+        PuzzleManager::setCompletedSceneLoop("S2_M1_DPZ_01", true);
 
+
+        //E_S3_P
         PuzzleManager::createPuzzle("S3_M1_PZ_01", TYPE_READ_PUZZLE); //피아노 보여주기
-        PuzzleManager::setCompletedDetailASCII("S3_M1_PZ_01", "src\\S8_M1_PZ_DT_02_01.png");
+        PuzzleManager::setCompletedDetailASCII("S3_M1_PZ_01", "src\\maps\\S3\\S3_M1_PZ_DT_02_01.png");
 
+        PuzzleManager::createPuzzle("S3_M1_DPZ_01", TYPE_READ_PUZZLE);
 
+        PuzzleManager::createPuzzle("S3_M1_DPZ_02", TYPE_READ_PUZZLE);
 
+        //H_S1_P
         PuzzleManager::createPuzzle("S6_M1_PZ_01", TYPE_NUMBER_PUZZLE); //석판을 보고 비밀번호 입력 부분
 
-        PuzzleManager::setPuzzleDetailASCII("S6_M1_PZ_01", 0, "src\\S1_M1_PZ_DT_02.png");
+        PuzzleManager::setPuzzleDetailASCII("S6_M1_PZ_01", 0, "src\\maps\\S1\\S1_M1_PZ_DT_02.png");
 
         PuzzleManager::setCorrectAnswer("S6_M1_PZ_01", 0);
         PuzzleManager::setCorrectAnswer("S6_M1_PZ_01", 4);
@@ -488,14 +520,22 @@ private:
         PuzzleManager::setPuzzleSceneDialog("S6_M1_PZ_01", 0, TYPE_CL_DL, "NUM_PZ_CL_DL");
 
         PuzzleManager::createPuzzle("S6_M1_PZ_02", TYPE_READ_PUZZLE); //석판
-        PuzzleManager::setCompletedDetailASCII("S6_M1_PZ_02", "src\\S6_M1_PZ_DT_01.png");
+        PuzzleManager::setCompletedDetailASCII("S6_M1_PZ_02", "src\\maps\\S6\\S6_M1_PZ_DT_01.png");
 
+        PuzzleManager::createPuzzle("S6_M1_DPZ_01", TYPE_READ_PUZZLE);
+        PuzzleManager::setCompletedObjectASCII("S6_M1_DPZ_01", "src\\maps\\S6\\dummy_S6_01.png");
+
+        PuzzleManager::createPuzzle("S6_M1_DPZ_02", TYPE_READ_PUZZLE);
+        PuzzleManager::setCompletedObjectASCII("S6_M1_DPZ_02", "src\\maps\\S6\\dummy_S6_02.png");
+
+
+        //H_S2_P
         PuzzleManager::createPuzzle("S7_M1_PZ_01", TYPE_ITEM_PUZZLE); //석상
-        PuzzleManager::setPuzzleObjectASCII("S7_M1_PZ_01", 0, "src\\S7_M1_PZ_01_01.png");
+        PuzzleManager::setPuzzleObjectASCII("S7_M1_PZ_01", 0, "src\\maps\\S7\\S7_M1_PZ_01_01.png");
         PuzzleManager::setPuzzleSceneDialog("S7_M1_PZ_01", 0, TYPE_NCL_DL, "S7_M1_PZ1_DL_00_00");
         PuzzleManager::setPuzzleSceneDialog("S7_M1_PZ_01", 0, TYPE_CL_DL, "S7_M1_PZ1_DL_00_01");
         PuzzleManager::setPuzzleConditionItem("S7_M1_PZ_01", 0, "S7_M2_PZ_FLOWER");
-        PuzzleManager::setCompletedObjectASCII("S7_M1_PZ_01", "src\\S7_M1_PZ_01_02.png");
+        PuzzleManager::setCompletedObjectASCII("S7_M1_PZ_01", "src\\maps\\S7\\S7_M1_PZ_01_02.png");
         PuzzleManager::setCompletedSceneDialog("S7_M1_PZ_01", "S7_M1_PZ1_DL_00_02");
 
         PuzzleManager::createPuzzle("S7_M2_PZ_01", TYPE_ITEM_PUZZLE); //서랍
@@ -512,20 +552,20 @@ private:
         PuzzleManager::setCompletedSceneDialog("S7_M2_PZ_02", "S7_M2_PZ2_DL_00_01"); //더이상 얻을 것이 없어보인다.
 
         PuzzleManager::createPuzzle("S7_M3_PZ_01", TYPE_ITEM_PUZZLE); //화분
-        PuzzleManager::setPuzzleObjectASCII("S7_M3_PZ_01", 0, "src\\S7_M3_PZ_01_01.png");
-        PuzzleManager::setPuzzleObjectASCII("S7_M3_PZ_01", 1, "src\\S7_M3_PZ_01_02.png");
+        PuzzleManager::setPuzzleObjectASCII("S7_M3_PZ_01", 0, "src\\maps\\S7\\S7_M3_PZ_01_01.png");
+        PuzzleManager::setPuzzleObjectASCII("S7_M3_PZ_01", 1, "src\\maps\\S7\\S7_M3_PZ_01_02.png");
         PuzzleManager::setPuzzleConditionItem("S7_M3_PZ_01", 0, "S7_M2_PZ_SEED");
         PuzzleManager::setPuzzleReward("S7_M3_PZ_01", 1, "S7_M2_PZ_POT");
 
         PuzzleManager::setPuzzleSceneDialog("S7_M3_PZ_01", 0, TYPE_NCL_DL, "S7_M3_PZ1_DL_00_00"); //텅 빈 화분이다
         PuzzleManager::setPuzzleSceneDialog("S7_M3_PZ_01", 0, TYPE_CL_DL, "S7_M3_PZ1_DL_00_01"); //화분에다 씨앗을 심었다.
         PuzzleManager::setPuzzleSceneDialog("S7_M3_PZ_01", 1, TYPE_CL_DL, "S7_M3_PZ1_DL_00_02"); //화분을 얻었다.
-        PuzzleManager::setCompletedObjectASCII("S7_M3_PZ_01", "src\\S7_M3_PZ_01_03.png");
+        PuzzleManager::setCompletedObjectASCII("S7_M3_PZ_01", "src\\maps\\S7\\S7_M3_PZ_01_03.png");
 
         PuzzleManager::createPuzzle("S7_M3_PZ_02", TYPE_ITEM_PUZZLE); //균열 서랍
-        PuzzleManager::setPuzzleObjectASCII("S7_M3_PZ_02", 0, "src\\S7_M3_PZ_02_01.png");
-        PuzzleManager::setPuzzleObjectASCII("S7_M3_PZ_02", 1, "src\\S7_M3_PZ_02_02.png");
-        PuzzleManager::setPuzzleObjectASCII("S7_M3_PZ_02", 2, "src\\S7_M3_PZ_02_03.png");
+        PuzzleManager::setPuzzleObjectASCII("S7_M3_PZ_02", 0, "src\\maps\\S7\\S7_M3_PZ_02_01.png");
+        PuzzleManager::setPuzzleObjectASCII("S7_M3_PZ_02", 1, "src\\maps\\S7\\S7_M3_PZ_02_02.png");
+        PuzzleManager::setPuzzleObjectASCII("S7_M3_PZ_02", 2, "src\\maps\\S7\\S7_M3_PZ_02_03.png");
         PuzzleManager::setPuzzleReward("S7_M3_PZ_02", 0, "S7_M1_PZ_KEY");
         PuzzleManager::setPuzzleConditionItem("S7_M3_PZ_02", 1, "S7_M2_PZ_LIGHTER");
         PuzzleManager::setPuzzleReward("S7_M3_PZ_02", 2, "S7_M2_PZ_FLOWER");
@@ -538,12 +578,20 @@ private:
         PuzzleManager::setPuzzleSceneDialog("S7_M3_PZ_02", 2, TYPE_CL_DL, "S7_M3_PZ2_DL_00_05");
         PuzzleManager::setPuzzleSceneDialog("S7_M3_PZ_02", 2, TYPE_CL_DL, "S7_M3_PZ2_DL_00_06");
 
+
+        PuzzleManager::createPuzzle("S7_M1_DPZ_01", TYPE_READ_PUZZLE);
+        PuzzleManager::setCompletedObjectASCII("S7_M1_DPZ_01", "src\\maps\\S7\\dummy_S7_01_01.png");
+
+        PuzzleManager::createPuzzle("S7_M2_DPZ_01", TYPE_READ_PUZZLE);
+        PuzzleManager::setCompletedObjectASCII("S7_M2_DPZ_01", "src\\maps\\S7\\dummy_S7_02_01.png");
+
         //GameObjectManager::getCharacter("Hero")->addInventory("S7_M2_PZ_FLOWER");
         //GameObjectManager::getCharacter("Hero")->addInventory("S7_M2_PZ_LIGHTER");
         //GameObjectManager::getCharacter("Hero")->addInventory("S7_M2_PZ_POT");
 
+        //H_S3_P
         PuzzleManager::createPuzzle("S8_M1_PZ_01", TYPE_NUMBER_PUZZLE);
-        PuzzleManager::setPuzzleDetailASCII("S8_M1_PZ_01", 0, "src\\S8_M1_PZ_DT_01_01.png");
+        PuzzleManager::setPuzzleDetailASCII("S8_M1_PZ_01", 0, "src\\maps\\S8\\S8_M1_PZ_DT_01_01.png");
 
         PuzzleManager::setCorrectAnswer("S8_M1_PZ_01", 6);
         PuzzleManager::setCorrectAnswer("S8_M1_PZ_01", 1);
@@ -554,45 +602,49 @@ private:
         PuzzleManager::setPuzzleSceneDialog("S8_M1_PZ_01", 0, TYPE_CL_DL, "NUM_PZ_CL_DL");
 
         PuzzleManager::createPuzzle("S8_M1_PZ_02", TYPE_READ_PUZZLE);
-        PuzzleManager::setCompletedDetailASCII("S8_M1_PZ_02", "src\\S8_M1_PZ_DT_02_01.png");
+        PuzzleManager::setCompletedDetailASCII("S8_M1_PZ_02", "src\\maps\\S8\\S8_M1_PZ_DT_02_01.png");
+
+        PuzzleManager::createPuzzle("S8_M1_DPZ_01", TYPE_READ_PUZZLE);
+        PuzzleManager::setCompletedObjectASCII("S8_M1_DPZ_01", "src\\maps\\S8\\dummy_S8_01.png");
+
+        PuzzleManager::createPuzzle("S8_M1_DPZ_02", TYPE_READ_PUZZLE);
+        PuzzleManager::setCompletedObjectASCII("S8_M1_DPZ_02", "src\\maps\\S8\\dummy_S8_02.png");
 
         PuzzleManager::createPuzzle("S9_M3_PZ_01", TYPE_READ_PUZZLE);
-        
-
     };
 
     static void MapInit() {
-        MapManager::createMap("S0_P_MAP_01", TYPE_PUZZLE, "src\\S0_MAP.png", "src\\S0_MAP_INFO.png");
-        MapManager::createMap("S1_P_MAP_01", TYPE_PUZZLE, "src\\S1_P_MAP_01.png", "src\\S1_P_MAP_01_INFO_01.png");
-        MapManager::createMap("S1_J_MAP_01", TYPE_JUMP, "src\\S1_J_MAP_01.png", "src\\S1_J_MAP_INFO_01.png");
-        MapManager::createMap("S2_P_MAP_01", TYPE_PUZZLE, "src\\S2_P_MAP_01.png", "src\\S2_P_MAP_INFO_01.png");
-        MapManager::createMap("S2_J_MAP_01", TYPE_JUMP, "src\\S2_J_MAP_01.png", "src\\S2_J_MAP_INFO_01.png");
-        MapManager::createMap("S3_P_MAP_01", TYPE_PUZZLE, "src\\S3_P_MAP_01.png", "src\\S3_P_MAP_INFO_01.png");
-        MapManager::createMap("S3_J_MAP_01", TYPE_JUMP, "src\\S3_J_MAP_01.png", "src\\S3_J_MAP_INFO_01.png");
-        MapManager::createMap("S4_P_MAP_01", TYPE_PUZZLE, "src\\S4_P_MAP_01.png", "src\\S4_P_MAP_INFO_01.png");
-        MapManager::createMap("S4_P_MAP_02", TYPE_PUZZLE, "src\\S4_P_MAP_02.png", "src\\S4_P_MAP_INFO_02.png");
-        MapManager::createMap("S4_P_MAP_03", TYPE_PUZZLE, "src\\S4_P_MAP_03_3.png", "src\\S4_P_MAP_INFO_03.png");
-        MapManager::createMap("S4_J_MAP_01", TYPE_JUMP, "src\\S4_J_MAP_01.png", "src\\S4_J_MAP_INFO_01.png");
-        MapManager::createMap("S5_P_MAP_01", TYPE_PUZZLE, "src\\S5_MAP_01.png", "src\\S5_MAP_INFO_01_TEST.png");
-        MapManager::createMap("S6_P_MAP_00", TYPE_PUZZLE, "src\\S0_MAP.png", "src\\S0_MAP_INFO.png");
-        MapManager::createMap("S6_P_MAP_01", TYPE_PUZZLE, "src\\S6_P_MAP_01.png", "src\\S6_P_MAP_01_INFO_01.png");
-        MapManager::createMap("S6_J_MAP_01", TYPE_JUMP, "src\\S6_J_MAP_01.png", "src\\S6_J_MAP_INFO_01.png");
-        MapManager::createMap("S7_P_MAP_01", TYPE_PUZZLE, "src\\S7_P_MAP_01.png", "src\\S7_P_MAP_INFO_01.png");
-        MapManager::createMap("S7_P_MAP_02", TYPE_PUZZLE, "src\\S7_P_MAP_02.png", "src\\S7_P_MAP_INFO_02.png");
-        MapManager::createMap("S7_P_MAP_03", TYPE_PUZZLE, "src\\S7_P_MAP_03.png", "src\\S7_P_MAP_INFO_03.png");
-        MapManager::createMap("S7_J_MAP_01", TYPE_JUMP, "src\\S7_J_MAP_01.png", "src\\S7_J_MAP_INFO_01.png");
-        MapManager::createMap("S8_P_MAP_01", TYPE_PUZZLE, "src\\S8_P_MAP_01.png", "src\\S8_P_MAP_INFO_01.png");
-        MapManager::createMap("S8_J_MAP_01", TYPE_JUMP, "src\\S8_J_MAP_01.png", "src\\S8_J_MAP_INFO_01.png");
-        MapManager::createMap("S9_P_MAP_01", TYPE_PUZZLE, "src\\S9_P_MAP_01.png", "src\\S9_P_MAP_INFO_01.png");
-        MapManager::createMap("S9_P_MAP_02", TYPE_PUZZLE, "src\\S9_P_MAP_02.png", "src\\S9_P_MAP_INFO_02.png");
-        MapManager::createMap("S9_P_MAP_03_0", TYPE_PUZZLE, "src\\S9_P_MAP_03_0.png", "src\\S9_P_MAP_INFO_03_0.png");
-        MapManager::createMap("S9_P_MAP_03_1", TYPE_PUZZLE, "src\\S9_P_MAP_03_1.png", "src\\S9_P_MAP_INFO_03_1.png");
-        MapManager::createMap("S9_P_MAP_03_2", TYPE_PUZZLE, "src\\S9_P_MAP_03_2.png", "src\\S9_P_MAP_INFO_03_2.png");
-        MapManager::createMap("S9_P_MAP_03_3", TYPE_PUZZLE, "src\\S9_P_MAP_03_3.png", "src\\S9_P_MAP_INFO_03_3.png");
-        MapManager::createMap("S9_P_MAP_04", TYPE_PUZZLE, "src\\S9_P_MAP_04.png", "src\\S9_P_MAP_INFO_04.png");
-        MapManager::createMap("S9_P_MAP_05", TYPE_PUZZLE, "src\\S9_P_MAP_05.png", "src\\S9_P_MAP_INFO_05.png");
-        MapManager::createMap("S9_J_MAP_01", TYPE_JUMP, "src\\S9_J_MAP_01.png", "src\\S9_J_MAP_INFO_01.png");
-        MapManager::createMap("S10_P_MAP_01", TYPE_PUZZLE, "src\\S10_MAP_01.png", "src\\S5_MAP_INFO_01_TEST.png");
+        MapManager::createMap("S0_P_MAP_01", TYPE_PUZZLE, "src\\maps\\S0\\S0_MAP.png", "src\\maps\\S0\\S0_MAP_INFO.png");
+        MapManager::createMap("S1_P_MAP_01", TYPE_PUZZLE, "src\\maps\\S1\\S1_P_MAP_01.png", "src\\maps\\S1\\S1_P_MAP_INFO_01.png");
+        MapManager::createMap("S1_J_MAP_01", TYPE_JUMP, "src\\maps\\S1\\S1_J_MAP_01.png", "src\\maps\\S1\\S1_J_MAP_INFO_01.png");
+        MapManager::createMap("S2_P_MAP_01", TYPE_PUZZLE, "src\\maps\\S2\\S2_P_MAP_01.png", "src\\maps\\S2\\S2_P_MAP_INFO_01.png");
+        MapManager::createMap("S2_J_MAP_01", TYPE_JUMP, "src\\maps\\S2\\S2_J_MAP_01.png", "src\\maps\\S2\\S2_J_MAP_INFO_01.png");
+        MapManager::createMap("S3_P_MAP_01", TYPE_PUZZLE, "src\\maps\\S3\\S3_P_MAP_01.png", "src\\maps\\S3\\S3_P_MAP_INFO_01.png");
+        MapManager::createMap("S3_J_MAP_01", TYPE_JUMP, "src\\maps\\S3\\S3_J_MAP_01.png", "src\\maps\\S3\\S3_J_MAP_INFO_01.png");
+        MapManager::createMap("S4_P_MAP_01", TYPE_PUZZLE, "src\\maps\\S4\\S4_P_MAP_01.png", "src\\maps\\S4\\S4_P_MAP_INFO_01.png");
+        MapManager::createMap("S4_P_MAP_02", TYPE_PUZZLE, "src\\maps\\S4\\S4_P_MAP_02.png", "src\\maps\\S4\\S4_P_MAP_INFO_02.png");
+        MapManager::createMap("S4_P_MAP_03", TYPE_PUZZLE, "src\\maps\\S4\\S4_P_MAP_03_3.png", "src\\maps\\S4\\S4_P_MAP_INFO_03.png");
+        MapManager::createMap("S4_J_MAP_01", TYPE_JUMP, "src\\maps\\S4\\S4_J_MAP_01.png", "src\\maps\\S4\\S4_J_MAP_INFO_01.png");
+        MapManager::createMap("S5_P_MAP_01", TYPE_PUZZLE, "src\\maps\\S5\\S5_MAP_01.png", "src\\maps\\S5\\S5_MAP_INFO_01_TEST.png");
+        MapManager::createMap("S6_P_MAP_00", TYPE_PUZZLE, "src\\maps\\S0\\S0_MAP.png", "src\\maps\\S0\\S0_MAP_INFO.png");
+        MapManager::createMap("S6_P_MAP_01", TYPE_PUZZLE, "src\\maps\\S6\\S6_P_MAP_01.png", "src\\maps\\S6\\S6_P_MAP_01_INFO_01.png");
+        MapManager::createMap("S6_J_MAP_01", TYPE_JUMP, "src\\maps\\S6\\S6_J_MAP_01.png", "src\\maps\\S6\\S6_J_MAP_INFO_01.png");
+        MapManager::createMap("S7_P_MAP_01", TYPE_PUZZLE, "src\\maps\\S7\\S7_P_MAP_01.png", "src\\maps\\S7\\S7_P_MAP_INFO_01.png");
+        MapManager::createMap("S7_P_MAP_02", TYPE_PUZZLE, "src\\maps\\S7\\S7_P_MAP_02.png", "src\\maps\\S7\\S7_P_MAP_INFO_02.png");
+        MapManager::createMap("S7_P_MAP_03", TYPE_PUZZLE, "src\\maps\\S7\\S7_P_MAP_03.png", "src\\maps\\S7\\S7_P_MAP_INFO_03.png");
+        MapManager::createMap("S7_J_MAP_01", TYPE_JUMP, "src\\maps\\S7\\S7_J_MAP_01.png", "src\\maps\\S7\\S7_J_MAP_INFO_01.png");
+        MapManager::createMap("S8_P_MAP_01", TYPE_PUZZLE, "src\\maps\\S8\\S8_P_MAP_01.png", "src\\maps\\S8\\S8_P_MAP_INFO_01.png");
+        MapManager::createMap("S8_J_MAP_01", TYPE_JUMP, "src\\maps\\S8\\S8_J_MAP_01.png", "src\\maps\\S8\\S8_J_MAP_INFO_01.png");
+        MapManager::createMap("S9_P_MAP_01", TYPE_PUZZLE, "src\\maps\\S9\\S9_P_MAP_01.png", "src\\maps\\S9\\S9_P_MAP_INFO_01.png");
+        MapManager::createMap("S9_P_MAP_02", TYPE_PUZZLE, "src\\maps\\S9\\S9_P_MAP_02.png", "src\\maps\\S9\\S9_P_MAP_INFO_02.png");
+        MapManager::createMap("S9_P_MAP_03_0", TYPE_PUZZLE, "src\\maps\\S9\\S9_P_MAP_03_0.png", "src\\maps\\S9\\S9_P_MAP_INFO_03_0.png");
+        MapManager::createMap("S9_P_MAP_03_1", TYPE_PUZZLE, "src\\maps\\S9\\S9_P_MAP_03_1.png", "src\\maps\\S9\\S9_P_MAP_INFO_03_1.png");
+        MapManager::createMap("S9_P_MAP_03_2", TYPE_PUZZLE, "src\\maps\\S9\\S9_P_MAP_03_2.png", "src\\maps\\S9\\S9_P_MAP_INFO_03_2.png");
+        MapManager::createMap("S9_P_MAP_03_3", TYPE_PUZZLE, "src\\maps\\S9\\S9_P_MAP_03_3.png", "src\\maps\\S9\\S9_P_MAP_INFO_03_3.png");
+        MapManager::createMap("S9_P_MAP_04", TYPE_PUZZLE, "src\\maps\\S9\\S9_P_MAP_04.png", "src\\maps\\S9\\S9_P_MAP_INFO_04.png");
+        MapManager::createMap("S9_P_MAP_05", TYPE_PUZZLE, "src\\maps\\S9\\S9_P_MAP_05.png", "src\\maps\\S9\\S9_P_MAP_INFO_05.png");
+        MapManager::createMap("S9_J_MAP_01", TYPE_JUMP, "src\\maps\\S9\\S9_J_MAP_01.png", "src\\maps\\S9\\S9_J_MAP_INFO_01.png");
+        MapManager::createMap("S10_P_MAP_01", TYPE_PUZZLE, "src\\maps\\S10\\S10_MAP_01.png", "src\\maps\\S10\\S10_MAP_INFO_01_TEST.png");
     };
 
 
@@ -604,6 +656,7 @@ private:
         StageManager::addMap(0, MapManager::getMap("S0_P_MAP_01"));
 
         StageManager::setDoorID(0, "S0_P_MAP_01", MAP_EXIT, "EXIT");
+
         //E_S1
         StageManager::addMap(1, MapManager::getMap("S1_P_MAP_01"));
         StageManager::addMap(1, MapManager::getMap("S1_J_MAP_01"));
@@ -612,6 +665,8 @@ private:
         StageManager::setDoorID(1, "S1_J_MAP_01", MAP_EXIT, "EXIT");
 
         StageManager::setPuzzleId(1, "S1_P_MAP_01", PUZZLE_OBJ_02, "S1_M1_PZ_01");
+        StageManager::setPuzzleId(1, "S1_P_MAP_01", PUZZLE_OBJ_05, "S1_M1_DPZ_01");
+        StageManager::setPuzzleId(1, "S1_P_MAP_01", PUZZLE_OBJ_06, "S1_M1_DPZ_02");
         //S1_SC2 퍼즐1층 씬 (석판을 보고난 후)
 
         StageManager::setScene(1, "S1_P_MAP_01", "S1_SC1");
@@ -625,6 +680,7 @@ private:
         StageManager::setDoorID(2, "S2_J_MAP_01", MAP_EXIT, "EXIT");
 
         StageManager::setPuzzleId(2, "S2_P_MAP_01", PUZZLE_OBJ_01, "S2_M1_PZ_01");
+        StageManager::setPuzzleId(2, "S2_P_MAP_01", PUZZLE_OBJ_05, "S2_M1_DPZ_01");
 
         StageManager::setScene(2, "S2_P_MAP_01", "S2_SC1");
         StageManager::setScene(2, "S2_J_MAP_01", "S2_SC2");
@@ -637,6 +693,8 @@ private:
         StageManager::setDoorID(3, "S3_J_MAP_01", MAP_EXIT, "EXIT");
 
         StageManager::setPuzzleId(3, "S3_P_MAP_01", PUZZLE_OBJ_02, "S3_M1_PZ_01");
+        StageManager::setPuzzleId(3, "S3_P_MAP_01", PUZZLE_OBJ_05, "S3_M1_DPZ_01");
+        StageManager::setPuzzleId(3, "S3_P_MAP_01", PUZZLE_OBJ_06, "S3_M1_DPZ_02");
 
         //E_S4
         StageManager::addMap(4, MapManager::getMap("S4_P_MAP_01"));
@@ -658,6 +716,7 @@ private:
 
         //H_S0
 
+
         //H_S1
         StageManager::addMap(6, MapManager::getMap("S6_P_MAP_00"));
         StageManager::addMap(6, MapManager::getMap("S6_P_MAP_01"));
@@ -669,6 +728,8 @@ private:
 
         StageManager::setPuzzleId(6, "S6_P_MAP_01", PUZZLE_OBJ_01, "S6_M1_PZ_01");
         StageManager::setPuzzleId(6, "S6_P_MAP_01", PUZZLE_OBJ_02, "S6_M1_PZ_02");
+        StageManager::setPuzzleId(6, "S6_P_MAP_01", PUZZLE_OBJ_05, "S6_M1_DPZ_01");
+        StageManager::setPuzzleId(6, "S6_P_MAP_01", PUZZLE_OBJ_06, "S6_M1_DPZ_02");
 
         //H_S2
         StageManager::addMap(7, MapManager::getMap("S7_P_MAP_01"));
@@ -688,6 +749,8 @@ private:
         StageManager::setPuzzleId(7, "S7_P_MAP_02", PUZZLE_OBJ_02, "S7_M2_PZ_02");
         StageManager::setPuzzleId(7, "S7_P_MAP_03", PUZZLE_OBJ_01, "S7_M3_PZ_01");
         StageManager::setPuzzleId(7, "S7_P_MAP_03", PUZZLE_OBJ_02, "S7_M3_PZ_02");
+        StageManager::setPuzzleId(7, "S7_P_MAP_01", PUZZLE_OBJ_05, "S7_M1_DPZ_01");
+        StageManager::setPuzzleId(7, "S7_P_MAP_02", PUZZLE_OBJ_05, "S7_M2_DPZ_01");
 
         //H_S3
         StageManager::addMap(8, MapManager::getMap("S8_P_MAP_01"));
@@ -698,6 +761,8 @@ private:
 
         StageManager::setPuzzleId(8, "S8_P_MAP_01", PUZZLE_OBJ_01, "S8_M1_PZ_01");
         StageManager::setPuzzleId(8, "S8_P_MAP_01", PUZZLE_OBJ_02, "S8_M1_PZ_02");
+        StageManager::setPuzzleId(8, "S8_P_MAP_01", PUZZLE_OBJ_05, "S8_M1_DPZ_01");
+        StageManager::setPuzzleId(8, "S8_P_MAP_01", PUZZLE_OBJ_06, "S8_M1_DPZ_02");
 
         //H_S4
         StageManager::addMap(9, MapManager::getMap("S9_P_MAP_01"));
@@ -717,7 +782,7 @@ private:
         StageManager::setDoorID(9, "S9_P_MAP_01", MAP_EXIT, "S9_J_MAP_01");
         StageManager::setDoorID(9, "S9_P_MAP_03_0", MAP_DOOR_01, "S9_P_MAP_03_1");
         StageManager::setDoorID(9, "S9_P_MAP_03_1", MAP_DOOR_01, "S9_P_MAP_03_2");
-        StageManager::setDoorID(9, "S9_P_MAP_03_2", MAP_DOOR_01, "S9_P_MAP_05");
+        StageManager::setDoorID(9, "S9_P_MAP_03_2", MAP_DOOR_01, "S9_P_MAP_03_5");
         StageManager::setDoorID(9, "S9_P_MAP_03_0", MAP_DOOR_02, "S9_P_MAP_01");
         StageManager::setDoorID(9, "S9_P_MAP_03_1", MAP_DOOR_02, "S9_P_MAP_01");
         StageManager::setDoorID(9, "S9_P_MAP_03_2", MAP_DOOR_02, "S9_P_MAP_01");
@@ -769,6 +834,8 @@ private:
         MapManager::setMapASCII("S9_J_MAP_01");
         MapManager::setMapASCII("S10_P_MAP_01");
     };
+
+
 
 public:
     static void init(EventDispatcher* eventDispatcher) {

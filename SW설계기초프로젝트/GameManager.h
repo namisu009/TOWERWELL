@@ -221,6 +221,8 @@ public:
         newScene.setDelay("Sister", 1000);
         newScene.setDetail("");
         */
+
+/*
         Scene newScene;
         newScene.setCharacterPosition("Hero", 50, 50);
         newScene.setAction("Hero", ACTION_MOVE_Y, 1);
@@ -278,7 +280,7 @@ public:
         newScene.setDetail("");
 
         newScene.display();
-
+        */
         RenderManager::setRenderMap(currentMap);
         //StageManager::.setScene("Scene_id_01");
     }
