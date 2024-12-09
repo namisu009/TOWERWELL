@@ -1,4 +1,5 @@
 #include "CollisionManager.h"
+#include "Character.h"
 
 bool CollisionManager::checkCollision(GameObject obj1, GameObject obj2) {
     return (obj1.getX() < obj2.getX() + obj2.getWidth() &&
@@ -79,24 +80,22 @@ bool CollisionManager::checkTrapCollision(GameObject object, JumpMap* jumpMap) {
     return false;
 }
 bool CollisionManager::checkWallAdjacent(GameObject object, JumpMap* map) {
-    int objectX = object.getX();
+    int objectX = object.getFootX();
     int objectY = object.getY();
-    int objectWidth = object.getWidth();
+    int objectWidth = object.getWidth() / 2;
     int objectHeight = object.getHeight();
-    if (objectX < 0 || objectY < 0 || objectX + objectWidth - 2 > map->getWidth() || objectY + objectHeight >= map->getHeight() || objectX + (objectWidth / 2) > map->getWidth()) {
-        return false;
-    }
 
     for (int y = 0; y < objectHeight; ++y) {
-        if (map->isClimbWall(objectX + objectWidth, objectY + y)) {
-            return true;
-        }
-        if (map->isClimbWall(objectX - 1, objectY + y)) {
-            return true;
+        for (int i = 0; i < 2; i++)
+        {
+            if (map->isClimbWall(objectX - objectWidth - i, objectY + y)) {
+                return true;
+            }
+            if (map->isClimbWall(objectX + objectWidth + i, objectY + y)) {
+                return true;
+            }
         }
     }
-
-
 
     return false;
 }

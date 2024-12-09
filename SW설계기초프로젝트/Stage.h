@@ -24,7 +24,7 @@ private:
     EventDispatcher* StageEventDispatcher; // 이벤트 디스패처 참조
 
 public:
-    Stage(){}
+    Stage() {}
     Stage(int id, EventDispatcher* _eventDispatcher) : Stage() {
         currentMapId = "";
         isCleared = false;
@@ -122,25 +122,12 @@ public:
     }
 
     void onPuzzleSolved() {
-        string mapKey = "S" + to_string(stageId) + "_P_MAP_01";
-        if (maps[currentMapId]->getType() != TYPE_PUZZLE)
-            return;
-        
-        PuzzleMap* pz = (PuzzleMap*) maps[currentMapId];
-
+        string mapKey = "S" + to_string(stageId + 1) + "_P_MAP_01";
+        PuzzleMap* pz = (PuzzleMap*)maps[mapKey];
         pz->solvePuzzle();
 
-        int cnt1 = 0, cnt2 = 0;
-        for(auto& m : maps){
-            if (m.second->getType() == TYPE_PUZZLE) {
-                cnt1++;
-                if (((PuzzleMap*)m.second)->isAllPuzzlesSolved()) {
-                    cnt2++;
-                }
-            }
-        }
-
-        if (cnt1 == cnt2){
+        if (pz->isAllPuzzlesSolved())
+        {
             isCleared = true;
         }
     }

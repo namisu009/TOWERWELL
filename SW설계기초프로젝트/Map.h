@@ -16,8 +16,8 @@ using namespace std;
 class Map
 {
 private:
-    const char * renderFile;
-    const char * screenFile;
+    const char* renderFile;
+    const char* screenFile;
 
     RenderArray renderArray;
     ScreenArray screenArray;
@@ -43,7 +43,7 @@ public:
     }
 
     RenderArray& getRenderArray() { return renderArray; }
-    ScreenArray& getScreenArray() { return screenArray;  }
+    ScreenArray& getScreenArray() { return screenArray; }
 
     EventDispatcher* getEventDispathcer() { return eventDispatcher; }
 
@@ -94,21 +94,26 @@ public:
     }
 
     bool isBackGround(int x, int y) const {
-        if (screenArray.MapInfo[y + 1][x] == MAP_BACKGROUND) return true; 
+        if (screenArray.MapInfo[y + 1][x] == MAP_BACKGROUND) return true;
         return false;
     }
 
     bool isWall(int x, int y) const {
-        if (screenArray.MapInfo[y + 1][x] == MAP_WALL) return true; 
+        if (screenArray.MapInfo[y + 1][x] == MAP_WALL) return true;
+        return false;
+    }
+
+    bool isClimbWall(int x, int y) {
+        if (screenArray.MapInfo[y + 1][x] == JUMP_WALL) return true;
         return false;
     }
 
     bool isFloor(int x, int y) const {
-        if (screenArray.MapInfo[y + 1][x] == MAP_FLOOR) return true; 
+        if (screenArray.MapInfo[y + 1][x] == MAP_FLOOR) return true;
         return false;
     }
 
-    void setDoorId(int colorId, string doorId) { 
+    void setDoorId(int colorId, string doorId) {
         DoorMapping[colorId] = doorId;
     }
 
@@ -130,7 +135,7 @@ public:
     int getType() {
         return type;
     }
-    
+
     unordered_map <int, string> getDoorMapping() {
         return DoorMapping;
     }
@@ -147,7 +152,7 @@ public:
 
     }
 
-    void setFile(const char * filename1, const char * filename2){
+    void setFile(const char* filename1, const char* filename2) {
         renderFile = filename1;
         screenFile = filename2;
     }

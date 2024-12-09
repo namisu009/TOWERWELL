@@ -11,7 +11,7 @@ Map* RenderManager::currentMap = nullptr;
 unordered_map<string, GameObject*> RenderManager::objectMap;
 unordered_map<string, Puzzle*> RenderManager::puzzleMap;
 Dialog* RenderManager::renderLog = nullptr;
-GameObject * RenderManager::renderDetail = nullptr;
+GameObject* RenderManager::renderDetail = nullptr;
 EventDispatcher* RenderManager::eventDispatcher;
 
 using namespace std;
@@ -39,7 +39,7 @@ void RenderManager::removePuzzle(Puzzle* puzzle) {
     puzzleMap.erase(puzzle->getId());
 }
 
-void RenderManager::setRenderDetail(GameObject * object) {
+void RenderManager::setRenderDetail(GameObject* object) {
     renderDetail = object;
 }
 
@@ -98,7 +98,7 @@ void RenderManager::renderObject() {
         COORD pos = { 0, 0 };
         pos.X = object_x;
         pos.Y = object_y;
-      
+
         // 객체의 ASCII 아트를 특정 위치에 렌더링
         for (int y = 0; y < art->height; y++)
         {
@@ -108,7 +108,7 @@ void RenderManager::renderObject() {
                 pos.X = object_x + x;
                 char buf[2] = { art->ASCIIArtArr[y][x], '\0' };
 
-                if (art->drawornotArr[y][x] == 1){
+                if (art->drawornotArr[y][x] == 1) {
                     COORD CursorPosition;
                     //SetConsoleCursorPosition(DoubleBufferManager::getHandle(), CursorPosition);
                     DoubleBufferManager::ScreenprintAtPosition(pos.X, pos.Y, buf); //현재 화면이 캐릭터가 그려질 곳이 아니라면 맵 그리기
@@ -169,7 +169,7 @@ void RenderManager::renderPuzzle() {
         pos.X = object_x;
         pos.Y = object_y;
 
-        char ** buf;
+        char** buf;
         buf = (char**)malloc(sizeof(char*) * art->height);
         for (int y = 0; y < art->height; y++)
         {
@@ -201,7 +201,7 @@ void RenderManager::renderPuzzle() {
     }
 }
 
-void RenderManager::renderScreenDetail () {
+void RenderManager::renderScreenDetail() {
     if (renderDetail == nullptr)
         return;
 
@@ -251,15 +251,17 @@ void RenderManager::renderDialog() {
             _getch();  // 입력 버퍼 비우기
         }
 
-        while (renderLog->getText() != "") {
-            if (_kbhit()) { // 키 입력 확인
-                int key = _getch(); // 키 입력 읽기      
-                if (key == VK_SPACE) {
-                    break;
+        if (renderLog->getText() != "") {
+            DoubleBufferManager::drawText(renderLog->getText().c_str(), renderLog_x, renderLog_y, renderLog_width, renderLog_height);
+
+            while (1) {
+                if (_kbhit()) { // 키 입력 확인
+                    int key = _getch(); // 키 입력 읽기      
+                    if (key == VK_SPACE) {
+                        break;
+                    }
                 }
             }
-
-             DoubleBufferManager::drawText(renderLog->getText().c_str(), renderLog_x, renderLog_y, renderLog_width, renderLog_height);
             //DoubleBufferManager::drawText(L"우선테스트", cmdWidth + renderLog_x, 1080);
         }
 
@@ -293,7 +295,7 @@ void RenderManager::renderInputText(string& input, int x, int y, int height) {
 }
 
 void RenderManager::render() {
-    renderClear();
+    //renderClear();
 
 
 
@@ -308,6 +310,8 @@ void RenderManager::render() {
         renderScreenDetail();
         DoubleBufferManager::ScreenFlipping();
         renderScreenDetail();
+        DoubleBufferManager::ScreenFlipping();
+
         //renderDialog();
 
         //return;
