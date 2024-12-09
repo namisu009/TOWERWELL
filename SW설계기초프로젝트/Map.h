@@ -103,11 +103,6 @@ public:
         return false;
     }
 
-    bool isClimbWall(int x, int y) {
-        if (screenArray.MapInfo[y + 1][x] == JUMP_WALL) return true;
-        return false;
-    }
-
     bool isFloor(int x, int y) const {
         if (screenArray.MapInfo[y + 1][x] == MAP_FLOOR) return true; 
         return false;

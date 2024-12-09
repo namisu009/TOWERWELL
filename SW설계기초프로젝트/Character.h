@@ -22,12 +22,14 @@ class Character : public GameObject
 
     AnimationManager* animationManager;
     chrono::steady_clock::time_point lastJumpTime;
-    const int doubleJumpTimeWindow = 900; // 밀리초 단위
+    const int doubleJumpTimeWindow = 900;
+
+
 
 public:
     Character(string _id) : GameObject(_id) {
         dash_counter = 0;
-        isJumping = false; isDash = false;
+        isJumping = false; isDash = false;        
         animationManager = new AnimationManager();
         lastJumpTime = chrono::steady_clock::now();
     }
@@ -59,17 +61,20 @@ public:
         }
     }
 
-    void useItem(string name) {
+    void uesItem(string name) {
         if (Inventory.find(name) != Inventory.end()) {
             Inventory[name]->useItem();
-            if (!Inventory[name]->getUseCount()) { // 아이템을 다 사용했을 경우
+            if (!Inventory[name]->getUseCount()) { //아이템을 다 사용했을 경우
                 Inventory.erase(name);
             }
         }
     }
 
     bool getisItem(string name) { //아이템이 있는지
-        return Inventory.find(name) != Inventory.end();
+        if (Inventory.find(name) != Inventory.end())
+            return true;
+
+        return false;
     }
 
     bool getisJumping() { return isJumping; }
@@ -98,6 +103,7 @@ public:
     }
 
     void setDx(float _dx) {
+
         if (_dx < 0)
             setAnimationStatus("LEFT");
         else if (_dx > 0)
@@ -106,60 +112,63 @@ public:
             setAnimationStatus("IDLE");
 
         GameObject::setDx(_dx);
-    }
 
-    void jump() {
-        if (!isJumping && !isDash) { // 점프 중이지 않으면 점프 시작
-            setDy(jumpStrength); // 위로 이동하는 속도 설정
-            isJumping = true; // 점프 상태 설정
-        }
     }
+	void jump() {
+		if (!isJumping && !isDash) { // 점프 중이지 않으면 점프 시작
+			setDy(jumpStrength); // 위로 이동하는 속도 설정
+			isJumping = true; // 점프 상태 설정
+		}
+	}
 
     void jump(bool t) {
         auto now = chrono::steady_clock::now();
         int elapsed = chrono::duration_cast<chrono::milliseconds>(now - lastJumpTime).count();
 
-        if (!isJumping && !isDash) {
+        if (!isJumping && !isDash) { // 점프 중이지 않으면 점프 시작
             setDy(jumpStrength);
             isJumping = true;
             canDoubleJump = true;
-            lastJumpTime = now;
+
         }
-        else if (canDoubleJump && elapsed <= doubleJumpTimeWindow) {
+        else if (elapsed <= doubleJumpTimeWindow && canDoubleJump) {
             setDy(jumpStrength * 1.1f);
             canDoubleJump = false;
-            lastJumpTime = now;
         }
+        lastJumpTime = now;
     }
 
+
     void dash() {
-        if (!isDash && isJumping) {
+        if (!isDash && isJumping) { // 점프 중이지 않으면 점프 시작
             if (getDx() != 0)
-                setDy(jumpStrength / 2);
+                setDy(jumpStrength / 2); // 위로 이동하는 속도 설정
             dash_counter = 10;
-            isDash = true;
+            isDash = true; // 점프 상태 설정
         }
     }
 
     void dashState() {
         if (isDash) {
             setDx(getDx() > 0 ? dashStrength : (getDx() < 0 ? -dashStrength : 0));
-            dash_counter--;
+            dash_counter--; // 대쉬 카운터 감소
             if (dash_counter <= 0) {
-                isDash = false;
+                isDash = 0; // 대쉬 상태 해제
             }
         }
     }
 
     void land() {
-        isJumping = false;
+        isJumping = false; // 점프 상태 종료
+        //dy = 0; // Y축 속도 초기화
         canDoubleJump = false;
     }
-
-    // 벽타기 기능 추가
+    
     void startWallClimbing() {
         setDx(0);
+        setDy(0);
         isWallClimbing = true;
+
     }
 
     void stopWallClimbing() {
@@ -167,18 +176,18 @@ public:
     }
 
     void climbUp() {
-        if (isWallClimbing)
-            setDy(-4.0f);
+        setDy(-1);
     }
 
     void climbDown() {
-        if (isWallClimbing)
-            setDy(4.0f);
+        setDy(1);
     }
 
     bool getIsWallClimbing() const {
         return isWallClimbing;
     }
+
+
 };
 
 #endif

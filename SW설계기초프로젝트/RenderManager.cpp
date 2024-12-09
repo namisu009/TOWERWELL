@@ -251,17 +251,15 @@ void RenderManager::renderDialog() {
             _getch();  // 입력 버퍼 비우기
         }
 
-        if (renderLog->getText() != "") {
-            DoubleBufferManager::drawText(renderLog->getText().c_str(), renderLog_x, renderLog_y, renderLog_width, renderLog_height);
-
-            while(1){
-                if (_kbhit()) { // 키 입력 확인
-                    int key = _getch(); // 키 입력 읽기      
-                    if (key == VK_SPACE) {
-                        break;
-                    }
+        while (renderLog->getText() != "") {
+            if (_kbhit()) { // 키 입력 확인
+                int key = _getch(); // 키 입력 읽기      
+                if (key == VK_SPACE) {
+                    break;
                 }
             }
+
+             DoubleBufferManager::drawText(renderLog->getText().c_str(), renderLog_x, renderLog_y, renderLog_width, renderLog_height);
             //DoubleBufferManager::drawText(L"우선테스트", cmdWidth + renderLog_x, 1080);
         }
 
@@ -295,7 +293,7 @@ void RenderManager::renderInputText(string& input, int x, int y, int height) {
 }
 
 void RenderManager::render() {
-    //renderClear();
+    renderClear();
 
 
 
@@ -310,8 +308,6 @@ void RenderManager::render() {
         renderScreenDetail();
         DoubleBufferManager::ScreenFlipping();
         renderScreenDetail();
-        DoubleBufferManager::ScreenFlipping();
-
         //renderDialog();
 
         //return;
