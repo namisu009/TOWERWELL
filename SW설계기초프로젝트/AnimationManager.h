@@ -60,27 +60,18 @@ public:
 
     RenderArray* getRenderArray(string _id) {
 
-        if (_id == "IDLE") { //IDLE_RIGHT
-            if (id == "RIGHT") {
-                _id = "IDLE_RIGHT";
-                //animationCounter = 0;
+        if (_id == "IDLE" || _id == "CLIMB") {
+            if (id.find("RIGHT") != string::npos) {
+                _id = _id + "_RIGHT";
             }
-            else if (id == "LEFT") {
-                _id = "IDLE_LEFT";
-                //animationCounter = 0;
-            }
-            else if (id == "IDLE_RIGHT") {
-                _id = "IDLE_RIGHT";
-            }
-            else if (id == "IDLE_LEFT") {
-                _id = "IDLE_LEFT";
+            if (id.find("LEFT") != string::npos) {
+                _id = _id + "_LEFT";
             }
         }
 
         if (id != _id)
         {
             id = _id;
-            //animationCounter = 0;
         }
 
         animationCounter++;

@@ -80,20 +80,17 @@ bool CollisionManager::checkTrapCollision(GameObject object, JumpMap* jumpMap) {
     return false;
 }
 bool CollisionManager::checkWallAdjacent(GameObject object, JumpMap* map) {
-    int objectX = object.getFootX();
+    int objectX = object.getX();
     int objectY = object.getY();
-    int objectWidth = object.getWidth() / 2;
+    int objectWidth = object.getWidth() - 1;
     int objectHeight = object.getHeight();
 
     for (int y = 0; y < objectHeight; ++y) {
-        for (int i = 0; i < 2; i++)
-        {
-            if (map->isClimbWall(objectX - objectWidth - i, objectY + y)) {
-                return true;
-            }
-            if (map->isClimbWall(objectX + objectWidth + i, objectY + y)) {
-                return true;
-            }
+        if (map->isClimbWall(objectX, objectY + y)) {
+            return true;
+        }
+        else if (map->isClimbWall(objectX + objectWidth, objectY + y)) {
+            return true;
         }
     }
 

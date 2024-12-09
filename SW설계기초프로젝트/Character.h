@@ -81,6 +81,22 @@ public:
 
     void setisJumping(bool j) { isJumping = j; }
 
+    void setAnimationStatus(float _dx) {
+        if (isWallClimbing)
+        {
+            setAnimationStatus("CLIMB");
+            return;
+        }
+
+        if (_dx < 0)
+            setAnimationStatus("LEFT");
+        else if (_dx > 0)
+            setAnimationStatus("RIGHT");
+        else
+            setAnimationStatus("IDLE");
+
+    }
+
     void setAnimationStatus(const char* id) {
         setRenderArray(animationManager->getRenderArray(id));
     }
@@ -98,13 +114,7 @@ public:
     }
 
     void setDx(float _dx) {
-        if (_dx < 0)
-            setAnimationStatus("LEFT");
-        else if (_dx > 0)
-            setAnimationStatus("RIGHT");
-        else
-            setAnimationStatus("IDLE");
-
+        setAnimationStatus(_dx);
         GameObject::setDx(_dx);
     }
 
@@ -168,12 +178,12 @@ public:
 
     void climbUp() {
         if (isWallClimbing)
-            setDy(-4.0f);
+            setDy(-1.0f);
     }
 
     void climbDown() {
         if (isWallClimbing)
-            setDy(4.0f);
+            setDy(1.0f);
     }
 
     bool getIsWallClimbing() const {

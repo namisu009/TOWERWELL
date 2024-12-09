@@ -101,13 +101,13 @@ public:
         RenderManager::addObject(sisterCharacter);
 
         setMap(currentMap);
-        /*
+        
         //테스트씬
         //
         //SceneManager::createScene("Afdsafad");
         //SceneManager::setAaction("Afdsafad", "Sister", ACTION_MOVE_X, 6, 10);
         Scene newScene;
-
+        /*
         GameObjectManager::createObject("Character", "Hood", "src\\hero_idle_right_01.png");
         GameObjectManager::getCharacter("Hood")->setAnimation("IDLE_RIGHT", 1, "src\\hero_idle_right_02.png");
         GameObjectManager::getCharacter("Hood")->setAnimation("IDLE_LEFT", "src\\hero_idle_left_01.png", "src\\hero_idle_left_02.png");
@@ -196,13 +196,19 @@ public:
             newScene.setDialog(c.c_str());
         }
 
+        */
 
-        /*
-        newScene.setScreen("src\\testani01.png");
-        newScene.setScreen("src\\testani02.png");
-        newScene.setScreen("src\\testani03.png");
-        newScene.setScreen("src\\testani04.png");
-        newScene.setScreen("src\\testani05.png");
+        newScene.setScreen("src\\test (1).png");
+        newScene.setDelay("Sister", 700);
+        newScene.setScreen("src\\test (1).png");
+        newScene.setScreen("src\\test (2).png");
+        newScene.setScreen("src\\test (3).png");
+        newScene.setScreen("src\\test (4).png");
+        newScene.setScreen("src\\test (5).png");
+        newScene.setScreen("src\\test (6).png");
+        newScene.setScreen("src\\test (7).png");
+        newScene.setScreen("src\\test (8).png");
+        newScene.setDelay("Sister", 700);
 
         newScene.setAction("Sister", ACTION_MOVE_X, 6, 10);
 
@@ -212,14 +218,9 @@ public:
         newScene.setAction("Sister", ACTION_MOVE_X, 1);
         newScene.setDelay("Sister", 700);
 
-        newScene.setDetail("src\\export.png");
+        //newScene.setDetail("src\\export.png");
         newScene.setDelay("Sister", 1000);
-
-        newScene.setDialog("SC1_DL_01");
-        newScene.setDialog("SC1_DL_02");
         newScene.setDetail("");
-
-        */
 
         //newScene.display();
 
@@ -277,21 +278,17 @@ public:
             playerCharacter->setDx(0);
             if (playerCharacter->getIsWallClimbing()) {
                 playerCharacter->setDy(0);
-
                 if (GetAsyncKeyState(VK_UP) & 0x8000) {
                     playerCharacter->climbUp();
                 }
                 if (GetAsyncKeyState(VK_DOWN) & 0x8000) {
                     playerCharacter->climbDown();
                 }
-
-                if (!(GetAsyncKeyState(0x46) & 0x8000) || // F키에서 손 뗌
-                    !(GetAsyncKeyState(VK_LEFT) & 0x8000) ||
-                    !(GetAsyncKeyState(VK_RIGHT) & 0x8000)) {
+                if (!(GetAsyncKeyState(0x46) & 0x8000)
+                    || !CollisionManager::checkWallAdjacent(*playerCharacter, (JumpMap*)currentMap)) {
                     playerCharacter->stopWallClimbing();
                 }
             }
-            // 벽타기 활성화 조건 확인
             else {
                 if (GetAsyncKeyState(0x46) & 0x8000) { // F키 누름
                     if (currentMap->getType() == TYPE_JUMP &&
@@ -299,12 +296,14 @@ public:
                         playerCharacter->startWallClimbing();
                     }
                 }
-                // 일반 이동 처리
                 if (GetAsyncKeyState(VK_RIGHT) & 0x8000) {
                     HandlerManager::processInput(VK_RIGHT);
                 }
                 if (GetAsyncKeyState(VK_LEFT) & 0x8000) {
                     HandlerManager::processInput(VK_LEFT);
+                }
+                if (GetAsyncKeyState(VK_SPACE) & 0x8000) {
+                    HandlerManager::processInput(VK_SPACE);
                 }
                 if (GetAsyncKeyState(VK_UP) & 0x8000) {
                     auto now = chrono::steady_clock::now();
@@ -316,6 +315,7 @@ public:
                     }
                 }
             }
+
             if (_kbhit()) {
                 int key = _getch();
                 if (key == 70 || key == 102)
@@ -331,18 +331,12 @@ public:
 
             // 충돌 처리 및 물리 연산
             while (CollisionManager::checkWallCollision(playerCharacter, *currentMap)) {
-
-                //&& CollisionManager::checkWallAdjacent(*playerCharacter, (JumpMap*)currentMap) && playerCharacter->getIsWallClimbing()
                 adjustPositionForCollision(playerCharacter);
-                //playerCharacter->setDx(0);
-                //playerCharacter->setDy(0);
             }
             PhysicsManager::applyGravity(playerCharacter, currentMap);
 
             while (CollisionManager::checkFloorCollision(playerCharacter, *currentMap)) {
                 adjustPositionForCollision(playerCharacter);
-                //playerCharacter->setDx(0);
-                //playerCharacter->setDy(0);
             }
 
             playerCharacter->move();

@@ -17,6 +17,8 @@ private:
         GameObjectManager::getCharacter("Hero")->setAnimation("IDLE_LEFT", "src\\hero_idle_left_01.png", "src\\hero_idle_left_02.png");
         GameObjectManager::getCharacter("Hero")->setAnimation("RIGHT", "src\\hero_right_01.png", "src\\hero_right_02.png");
         GameObjectManager::getCharacter("Hero")->setAnimation("LEFT", "src\\hero_left_01.png", "src\\hero_left_02.png");
+        GameObjectManager::getCharacter("Hero")->setAnimation("CLIMB_LEFT", "src\\hero_climb_left_01.png", "src\\hero_climb_left_02.png");
+        GameObjectManager::getCharacter("Hero")->setAnimation("CLIMB_RIGHT", "src\\hero_climb_right_01.png", "src\\hero_climb_right_02.png");
 
 
         GameObjectManager::createObject("Character", "Sister", "src\\sister_idle_right_01.png");
@@ -24,6 +26,8 @@ private:
         GameObjectManager::getCharacter("Sister")->setAnimation("IDLE_LEFT", "src\\sister_idle_left_01.png", "src\\sister_idle_left_02.png");
         GameObjectManager::getCharacter("Sister")->setAnimation("RIGHT", "src\\sister_right_01.png", "src\\sister_right_02.png");
         GameObjectManager::getCharacter("Sister")->setAnimation("LEFT", "src\\sister_left_01.png", "src\\sister_left_02.png");
+        GameObjectManager::getCharacter("Sister")->setAnimation("CLIMB_LEFT", "src\\sister_climb_left_01.png", "src\\sister_climb_left_02.png");
+        GameObjectManager::getCharacter("Sister")->setAnimation("CLIMB_RIGHT", "src\\sister_climb_right_01.png", "src\\sister_climb_right_02.png");
 
 
         GameObjectManager::createObject("Character", "Hood", "src\\hood_idle_right_01.png");
