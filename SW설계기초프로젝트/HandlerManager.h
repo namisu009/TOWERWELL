@@ -58,11 +58,7 @@ public:
             });
 
         // 대시
-        bindInput(VK_SPACE, [object]() {
-            object->dash();
-            });
-
-        bindInput(0x46, [object, stage]() {
+        bindInput(VK_SPACE, [object, stage]() {
 
             int init_x = object->getFootX();
             int init_y = object->getFootY() - object->getHeight() / 2;
@@ -73,15 +69,23 @@ public:
                 }
                 //stage->onMoveMap(init_x, init_y);
             }
+            else {
+                object->dash();
+            }
+            });
+
+        bindInput(0x46, [object, stage]() {
+
+
             });
 
         bindInput(0x43, [object, stage]() {
             //eventDispatcher->dispatch(MOVE_MAP);
-        });
+            });
     }
 
     static void getPuzzleMapHandle(Character* object, Stage* stage) {
-     
+
         clearKeyMap();
 
         bindInput(VK_RIGHT, [object]() {
@@ -96,9 +100,9 @@ public:
         // 점프
         bindInput(VK_UP, [object]() {
             object->jump();
-        });
+            });
 
-        bindInput(0x46, [object, stage]() {
+        bindInput(VK_SPACE, [object, stage]() {
             PuzzleMap* map = ((PuzzleMap*)stage->getCurrentMap());
 
             Character* obj = object;
@@ -149,7 +153,7 @@ public:
                     eventDispatcher->dispatch(STAGE_COMPLETED);
                 }
             }
-        });
+            });
 
         // 퍼즐 아이디 가져오기
 
@@ -167,19 +171,22 @@ public:
         bindInput(VK_SPACE, []() {
             RenderManager::ClearRenderDetail();
             eventDispatcher->dispatch(CHANGE_MAP_HANDLE);
-        });
+            });
 
         while (flag) {
-            if (GetAsyncKeyState(VK_SPACE) & 0x8000) {
-                HandlerManager::processInput(VK_SPACE);
-                flag = 0;
+            if (_kbhit()) { // 키 입력 확인
+                int key = _getch(); // 키 입력 읽기      
+                if (key == 32) {
+                    HandlerManager::processInput(VK_SPACE);
+                    flag = 0;
+                }
             }
         }
 
     }
 
     static void getNumberPuzzleHandle(Puzzle* puzzle) {
-        NumberPuzzle* numberPuzzle = (NumberPuzzle*) puzzle;
+        NumberPuzzle* numberPuzzle = (NumberPuzzle*)puzzle;
         if (!numberPuzzle) {
             return;
         }
@@ -224,14 +231,14 @@ public:
             RenderManager::setRenderDialog(nullptr);
             RenderManager::ClearRenderDetail();
             flag = 0; // 핸들링 종료
-        });
+            });
 
         bindInput(VK_BACK, [&]() {
             if (!userInput.empty()) {
                 userInput.pop_back(); // 마지막 문자 삭제
                 RenderManager::renderInputText(userInput, cmdWidth + GameObjectManager::getDialog("NUMBER_WINDOW")->getX(), 1085);    // 화면 갱신
             }
-        });
+            });
 
         // 숫자 키 입력 바인딩
         for (int key = '0'; key <= '9'; ++key) {
@@ -241,7 +248,7 @@ public:
 
                 userInput += static_cast<char>(key);
                 RenderManager::renderInputText(userInput, cmdWidth + GameObjectManager::getDialog("NUMBER_WINDOW")->getX(), 1085);    // 화면 갱신
-            });
+                });
         }
         /*
         int x = GameObjectManager::getDialog("NUMBER_WINDOW")->getX();

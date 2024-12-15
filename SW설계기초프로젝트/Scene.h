@@ -19,7 +19,7 @@ class Scene
 	queue<Command> commands;
 public:
 	Scene() {
-		sceneLoop = false;
+		sceneLoop = true;
 	}
 
 	void setSceneLoop(bool _b) {
@@ -33,14 +33,14 @@ public:
 	void setRenderCharacter(string key) {
 		Command cmd;
 		cmd.setObject(GameObjectManager::getCharacter(key));
-		cmd.setAction([cmd, key]() mutable { RenderManager::addObject(GameObjectManager::getCharacter(key));});
+		cmd.setAction([cmd, key]() mutable { RenderManager::addObject(GameObjectManager::getCharacter(key)); });
 		commands.push(cmd);
 	}
 
 	void removeRenderCharacter(string key) {
 		Command cmd;
 		cmd.setObject(GameObjectManager::getCharacter(key));
-		cmd.setAction([cmd, key]() mutable { RenderManager::removeObject(GameObjectManager::getCharacter(key));});
+		cmd.setAction([cmd, key]() mutable { RenderManager::removeObject(GameObjectManager::getCharacter(key)); });
 		commands.push(cmd);
 
 	}
@@ -76,7 +76,7 @@ public:
 
 		cmd.setAction([cmd]() mutable {
 			RenderManager::setRenderMap(cmd.getMap());
-		});
+			});
 
 		commands.push(cmd);
 	}
@@ -103,22 +103,22 @@ public:
 
 	void setCharacterPosition(string key, int x, int y) {
 		Command cmd;
-		
+
 		cmd.setObject(GameObjectManager::getCharacter(key));
 		cmd.setAction([cmd, key, x, y]() mutable {
 			if (y == 0 && key == "Hood")
 				y = GameObjectManager::getCharacter("Hero")->getY();
-			else if(y == 0)
+			else if (y == 0)
 				y = GameObjectManager::getCharacter(key)->getY();
 
-			cmd.getObject()->setPosition(x, y); 
-			
-		});
+			cmd.getObject()->setPosition(x, y);
+
+			});
 		commands.push(cmd);
 	}
 
 	void setAction(string key, ActionType command, int dt, int repeat) { //setDx, setDy, dx, dy
-		for(int i = 0; i < repeat; i++)
+		for (int i = 0; i < repeat; i++)
 			setAction(key, command, dt);
 	}
 
@@ -147,7 +147,7 @@ public:
 			cmd1.setAction([cmd1, dt]() mutable {cmd1.getObject()->setDx(dt); });
 			cmd2.setAction([cmd2, dt]() mutable {cmd2.getObject()->setDx(dt); });
 		}
-		else if (command == ACTION_MOVE_Y){
+		else if (command == ACTION_MOVE_Y) {
 			cmd1.setAction([cmd1, dt]() mutable {cmd1.getObject()->setDy(dt); });
 			cmd2.setAction([cmd2, dt]() mutable {cmd2.getObject()->setDy(dt); });
 		}
@@ -180,7 +180,7 @@ public:
 		Command cmd = commands.front();
 		commands.pop();
 
-		if (sceneLoop){
+		if (sceneLoop) {
 			commands.push(cmd);
 		}
 
@@ -197,7 +197,7 @@ public:
 		int size = commands.size();
 		while (size) {
 			Command cmd = popCommand();
-			
+
 			if (cmd.getType() == TYPE_CHARACTER || cmd.getType() == TYPE_SCREEN) {
 				if (!sceneLoop && cmd.getType() == TYPE_SCREEN && RenderManager::getRenderMap()->getMapId() == "SCREEN")
 				{

@@ -20,7 +20,7 @@ private:
     ArtLoadManager& operator=(const ArtLoadManager& ref) {}
     ~ArtLoadManager() {}
 public:
-    ArtLoadManager* GetInstance();
+    static ArtLoadManager* GetInstance();
     void RenderArrayLoad(RenderArray* Array, const char* fileName);
     void ScreenArrayLoad(int type, Map* map, const char* fileName);
     void resetExpandThePuzzleInfo(Puzzle* p, ScreenArray* Array);

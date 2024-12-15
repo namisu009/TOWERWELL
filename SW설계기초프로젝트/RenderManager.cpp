@@ -110,8 +110,8 @@ void RenderManager::renderObject() {
 
                 if (art->drawornotArr[y][x] == 1 && (
                     currentMap->getMapId() == "SCREEN" || (
-                    currentMap->getMapId() != "SCREEN"
-                    && currentMap->getScreenArray().MapInfo[pos.Y][pos.X] != MAP_FIRST_OBJECT))) {
+                        currentMap->getMapId() != "SCREEN"
+                        && currentMap->getScreenArray().MapInfo[pos.Y][pos.X] != MAP_FIRST_OBJECT))) {
                     COORD CursorPosition;
                     //SetConsoleCursorPosition(DoubleBufferManager::getHandle(), CursorPosition);
                     DoubleBufferManager::ScreenprintAtPosition(pos.X, pos.Y, buf); //현재 화면이 캐릭터가 그려질 곳이 아니라면 맵 그리기
@@ -261,14 +261,13 @@ void RenderManager::renderDialog() {
             while (1) {
                 if (_kbhit()) { // 키 입력 확인
                     int key = _getch(); // 키 입력 읽기      
-                    if (key == 70 || key == 102) {
+                    if (key == 32) {
                         break;
                     }
                 }
             }
             //DoubleBufferManager::drawText(L"우선테스트", cmdWidth + renderLog_x, 1080);
         }
-
 
     }
     else {

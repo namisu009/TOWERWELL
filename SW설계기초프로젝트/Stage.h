@@ -123,6 +123,7 @@ public:
 
         Scene* scene = scenes[currentMapId];
         if (scene) {
+            scene->setSceneLoop(false);
             scene->display();
 
             RenderManager::setRenderMap(maps[currentMapId]);

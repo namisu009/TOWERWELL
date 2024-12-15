@@ -101,7 +101,7 @@ public:
         RenderManager::addObject(sisterCharacter);
 
         setMap(currentMap);
-        
+
         //테스트씬
         //
         //SceneManager::createScene("Afdsafad");
@@ -222,65 +222,65 @@ public:
         newScene.setDetail("");
         */
 
-/*
-        Scene newScene;
-        newScene.setCharacterPosition("Hero", 50, 50);
-        newScene.setAction("Hero", ACTION_MOVE_Y, 1);
+        /*
+                Scene newScene;
+                newScene.setCharacterPosition("Hero", 50, 50);
+                newScene.setAction("Hero", ACTION_MOVE_Y, 1);
 
-        newScene.setAction("Hero", ACTION_MOVE_Y, 4);
-        newScene.setAction("Hero", ACTION_MOVE_Y, 5);
-        newScene.setAction("Hero", ACTION_MOVE_Y, 6);
-        newScene.setAction("Hero", ACTION_MOVE_Y, 7);
+                newScene.setAction("Hero", ACTION_MOVE_Y, 4);
+                newScene.setAction("Hero", ACTION_MOVE_Y, 5);
+                newScene.setAction("Hero", ACTION_MOVE_Y, 6);
+                newScene.setAction("Hero", ACTION_MOVE_Y, 7);
 
 
 
-        newScene.setDelay("Hero", 200);
-        newScene.setAction("Hero", ACTION_MOVE_Y, -1);
-        newScene.setDelay("Hero", 200);
-        newScene.setAction("Hero", ACTION_MOVE_Y, 1);
+                newScene.setDelay("Hero", 200);
+                newScene.setAction("Hero", ACTION_MOVE_Y, -1);
+                newScene.setDelay("Hero", 200);
+                newScene.setAction("Hero", ACTION_MOVE_Y, 1);
 
-        newScene.setAction("Hero", ACTION_MOVE_Y, 1);
-        newScene.setDelay("Hero", 100);
-        newScene.setAction("Hero", ACTION_MOVE_Y, 1);
-        newScene.setDelay("Hero", 200);
+                newScene.setAction("Hero", ACTION_MOVE_Y, 1);
+                newScene.setDelay("Hero", 100);
+                newScene.setAction("Hero", ACTION_MOVE_Y, 1);
+                newScene.setDelay("Hero", 200);
 
-        newScene.setAction("Hero", ACTION_MOVE_Y, 1);
-        
-        newScene.setDelay("Hero", 500);
-        newScene.setAction("Hero", ACTION_MOVE_Y, 1);
-        
-        newScene.setDelay("Hero", 500);
-        newScene.setAction("Hero", ACTION_MOVE_Y, 1);
-        newScene.setDelay("Hero", 500);
-        newScene.setAction("Hero", ACTION_MOVE_Y, 1);
-        newScene.setDelay("Hero", 500);
-        newScene.setAction("Hero", ACTION_MOVE_Y, 1);
-        newScene.setDelay("Hero", 500);
-        newScene.setAction("Hero", ACTION_MOVE_Y, 1);
-        newScene.setDelay("Hero", 500);
-        newScene.setAction("Hero", ACTION_MOVE_Y, 1);
-        newScene.setDelay("Hero", 500);
-        newScene.setDelay("Hero", 500);
-        newScene.setAction("Hero", ACTION_MOVE_Y, 1);
-        newScene.setAction("Hero", ACTION_MOVE_Y, 1);
-        newScene.setDetail("src\\teeest.png");
-        newScene.setDelay("Hero", 3000);
-        GameObjectManager::createObject("Dialog", "S5_SC2_DL_01", "깊은 우물 속으로 가라앉고 있다.");
-        GameObjectManager::createObject("Dialog", "S5_SC2_DL_02", "죽을 것 같다.");
-        GameObjectManager::createObject("Dialog", "S5_SC2_DL_03", "많은 정보들이 머리 속을 헤집는 느낌이다.");
-        GameObjectManager::createObject("Dialog", "S5_SC2_DL_04", "내 여동생을 구해야만 해… 반드시… 리안…");
-        GameObjectManager::createObject("Dialog", "S5_SC2_DL_05", "깊은 고요 속에서 주인공은 정신을 잃는다.");
+                newScene.setAction("Hero", ACTION_MOVE_Y, 1);
 
-        newScene.setDialog("S5_SC2_DL_01");
-        newScene.setDialog("S5_SC2_DL_02");
-        newScene.setDialog("S5_SC2_DL_03");
-        newScene.setDialog("S5_SC2_DL_04");
-        newScene.setDialog("S5_SC2_DL_05");
+                newScene.setDelay("Hero", 500);
+                newScene.setAction("Hero", ACTION_MOVE_Y, 1);
 
-        newScene.setDetail("");
+                newScene.setDelay("Hero", 500);
+                newScene.setAction("Hero", ACTION_MOVE_Y, 1);
+                newScene.setDelay("Hero", 500);
+                newScene.setAction("Hero", ACTION_MOVE_Y, 1);
+                newScene.setDelay("Hero", 500);
+                newScene.setAction("Hero", ACTION_MOVE_Y, 1);
+                newScene.setDelay("Hero", 500);
+                newScene.setAction("Hero", ACTION_MOVE_Y, 1);
+                newScene.setDelay("Hero", 500);
+                newScene.setAction("Hero", ACTION_MOVE_Y, 1);
+                newScene.setDelay("Hero", 500);
+                newScene.setDelay("Hero", 500);
+                newScene.setAction("Hero", ACTION_MOVE_Y, 1);
+                newScene.setAction("Hero", ACTION_MOVE_Y, 1);
+                newScene.setDetail("src\\teeest.png");
+                newScene.setDelay("Hero", 3000);
+                GameObjectManager::createObject("Dialog", "S5_SC2_DL_01", "깊은 우물 속으로 가라앉고 있다.");
+                GameObjectManager::createObject("Dialog", "S5_SC2_DL_02", "죽을 것 같다.");
+                GameObjectManager::createObject("Dialog", "S5_SC2_DL_03", "많은 정보들이 머리 속을 헤집는 느낌이다.");
+                GameObjectManager::createObject("Dialog", "S5_SC2_DL_04", "내 여동생을 구해야만 해… 반드시… 리안…");
+                GameObjectManager::createObject("Dialog", "S5_SC2_DL_05", "깊은 고요 속에서 주인공은 정신을 잃는다.");
 
-        newScene.display();
-        */
+                newScene.setDialog("S5_SC2_DL_01");
+                newScene.setDialog("S5_SC2_DL_02");
+                newScene.setDialog("S5_SC2_DL_03");
+                newScene.setDialog("S5_SC2_DL_04");
+                newScene.setDialog("S5_SC2_DL_05");
+
+                newScene.setDetail("");
+
+                newScene.display();
+                */
         RenderManager::setRenderMap(currentMap);
         //StageManager::.setScene("Scene_id_01");
     }
@@ -363,9 +363,17 @@ public:
                 if (GetAsyncKeyState(VK_LEFT) & 0x8000) {
                     HandlerManager::processInput(VK_LEFT);
                 }
+
+                if (_kbhit()) { // 키 입력 확인
+                    int key = _getch(); // 키 입력 읽기      
+                    if (key == 32) {
+                        HandlerManager::processInput(VK_SPACE);
+                        actionPositions[{playerCharacter->getFootX(), playerCharacter->getFootY()}] = { ACTION_DASH, playerCharacter->getDx() };
+                    }
+                }
                 if (GetAsyncKeyState(VK_SPACE) & 0x8000) {
-                    HandlerManager::processInput(VK_SPACE);
-                    actionPositions[{playerCharacter->getFootX(), playerCharacter->getFootY()}] = { ACTION_DASH, playerCharacter->getDx() };
+                    //HandlerManager::processInput(VK_SPACE);
+                    //actionPositions[{playerCharacter->getFootX(), playerCharacter->getFootY()}] = { ACTION_DASH, playerCharacter->getDx() };
                 }
                 if (GetAsyncKeyState(VK_UP) & 0x8000) {
                     auto now = chrono::steady_clock::now();
@@ -380,8 +388,8 @@ public:
 
             if (_kbhit()) {
                 int key = _getch();
-                if (key == 70 || key == 102)
-                    HandlerManager::processInput(0x46);
+                //if (key == 70 || key == 102)
+                    //HandlerManager::processInput(0x46);
             }
 
             playerCharacter->dashState();
