@@ -124,7 +124,16 @@ public:
 	}
 
 
+	void setCharacterPositionX(string key, int x) {
+		Command cmd;
 
+		cmd.setObject(GameObjectManager::getCharacter(key));
+		cmd.setAction([cmd, key, x]() mutable {
+			if (x >= 0)
+				cmd.getObject()->setX(x);
+			});
+		commands.push(cmd);
+	}
 	void setCharacterPosition(string key, int x, int y) {
 		Command cmd;
 
@@ -141,10 +150,14 @@ public:
 				y = GameObjectManager::getCharacter(key)->getY();
 			
 
-			cmd.getObject()->setY(y);
-			cmd.getObject()->setX(x);
+			if(y >= 0)
+				cmd.getObject()->setY(y);
+
+			if(x >= 0)
+				cmd.getObject()->setX(x);
 
 			});
+
 		commands.push(cmd);
 	}
 
@@ -204,6 +217,15 @@ public:
 		Command cmd;
 		cmd.setObject(GameObjectManager::getCharacter(key));
 		cmd.setAction([cmd, time]() mutable { Sleep(time); });
+		commands.push(cmd);
+	}
+
+	void setRenderHood(string key, bool t) {
+		Command cmd;
+		cmd.setObject(GameObjectManager::getCharacter(key));
+		cmd.setAction([cmd, key, t]() mutable {
+			GameObjectManager::getCharacter(key)->setHood(t);
+		});
 		commands.push(cmd);
 	}
 

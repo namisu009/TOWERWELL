@@ -17,6 +17,7 @@ class Character : public GameObject
     bool isWallClimbing = false;
     bool isDeath = false;
     bool isCarry = false;
+    bool isHood = true;
     float jumpStrength = -13.0f; // 점프 강도
     float dashStrength = 12.0f;
 
@@ -83,6 +84,22 @@ public:
 
     void setisJumping(bool j) { isJumping = j; }
 
+    void setHood(bool t) {
+        isHood = t;
+
+        setAnimationStatus(0.0f);
+
+        int _y = getY();
+        _y += getHeight();
+        
+        setWidth(getRenderArray()->width);
+        setHeight(getRenderArray()->height);
+
+        _y = _y - getHeight();
+
+        setY(_y);
+    }
+
     void setAnimationStatus(float _dx) {
         if (isWallClimbing)
         {
@@ -94,6 +111,9 @@ public:
 
         if (isCarry)
             str += "CARRY_";
+
+        if (!isHood)
+            str += "HERO_";
 
         if (_dx < 0)
             str += "LEFT";
@@ -119,6 +139,16 @@ public:
         else {
             setRenderArray(animationManager->getRenderArray("IDLE_LEFT"));
         }
+
+        int _y = getY();
+        _y += getHeight();
+
+        setWidth(getRenderArray()->width);
+        setHeight(getRenderArray()->height);
+
+        _y = _y - getHeight();
+
+        setY(_y);
     }
 
     void setCarryState(bool t) {
@@ -129,6 +159,7 @@ public:
         _y += getHeight();
 
         setWidth(getRenderArray()->width);
+        setHeight(getRenderArray()->height);
         
         _y = _y - getHeight();
 

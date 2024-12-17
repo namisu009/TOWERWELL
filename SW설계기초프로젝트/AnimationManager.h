@@ -65,7 +65,7 @@ public:
             return Animations[id][animationToggle];;
         }
 
-        if (_id == "IDLE" || _id == "CLIMB" || _id == "CARRY_IDLE") {
+        if (_id == "IDLE" || _id == "CLIMB" || _id == "CARRY_IDLE" || _id == "HERO_IDLE") {
             if (id.find("RIGHT") != string::npos) {
                 _id = _id + "_RIGHT";
             }
