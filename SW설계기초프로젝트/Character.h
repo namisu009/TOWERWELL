@@ -15,6 +15,7 @@ class Character : public GameObject
     bool isDash; // 대쉬 상태 여부
     bool canDoubleJump = false;
     bool isWallClimbing = false;
+    bool isDeath = false;
     float jumpStrength = -13.0f; // 점프 강도
     float dashStrength = 12.0f;
 
@@ -95,6 +96,15 @@ public:
         else
             setAnimationStatus("IDLE");
 
+    }
+
+    bool getDeathState() {
+        return isDeath;
+    }
+
+    void setDeathState(bool t) {
+        isDeath = t;
+        setRenderArray(animationManager->getRenderArray("DEATH"));
     }
 
     void setAnimationStatus(const char* id) {

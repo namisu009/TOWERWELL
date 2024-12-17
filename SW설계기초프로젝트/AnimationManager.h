@@ -59,6 +59,11 @@ public:
     }
 
     RenderArray* getRenderArray(string _id) {
+        if (_id == "DEATH")
+        {
+            id = _id;
+            return Animations[id][animationToggle];;
+        }
 
         if (_id == "IDLE" || _id == "CLIMB") {
             if (id.find("RIGHT") != string::npos) {

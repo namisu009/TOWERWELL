@@ -51,6 +51,19 @@ public:
 		commands.push(cmd);
 	}
 
+	void setDeath(string key, bool t) {
+		Command cmd;
+		cmd.setObject(GameObjectManager::getCharacter(key));
+		cmd.setAction([cmd, key, t]() mutable { 
+			GameObjectManager::getCharacter(key)->setDeathState(t);
+			int _y = GameObjectManager::getCharacter("Hero")->getY();
+			_y += GameObjectManager::getCharacter("Hero")->getHeight();
+			_y = _y - GameObjectManager::getCharacter("Sister")->getHeight();
+			GameObjectManager::getCharacter(key)->setY(_y);
+		});
+		commands.push(cmd);
+	}
+
 	/*
 	void setClearedPuzzle(string key) {
 		Command cmd;
@@ -107,11 +120,18 @@ public:
 		cmd.setObject(GameObjectManager::getCharacter(key));
 		cmd.setAction([cmd, key, x, y]() mutable {
 			if (y == 0 && key == "Hood")
-				y = GameObjectManager::getCharacter("Hero")->getY();
+			{
+				int _y = GameObjectManager::getCharacter("Hero")->getY();
+				_y += GameObjectManager::getCharacter("Hero")->getHeight();
+
+				y = _y - GameObjectManager::getCharacter("Hood")->getHeight();
+			}
 			else if (y == 0)
 				y = GameObjectManager::getCharacter(key)->getY();
+			
 
-			cmd.getObject()->setPosition(x, y);
+			cmd.getObject()->setY(y);
+			cmd.getObject()->setX(x);
 
 			});
 		commands.push(cmd);

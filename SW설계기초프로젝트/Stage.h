@@ -34,6 +34,10 @@ public:
         StageEventDispatcher->subscribe(PUZZLE_SOLVED, [this]() { this->onPuzzleSolved(); });
     }
 
+    int getStageId() {
+        return stageId;
+    }
+
     /* 사용자 기능 */
     Map* getCurrentMap() {
         return maps[currentMapId];
