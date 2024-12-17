@@ -16,6 +16,7 @@ class Character : public GameObject
     bool canDoubleJump = false;
     bool isWallClimbing = false;
     bool isDeath = false;
+    bool isCarry = false;
     float jumpStrength = -13.0f; // 점프 강도
     float dashStrength = 12.0f;
 
@@ -89,12 +90,19 @@ public:
             return;
         }
 
+        string str = "";
+
+        if (isCarry)
+            str += "CARRY_";
+
         if (_dx < 0)
-            setAnimationStatus("LEFT");
+            str += "LEFT";
         else if (_dx > 0)
-            setAnimationStatus("RIGHT");
+            str += "RIGHT";
         else
-            setAnimationStatus("IDLE");
+            str += "IDLE";
+        
+        setAnimationStatus(str.c_str());
 
     }
 
@@ -104,7 +112,27 @@ public:
 
     void setDeathState(bool t) {
         isDeath = t;
-        setRenderArray(animationManager->getRenderArray("DEATH"));
+        if (isDeath)
+        {
+            setRenderArray(animationManager->getRenderArray("DEATH"));
+        }
+        else {
+            setRenderArray(animationManager->getRenderArray("IDLE_LEFT"));
+        }
+    }
+
+    void setCarryState(bool t) {
+        isCarry = t;
+        setAnimationStatus(0.0f);
+
+        int _y = getY();
+        _y += getHeight();
+
+        setWidth(getRenderArray()->width);
+        
+        _y = _y - getHeight();
+
+        setY(_y);
     }
 
     void setAnimationStatus(const char* id) {

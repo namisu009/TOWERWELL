@@ -19,6 +19,11 @@ private:
         GameObjectManager::getCharacter("Hero")->setAnimation("LEFT", "src\\characters\\hero_left_01.png", "src\\characters\\hero_left_02.png");
         GameObjectManager::getCharacter("Hero")->setAnimation("CLIMB_RIGHT", "src\\characters\\hero_climb_right_01.png", "src\\characters\\hero_climb_right_02.png");
         GameObjectManager::getCharacter("Hero")->setAnimation("CLIMB_LEFT", "src\\characters\\hero_climb_left_01.png", "src\\characters\\hero_climb_left_02.png");
+        GameObjectManager::getCharacter("Hero")->setAnimation("CARRY_IDLE_RIGHT", "src\\characters\\hero_carry_right_01.png", "src\\characters\\hero_carry_right_02.png");
+        GameObjectManager::getCharacter("Hero")->setAnimation("CARRY_IDLE_LEFT", "src\\characters\\hero_carry_left_01.png", "src\\characters\\hero_carry_left_02.png");
+        GameObjectManager::getCharacter("Hero")->setAnimation("CARRY_RIGHT", "src\\characters\\hero_carry_right_01.png", "src\\characters\\hero_carry_right_02.png");
+        GameObjectManager::getCharacter("Hero")->setAnimation("CARRY_LEFT", "src\\characters\\hero_carry_left_01.png", "src\\characters\\hero_carry_left_02.png");
+
 
 
         GameObjectManager::createObject("Character", "Sister", "src\\characters\\sister_idle_right_01.png");
@@ -397,6 +402,13 @@ private:
         S5_SC1.setCharacterPosition("Sister", 70, 0);
         S5_SC1.setCharacterPosition("Hero", 50, 0);
 
+        S5_SC1.setAction("Hero", ACTION_MOVE_X, 1);
+        S5_SC1.setCarry("Hero", false); //업어주기
+        S5_SC1.setDeath("Sister", false);
+        //내가 업어줄게 대사
+        S5_SC1.setRenderCharacter("Sister");
+
+
         S5_SC1.setDialog("S5_SC1_DL_01");
 		S5_SC1.setDelay("Sister", 300);
         S5_SC1.setDialog("S5_SC1_DL_02");
@@ -709,12 +721,21 @@ private:
 
         S4_SC5.setScreen("src\\scene\\S4_SC5\\S4_SC5_ (1).PNG");
         S4_SC5.setDelay("Sister", 70);
+        S4_SC5.setAction("Sister", ACTION_MOVE_X, -2, 5);
+        S4_SC5.setDelay("Sister", 100);
+
         for (int i = 1; i <= 57; i++)
         {
             string str = "src\\scene\\S4_SC5\\S4_SC5_ (" + to_string(i) + ").PNG";
             S4_SC5.setScreen(str.c_str());
             S4_SC5.setDelay("Sister", 70);
         }
+
+        //힘들다는 대사와 함께 여동생 쓰러짐
+        S4_SC5.setDeath("Sister", true);
+        //내가 업어줄게 대사
+        S4_SC5.removeRenderCharacter("Sister");
+        S4_SC5.setCarry("Hero", true); //업어주기
 
         //S5_SC3
         // S5_SC3: 과거의 시간으로 돌아온 히로, 옥상의 우물에서
@@ -1148,6 +1169,7 @@ private:
 		StageManager::setScene(3, "S3_J_MAP_01", "S3_SC2");
 
         //E_S4
+
         StageManager::addMap(4, MapManager::getMap("S4_P_MAP_01"));
         StageManager::addMap(4, MapManager::getMap("S4_P_MAP_02"));
         StageManager::addMap(4, MapManager::getMap("S4_P_MAP_03"));

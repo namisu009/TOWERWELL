@@ -64,6 +64,17 @@ public:
 		commands.push(cmd);
 	}
 
+	void setCarry(string key, bool t) {
+		Command cmd;
+		cmd.setObject(GameObjectManager::getCharacter(key));
+		cmd.setAction([cmd, key, t]() mutable {
+			GameObjectManager::getCharacter(key)->setCarryState(t);
+			});
+		commands.push(cmd);
+	}
+
+
+
 	/*
 	void setClearedPuzzle(string key) {
 		Command cmd;

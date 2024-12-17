@@ -41,7 +41,7 @@ public:
     }
 
     RenderArray* getIdle() {
-        if (id == "IDEL_RIGHT" || id == "IDEL_LEFT")
+        if (id == "IDEL_RIGHT" || id == "IDEL_LEFT" || id == "CARRAY_IDLE")
             animationCounter++;
         else
             return Animations[id][animationToggle];
@@ -65,7 +65,7 @@ public:
             return Animations[id][animationToggle];;
         }
 
-        if (_id == "IDLE" || _id == "CLIMB") {
+        if (_id == "IDLE" || _id == "CLIMB" || _id == "CARRY_IDLE") {
             if (id.find("RIGHT") != string::npos) {
                 _id = _id + "_RIGHT";
             }
