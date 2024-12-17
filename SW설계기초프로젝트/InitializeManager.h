@@ -126,7 +126,7 @@ private:
 
     static void SceneInit() {
         Scene S0_SC1, S0_SC2, S1_SC1, S1_SC2, S1_SC3, S1_SC4, S2_SC1, S2_SC2, S3_SC1, S3_SC2, S3_SC3, S4_SC1, S4_SC2, S5_SC1, S5_SC2,
-            S0_SC3, S1_SC5, S1_SC6, S2_SC3, S3_SC4, S4_SC3, S4_SC4, S5_SC3;
+            S0_SC3, S1_SC5, S1_SC6, S2_SC3, S3_SC4, S4_SC3, S4_SC4, S4_SC5, S5_SC3;
 
         //S0_SC1 프롤로그
 		GameObjectManager::createObject("Dialog", "S0_SC1_DL_01", "* 대사창 넘기기, 물체와 상호작용은 스페이스키로 가능합니다. *");
@@ -703,9 +703,19 @@ private:
         S4_SC4.setDialog("S4_SC4_DL_20");
         S4_SC4.setDialog("S4_SC4_DL_21");
         S4_SC4.setDetail("");
+
         //S4_SC4.setClearedPuzzle("S9_P_MAP_");
-        // 
-        // 
+        //S4_SC5
+
+        S4_SC5.setScreen("src\\scene\\S4_SC5\\S4_SC5_ (1).PNG");
+        S4_SC5.setDelay("Sister", 70);
+        for (int i = 1; i <= 57; i++)
+        {
+            string str = "src\\scene\\S4_SC5\\S4_SC5_ (" + to_string(i) + ").PNG";
+            S4_SC5.setScreen(str.c_str());
+            S4_SC5.setDelay("Sister", 70);
+        }
+
         //S5_SC3
         // S5_SC3: 과거의 시간으로 돌아온 히로, 옥상의 우물에서
         GameObjectManager::createObject("Dialog", "S5_SC3_DL_01", "히로: 우물이 원하는 게 대체 뭘까…");
@@ -854,6 +864,7 @@ private:
 		SceneMananger::addScene("S3_SC4", S3_SC4);
         SceneMananger::addScene("S4_SC3", S4_SC3);
         SceneMananger::addScene("S4_SC4", S4_SC4);
+        SceneMananger::addScene("S4_SC5", S4_SC5);
         SceneMananger::addScene("S5_SC3", S5_SC3);
     }
 
@@ -1061,7 +1072,7 @@ private:
         MapManager::createMap("S4_P_MAP_01", TYPE_PUZZLE, "src\\maps\\S4\\S4_P_MAP_01.png", "src\\maps\\S4\\S4_P_MAP_INFO_01.png");
         MapManager::createMap("S4_P_MAP_02", TYPE_PUZZLE, "src\\maps\\S4\\S4_P_MAP_02.png", "src\\maps\\S4\\S4_P_MAP_INFO_02.png");
         MapManager::createMap("S4_P_MAP_03", TYPE_PUZZLE, "src\\maps\\S4\\S4_P_MAP_03_3.png", "src\\maps\\S4\\S4_P_MAP_INFO_03.png");
-        MapManager::createMap("S4_J_MAP_01", TYPE_JUMP, "src\\maps\\S4\\S4_J_MAP_01.png", "src\\maps\\S4\\S4_J_MAP_INFO_01.png");
+        MapManager::createMap("S4_J_MAP_01", TYPE_JUMP, "src\\maps\\S4\\S4_J_MAP_01.png", "src\\maps\\S4\\S4_J_MAP_INFO_02.png");
         MapManager::createMap("S5_P_MAP_01", TYPE_PUZZLE, "src\\maps\\S5\\S5_MAP_01.png", "src\\maps\\S5\\S5_MAP_INFO_01_TEST.png");
         MapManager::createMap("S6_P_MAP_00", TYPE_PUZZLE, "src\\maps\\S0\\S0_MAP.png", "src\\maps\\S0\\S0_MAP_INFO.png");
         MapManager::createMap("S6_P_MAP_01", TYPE_PUZZLE, "src\\maps\\S6\\S6_P_MAP_01.png", "src\\maps\\S6\\S6_P_MAP_INFO_01.png");
@@ -1150,6 +1161,7 @@ private:
         StageManager::setDoorID(4, "S4_J_MAP_01", MAP_EXIT, "EXIT");
 
 		StageManager::setScene(4, "S4_P_MAP_01", "S4_SC1");
+        StageManager::setScene(4, "S4_J_MAP_01", "S4_SC5");
 
         //E_S5
         StageManager::addMap(5, MapManager::getMap("S5_P_MAP_01"));

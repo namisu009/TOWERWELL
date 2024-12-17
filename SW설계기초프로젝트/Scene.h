@@ -225,10 +225,6 @@ public:
 				}
 
 				cmd.getAction()();
-
-				if (cmd.getType() == TYPE_SCREEN) {
-					Sleep(100);
-				}
 				Sleep(10);
 			}
 			else if (cmd.getType() == TYPE_DIALOG) {
