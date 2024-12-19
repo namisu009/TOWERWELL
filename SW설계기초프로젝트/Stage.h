@@ -32,6 +32,9 @@ public:
         eventDispatcher = _eventDispatcher;
         StageEventDispatcher = new EventDispatcher();
         StageEventDispatcher->subscribe(PUZZLE_SOLVED, [this]() { this->onPuzzleSolved(); });
+        StageEventDispatcher->subscribe(CLEAR_HANDLE, [this]() { eventDispatcher->dispatch(CLEAR_HANDLE); });
+        StageEventDispatcher->subscribe(PUZZLE_HANDLE, [this]() { eventDispatcher->dispatch(PUZZLE_HANDLE); });
+
     }
 
     int getStageId() {
@@ -129,7 +132,6 @@ public:
         if (scene) {
             scene->setSceneLoop(false);
             scene->display();
-
             RenderManager::setRenderMap(maps[currentMapId]);
         }
 

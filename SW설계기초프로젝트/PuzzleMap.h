@@ -23,7 +23,6 @@ public:
 
         puzzleCount = 0;
         solvedPuzzleCount = 0;
-        callDispatch(PUZZLE_SOLVED);
     }
 
     string getPuzzleId(int x, int y) {
@@ -90,8 +89,13 @@ public:
             if (isExitDoor(x, y) && !isAllPuzzlesSolved())
             {
                 Scene newScene;
+
+
                 newScene.setDialog("PZ_NCL_DL");
+                newScene.setSceneLoop(false);
                 newScene.display();
+
+
                 return "";
             }
             

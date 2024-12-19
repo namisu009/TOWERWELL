@@ -1,4 +1,4 @@
 #include "StageManager.h"
 
-int StageManager::currentStageId = 10;// 현재 스테이지 ID
+int StageManager::currentStageId = 9;// 현재 스테이지 ID
 unordered_map<int, Stage*> StageManager::stages;// 스테이지 관리	

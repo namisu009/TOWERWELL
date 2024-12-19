@@ -73,6 +73,24 @@ public:
 		commands.push(cmd);
 	}
 
+	void setVKSPACE() {
+		Command cmd;
+		cmd.setType(TYPE_SCREEN);
+		cmd.setAction([cmd]() mutable {
+			while (_kbhit()) { // 입력 버퍼에 남아있는 키가 있으면
+				_getch(); // 해당 키를 소비하고 버림
+			}
+			while (1) {
+				if (_kbhit()) { // 키 입력 확인
+					int key = _getch(); // 키 입력 읽기      
+					if (key == 32) {
+						break;
+					}
+				}
+			}
+		});
+		commands.push(cmd);
+	}
 
 
 	/*
@@ -248,6 +266,8 @@ public:
 
 	void display() {
 		int size = commands.size();
+		clearInputBuffer();
+
 		while (size) {
 			Command cmd = popCommand();
 
@@ -284,7 +304,8 @@ public:
 			*/
 			size--;
 		}
-
+		clearInputBuffer();
+		
 	}
 };
 

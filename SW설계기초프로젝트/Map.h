@@ -149,7 +149,7 @@ public:
     }
 
     void callDispatch(EventType type) {
-
+        eventDispatcher->dispatch(type);
     }
 
     void setFile(const char* filename1, const char* filename2) {

@@ -14,7 +14,6 @@
 #include "Dialog.h"
 #include "ScreenInfo.h"
 #include "DoubleBufferManager.h"
-#include "RenderStruct.h"
 
 using namespace std;
 
@@ -62,6 +61,9 @@ public:
 
     static GameObject* getRenderDetail();
     static Map* getRenderMap();
+    static Dialog* getRenderDialog();
+
+    static GameObject* getRenderObject(string key);
 };
 
 

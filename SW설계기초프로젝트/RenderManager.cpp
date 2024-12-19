@@ -24,7 +24,8 @@ std::wstring stringToWstring(const std::string& var)
 }
 
 void RenderManager::addObject(GameObject* object) {
-    objectMap[object->getId()] = object; // 렌더링할 객체 추가
+    if (objectMap.find(object->getId()) == objectMap.end())
+        objectMap[object->getId()] = object; // 렌더링할 객체 추가
 }
 
 void RenderManager::removeObject(GameObject* object) {
@@ -65,6 +66,17 @@ GameObject* RenderManager::getRenderDetail() {
 
 Map* RenderManager::getRenderMap() {
     return currentMap;
+}
+
+Dialog* RenderManager::getRenderDialog() {
+    return renderLog;
+}
+
+GameObject* RenderManager::getRenderObject(string key) {
+    if (objectMap.find(key) != objectMap.end())
+        return objectMap[key];
+    else
+        return nullptr;
 }
 
 
@@ -239,6 +251,7 @@ void RenderManager::renderDialog() {
         pos.Y = renderLog_y;
 
         // 객체의 ASCII 아트를 특정 위치에 렌더링
+
         for (int y = 0; y < art->height; y++)
         {
             pos.Y = renderLog_y + y;
@@ -251,13 +264,9 @@ void RenderManager::renderDialog() {
 
         // 사용자 입력 대기
 
-        while (_kbhit()) {
-            _getch();  // 입력 버퍼 비우기
-        }
 
         if (renderLog->getText() != "") {
             DoubleBufferManager::drawText(renderLog->getText().c_str(), renderLog_x, renderLog_y, renderLog_width, renderLog_height);
-
             while (1) {
                 if (_kbhit()) { // 키 입력 확인
                     int key = _getch(); // 키 입력 읽기      
@@ -268,6 +277,8 @@ void RenderManager::renderDialog() {
             }
             //DoubleBufferManager::drawText(L"우선테스트", cmdWidth + renderLog_x, 1080);
         }
+
+        
 
     }
     else {
@@ -299,9 +310,6 @@ void RenderManager::renderInputText(string& input, int x, int y, int height) {
 
 void RenderManager::render() {
     //renderClear();
-
-
-
     renderMap();
 
     if (currentMap->getType() == TYPE_PUZZLE)
@@ -320,7 +328,9 @@ void RenderManager::render() {
         //return;
     }
 
+
     renderDialog();
+
 
 }
 

@@ -106,6 +106,12 @@ public:
     static void setCompletedSceneAction(string id, string cmd, ActionType command, int dt) {
         puzzles[id]->setCompletedSceneAction(cmd, command, dt);
     }
+    static void setCompletedSceneDetail(string id, const char* filename) {
+        puzzles[id]->setCompletedSceneDetail(filename);
+    }
+    static void setCompletedSceneVKSPACE(string id) {
+        puzzles[id]->setCompletedSceneVKSPACE();
+    }
     static void setCompletedSceneAction(string id, string cmd, ActionType command, int dt, int repeat) {
         puzzles[id]->setCompletedSceneAction(cmd, command, dt, repeat);
     }

@@ -14,6 +14,8 @@ enum EventType {
     MOVE_MAP,
     CHANGE_MAP_HANDLE,
     RENDER,
+    CLEAR_HANDLE,
+    PUZZLE_HANDLE,
 };
 
 class EventDispatcher {

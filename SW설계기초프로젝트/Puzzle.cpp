@@ -169,6 +169,8 @@ void Puzzle::setPuzzleDetailASCII(int key, const char* filename) {
     artLoadManager->RenderArrayLoad(puzzleDetailArray[key], filename);
 }
 
+
+
 void Puzzle::setPuzzleSceneDialog(int type, int key, string cmd) {
     if (key < 0 || key >= puzzleCount) {
         return;
@@ -302,6 +304,21 @@ void Puzzle::setCompletedDetailASCII(const char* filename) {
 
     artLoadManager->RenderArrayLoad(solvedDetailArray, filename);
 }
+
+void Puzzle::setCompletedSceneDetail(const char* filename) {
+    if (completedScene == nullptr)
+        completedScene = new Scene();
+
+    completedScene->setDetail(filename);
+}
+
+void Puzzle::setCompletedSceneVKSPACE() {
+    if (completedScene == nullptr)
+        completedScene = new Scene();
+
+    completedScene->setVKSPACE();
+}
+
 
 void Puzzle::setCompletedSceneDialog(string cmd) {
     if (completedScene == nullptr)

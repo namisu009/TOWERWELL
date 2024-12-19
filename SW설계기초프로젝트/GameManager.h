@@ -82,6 +82,12 @@ public:
             StageManager::moveToNextStage(); // 다음 스테이지로 이동
             setMap(StageManager::getCurrentStage()->getCurrentMap());  // 첫 맵 실행
             });
+        eventDispatcher.subscribe(CLEAR_HANDLE, [this]() {
+            HandlerManager::clearKeyMap();
+            });
+        eventDispatcher.subscribe(PUZZLE_HANDLE, [this]() {
+            HandlerManager::getPuzzleMapHandle(playerCharacter, StageManager::getCurrentStage());
+        });
     }
 
     void initialize() {
@@ -97,7 +103,7 @@ public:
 
         RenderManager::setRenderMap(currentMap);
         RenderManager::addObject(playerCharacter);
-        RenderManager::addObject(sisterCharacter);
+        //RenderManager::addObject(sisterCharacter);
 
         setMap(currentMap);
 
@@ -191,10 +197,7 @@ public:
                         actionPositions[{playerCharacter->getFootX(), playerCharacter->getFootY()}] = { ACTION_DASH, playerCharacter->getDx() };
                     }
                 }
-                if (GetAsyncKeyState(VK_SPACE) & 0x8000) {
-                    //HandlerManager::processInput(VK_SPACE);
-                    //actionPositions[{playerCharacter->getFootX(), playerCharacter->getFootY()}] = { ACTION_DASH, playerCharacter->getDx() };
-                }
+
                 if (GetAsyncKeyState(VK_UP) & 0x8000) {
                     auto now = chrono::steady_clock::now();
                     int elapsed = chrono::duration_cast<chrono::milliseconds>(now - lastJumpTime).count();
@@ -230,8 +233,8 @@ public:
             }
 
             playerCharacter->move();
-
-            if(!sisterCharacter->getDeathState())
+            
+            if(RenderManager::getRenderObject("Sister") && !sisterCharacter->getDeathState())
                 updateSisterPosition();
 
             mtx.unlock();

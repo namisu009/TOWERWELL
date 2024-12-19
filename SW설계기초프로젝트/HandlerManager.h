@@ -103,6 +103,10 @@ public:
             });
 
         bindInput(VK_SPACE, [object, stage]() {
+            if (RenderManager::getRenderDialog()) {
+                return;
+            }
+
             PuzzleMap* map = ((PuzzleMap*)stage->getCurrentMap());
 
             Character* obj = object;
@@ -112,6 +116,8 @@ public:
             int init_y = obj->getFootY() - obj->getHeight() / 2;
 
             Puzzle* puzzle = PuzzleManager::getPuzzle(stg->getPuzzleId(init_x, init_y));
+
+
             if (puzzle) {
                 if (puzzle->getDetailArray() != nullptr) {
                     puzzle->showPuzzleDetail();
@@ -140,7 +146,9 @@ public:
                 return;
             }
 
-            if (stg->getDoorId(init_x, init_y) != "EXIT" && stg->getDoorId(init_x, init_y) != "") {
+            string doorId = stg->getDoorId(init_x, init_y);
+
+            if (doorId != "EXIT" && doorId != "") {
                 if (!stg->getCurrentMap()->isExitDoor(init_x, init_y)) {
                     if(stg->getStageId() != 9)
                         stg->getCurrentMap()->setInitPosition(init_x, obj->getFootY());
@@ -149,7 +157,7 @@ public:
                 return;
             }
 
-            if (stage->getDoorId(init_x, init_y) == "EXIT") {
+            if (doorId == "EXIT") {
                 if (stage->getIsCleared()) {
                     eventDispatcher->dispatch(STAGE_COMPLETED);
                 }

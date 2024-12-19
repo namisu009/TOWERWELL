@@ -76,10 +76,14 @@ public:
 
     void setCompletedObjectASCII(const char* filename);
     void setCompletedDetailASCII(const char* filename);
+    void setCompletedSceneDetail(const char* filename);
+    
     void setCompletedSceneDialog(string cmd);
     void setCompletedSceneAction(string cmd, ActionType command, int dt);
     void setCompletedSceneAction(string cmd, ActionType command, int dt, int repeat);
     void setCompletedSceneDelay(string cmd, int time);
+
+    void setCompletedSceneVKSPACE();
     void setCompletedSceneLoop(bool loop);
 
     void showSolvedState();
