@@ -164,6 +164,7 @@ private:
         GameObjectManager::createObject("Dialog", "S0_SC1_DL_17", "리안: 응! 같이 가자, 언니!");
 
 
+        S0_SC1.setRenderCharacter("Sister");
         S0_SC1.setCharacterPosition("Sister", 310, 0);
         S0_SC1.setCharacterPosition("Hero", 50, 0);
 
