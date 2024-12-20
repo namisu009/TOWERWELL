@@ -71,7 +71,7 @@ enum PuzzleType {
 };
 
 enum ActionType {
-	ACTION_MOVE_X,
+	ACTION_MOVE_X = 401,
 	ACTION_MOVE_Y,
 	ACTION_JUMP,
 	ACTION_DASH,
