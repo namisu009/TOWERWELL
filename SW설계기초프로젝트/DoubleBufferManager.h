@@ -10,7 +10,6 @@
 #include "ScreenInfo.h"
 
 
-
 using namespace std;
 
 class DoubleBufferManager
@@ -117,7 +116,7 @@ public:
         if (length == 0 || length > cmdWidth) return; // 가로 크기를 초과하면 무시
 
         SetConsoleCursorPosition(g_hScreen[g_nScreenIndex], CursorPosition);
-        WriteFile(g_hScreen[g_nScreenIndex], string, strlen(string) , &dw, NULL);
+        WriteFile(g_hScreen[g_nScreenIndex], string, strlen(string), &dw, NULL);
     }
 
     static void ScreenprintAtPosition(int x, int y, const char* string) {
@@ -145,15 +144,15 @@ public:
         int clientHeight = clientRect.bottom - clientRect.top;
 
         // 배열 → 픽셀 변환 비율
-        float scaleX = clientWidth / 470.0f;
-        float scaleY = clientHeight / 169.0f;
+        float scaleX = static_cast<float>(clientWidth) / 470.0f;
+        float scaleY = static_cast<float>(clientHeight) / 169.0f;
 
         // 픽셀 좌표 계산
         RECT rect;
-        rect.left = arrayX * scaleX;
-        rect.top = arrayY * scaleY;
-        rect.right = rect.left + arrayWidth * scaleX;
-        rect.bottom = rect.top + arrayHeight * scaleY;
+        rect.left = static_cast<int>(arrayX * scaleX);
+        rect.top = static_cast<int>(arrayY * scaleY);
+        rect.right = static_cast<int>(rect.left + arrayWidth * scaleX);
+        rect.bottom = static_cast<int>(rect.top + arrayHeight * scaleY);
 
         return rect;
     }
@@ -181,6 +180,9 @@ public:
         // 텍스트 높이 계산
         DrawTextA(hdc, text.c_str(), -1, &tempRect, format | DT_CALCRECT);
 
+        SelectObject(hdc, oldFont);
+        DeleteObject(hFont);
+
         return tempRect.bottom - tempRect.top; // 계산된 텍스트 높이 반환
     }
 
@@ -188,12 +190,12 @@ public:
     static RECT AdjustRect(const RECT& baseRect, float horizontalMarginRatio, float verticalMarginRatio) {
         RECT adjustedRect = baseRect;
 
-        int horizontalMargin = (baseRect.right - baseRect.left) * horizontalMarginRatio;
-        int verticalMargin = (baseRect.bottom - baseRect.top) * verticalMarginRatio;
+        int horizontalMargin = static_cast<int>((baseRect.right - baseRect.left) * horizontalMarginRatio);
+        int verticalMargin = static_cast<int>((baseRect.bottom - baseRect.top) * verticalMarginRatio);
 
         // RECT를 줄이는 작업
         adjustedRect.left += horizontalMargin;
-        adjustedRect.right += horizontalMargin;
+        adjustedRect.right -= horizontalMargin;
         adjustedRect.top += verticalMargin;
         adjustedRect.bottom -= verticalMargin;
 
@@ -209,39 +211,49 @@ public:
 
         return clientRect;
     }
-
     static void drawText(const char* text, int x, int y, int width = 0, int height = 0, int fontSize = 35) {
-        // GDI 폰트와 텍스트 크기 설정
+        // Get the console window and device context
         HWND consoleWindow = GetConsoleWindow();
         HDC hdc = GetDC(consoleWindow);
-        CONSOLE_SCREEN_BUFFER_INFO csbi;
-        GetConsoleScreenBufferInfo(g_hScreen[g_nScreenIndex], &csbi);
 
-        int dpiScale = GetDPIScalingFactor();
-        int adjustedFontSize = fontSize * dpiScale;
+        // Get DPI scaling factor for dynamic adjustments
+        float dpiScale = GetDPIScalingFactor();
+        int adjustedFontSize = static_cast<int>(fontSize * dpiScale);
 
+        // Convert logical array coordinates to pixel-based rectangle
         RECT rect = ConvertArrayToPixelRect(x, y, width, height);
 
+        // Calculate the text height dynamically based on the DPI-scaled font size
         int textHeight = calculateTextHeight(hdc, text, rect, DT_WORDBREAK | DT_CENTER, adjustedFontSize);
 
+        // Adjust the rectangle for vertical centering
         RECT adjustedRect = adjustRectForVerticalCenter(rect, textHeight);
-        adjustedRect = AdjustRect(adjustedRect, 0.05, 0);
 
-        HFONT hFont = CreateFont(adjustedFontSize, 0, 0, 0, FW_BOLD, FALSE, FALSE, FALSE,
+        // Further adjust the rectangle by reducing margins for better positioning
+        adjustedRect = AdjustRect(adjustedRect, 0.05f, 0.05f);
+
+        // Create a font with dynamic size based on DPI scaling
+        HFONT hFont = CreateFont(
+            adjustedFontSize, 0, 0, 0, FW_BOLD, FALSE, FALSE, FALSE,
             DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY,
             DEFAULT_PITCH | FF_DONTCARE, "맑은 고딕");
 
+        // Save the old font and set the new font
         HFONT oldFont = (HFONT)SelectObject(hdc, hFont);
+
+        // Set text color and background mode
         SetTextColor(hdc, RGB(150, 150, 150));
         SetBkMode(hdc, TRANSPARENT);
-        //SetBkMode(hdc, OPAQUE);
 
+        // Draw the text
         DrawText(hdc, text, -1, &adjustedRect, DT_LEFT | DT_WORDBREAK);
 
+        // Restore the old font and release resources
         SelectObject(hdc, oldFont);
         DeleteObject(hFont);
         ReleaseDC(consoleWindow, hdc);
     }
+
 
     /*
     static void drawText(wstring text, int x, int y, int width = cmdWidth - 50, int height = 90, COLORREF color = RGB(150, 150, 150), int fontSize = 90, const std::wstring& fontName = L"맑은 고딕") {
