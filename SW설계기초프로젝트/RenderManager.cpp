@@ -112,7 +112,7 @@ void RenderManager::renderObject() {
         pos.X = object_x;
         pos.Y = object_y;
 
-        if (art == NULL) return;
+        //if (art == NULL) return;
 
         // 객체의 ASCII 아트를 특정 위치에 렌더링
         for (int y = 0; y < art->height; y++)
