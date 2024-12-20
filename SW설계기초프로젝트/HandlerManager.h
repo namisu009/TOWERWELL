@@ -115,7 +115,7 @@ public:
             int init_x = obj->getFootX();
             int init_y = obj->getFootY() - obj->getHeight() / 2;
 
-            Puzzle* puzzle = PuzzleManager::getPuzzle(stg->getPuzzleId(init_x, init_y));
+              Puzzle* puzzle = PuzzleManager::getPuzzle(stg->getPuzzleId(init_x, init_y));
 
 
             if (puzzle) {

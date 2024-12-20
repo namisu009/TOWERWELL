@@ -63,8 +63,10 @@ bool Puzzle::progressPuzzle() {
     if (isSolved)
         return false; // 이미 최종 해결된 경우
 
-    if (!isSolved && puzzleCLSceneArray[currentStep] != nullptr) {
-        puzzleCLSceneArray[cl_sceneArrayIdx]->display(); // 중간 해결 장면 출력
+    if (!isSolved) {
+        if(puzzleCLSceneArray[currentStep] != nullptr)
+            puzzleCLSceneArray[cl_sceneArrayIdx]->display(); // 중간 해결 장면 출력
+
         currentStep++;
 
         // 상태 업데이트
@@ -318,6 +320,23 @@ void Puzzle::setCompletedSceneVKSPACE() {
 
     completedScene->setVKSPACE();
 }
+
+void Puzzle::setPuzzleSceneDetail(int type, int key, const char* filename) {
+    if (puzzleCLSceneArray[key] == nullptr)
+        puzzleCLSceneArray[key] = new Scene();
+
+    puzzleCLSceneArray[key]->setDetail(filename);
+}
+
+void Puzzle::setPuzzleSceneVKSPACE(int key) {
+    if (puzzleCLSceneArray[key] == nullptr)
+        puzzleCLSceneArray[key] = new Scene();
+
+    puzzleCLSceneArray[key]->setVKSPACE();
+}
+
+
+
 
 
 void Puzzle::setCompletedSceneDialog(string cmd) {

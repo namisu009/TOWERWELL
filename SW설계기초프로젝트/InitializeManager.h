@@ -727,7 +727,9 @@ private:
         GameObjectManager::createObject("Dialog", "S4_SC3_DL_01", "상당히 낡아보이는 일기장이다.");
         GameObjectManager::createObject("Dialog", "S4_SC3_DL_02", "표지를 펼치자 웃고있는 여성의 사진이 떨어진다.");
         GameObjectManager::createObject("Dialog", "S4_SC3_DL_03", "... 얼른 서두르자.");
+        GameObjectManager::createObject("Dialog", "S4_SC3_DL_04", "문이 열리지 않아... 무슨 단서가 더 있나?");
         //딜레이 처리
+
 
         S4_SC3.setDialog("S4_SC3_DL_01");
         S4_SC3.setDialog("S4_SC3_DL_02");
@@ -1118,6 +1120,7 @@ private:
         ItemManager::addItems("S7_M2_PZ_LIGHTER", 1);
         ItemManager::addItems("S7_M2_PZ_POT", 1);
         ItemManager::addItems("S7_M2_PZ_FLOWER", 1);
+        ItemManager::addItems("S9_M1_PZ_05_KEY", 1);
     }
 
     static void PuzzleInit() {
@@ -1307,8 +1310,24 @@ private:
         PuzzleManager::setCompletedSceneDialog("S9_M1_PZ_03", "S9_M1_PZ1_DL_00_03");
 
         PuzzleManager::createPuzzle("S9_M1_PZ_04", TYPE_READ_PUZZLE); //일기장
-        PuzzleManager::setCompletedSceneDialog("S9_M1_PZ_04", "S9_M1_PZ1_DL_00_03");
+        PuzzleManager::createPuzzle("S9_M1_PZ_05", TYPE_ITEM_PUZZLE); //일기장 보기 전까진 나가지 못하는 문
 
+        //PUZZLE_OBJ_10
+        PuzzleManager::setPuzzleReward("S9_M1_PZ_04", 0, "S9_M1_PZ_05_KEY");;
+        PuzzleManager::setPuzzleSceneDialog("S9_M1_PZ_04", 0, TYPE_CL_DL, "S9_M1_PZ1_DL_00_03");
+        PuzzleManager::setPuzzleSceneDialog("S9_M1_PZ_04", 0, TYPE_CL_DL, "S4_SC3_DL_01");
+        PuzzleManager::setPuzzleSceneDialog("S9_M1_PZ_04", 0, TYPE_CL_DL, "S4_SC3_DL_02");
+        PuzzleManager::setPuzzleSceneDetail("S9_M1_PZ_04", 0, TYPE_CL_DL, "src\\scene\\S4_SC3\\S4_SC3_DT_00.png");
+        PuzzleManager::setPuzzleSceneVKSPACE("S9_M1_PZ_04", 0);
+        PuzzleManager::setPuzzleSceneDetail("S9_M1_PZ_04", 0, TYPE_CL_DL, "src\\scene\\S4_SC3\\S4_SC3_DT_01.png");
+        PuzzleManager::setPuzzleSceneVKSPACE("S9_M1_PZ_04", 0);
+        PuzzleManager::setPuzzleSceneDetail("S9_M1_PZ_04", 0, TYPE_CL_DL, "src\\scene\\S4_SC3\\S4_SC3_DT_02.png");
+        PuzzleManager::setPuzzleSceneVKSPACE("S9_M1_PZ_04", 0);
+        PuzzleManager::setPuzzleSceneDetail("S9_M1_PZ_04", 0, TYPE_CL_DL, "");
+        PuzzleManager::setPuzzleSceneDialog("S9_M1_PZ_04", 0, TYPE_CL_DL, "S4_SC3_DL_03");
+
+
+        PuzzleManager::setCompletedSceneDialog("S9_M1_PZ_04", "S9_M1_PZ1_DL_00_03");
         PuzzleManager::setCompletedSceneDialog("S9_M1_PZ_04", "S4_SC3_DL_01");
         PuzzleManager::setCompletedSceneDialog("S9_M1_PZ_04", "S4_SC3_DL_02");
         PuzzleManager::setCompletedSceneDetail("S9_M1_PZ_04", "src\\scene\\S4_SC3\\S4_SC3_DT_00.png");
@@ -1319,7 +1338,12 @@ private:
         PuzzleManager::setCompletedSceneVKSPACE("S9_M1_PZ_04");
         PuzzleManager::setCompletedSceneDetail("S9_M1_PZ_04", "");
         PuzzleManager::setCompletedSceneDialog("S9_M1_PZ_04", "S4_SC3_DL_03");
+        PuzzleManager::setCompletedSceneLoop("S9_M1_PZ_04", true);
 
+        PuzzleManager::setPuzzleObjectASCII("S9_M1_PZ_05", 0, "src\\maps\\S9\\S9_M1_PZ_05_01.png");
+        PuzzleManager::setCompletedObjectASCII("S9_M1_PZ_05", "src\\maps\\S9\\S9_M1_PZ_05_02.png");
+        PuzzleManager::setPuzzleConditionItem("S9_M1_PZ_05", 0, "S9_M1_PZ_05_KEY");
+        PuzzleManager::setPuzzleSceneDialog("S9_M1_PZ_05", 0, TYPE_NCL_DL, "S4_SC3_DL_04");
     };
 
     static void MapInit() {
@@ -1372,7 +1396,7 @@ private:
 
         StageManager::setDoorID(1, "S1_P_MAP_01", MAP_EXIT, "S1_J_MAP_01");
         StageManager::setDoorID(1, "S1_J_MAP_01", MAP_EXIT, "EXIT");
-
+        
         StageManager::setPuzzleId(1, "S1_P_MAP_01", PUZZLE_OBJ_02, "S1_M1_PZ_01");
         StageManager::setPuzzleId(1, "S1_P_MAP_01", PUZZLE_OBJ_05, "S1_M1_DPZ_01");
         StageManager::setPuzzleId(1, "S1_P_MAP_01", PUZZLE_OBJ_06, "S1_M1_DPZ_02");
@@ -1497,6 +1521,7 @@ private:
         StageManager::setPuzzleId(9, "S9_P_MAP_01", PUZZLE_OBJ_01, "S9_M1_PZ_01");
         StageManager::setPuzzleId(9, "S9_P_MAP_01_02", PUZZLE_OBJ_01, "S9_M1_PZ_02");
         StageManager::setPuzzleId(9, "S9_P_MAP_04", PUZZLE_OBJ_02, "S9_M1_PZ_04");
+        StageManager::setPuzzleId(9, "S9_P_MAP_04", PUZZLE_OBJ_10, "S9_M1_PZ_05");
         StageManager::setPuzzleId(9, "S9_P_MAP_01_03", PUZZLE_OBJ_01, "S9_M1_PZ_03");
 
 
@@ -1516,7 +1541,7 @@ private:
         StageManager::setDoorID(9, "S9_P_MAP_03_3", MAP_EXIT, "S9_P_MAP_01_02");
         StageManager::setDoorID(9, "S9_P_MAP_02", MAP_EXIT, "S9_P_MAP_01");
         StageManager::setDoorID(9, "S9_P_MAP_02", MAP_DOOR_02, "S9_P_MAP_04");
-        StageManager::setDoorID(9, "S9_P_MAP_04", MAP_EXIT, "S9_P_MAP_01_02");
+        StageManager::setDoorID(9, "S9_P_MAP_04", MAP_DOOR_01, "S9_P_MAP_01_02");
         StageManager::setDoorID(9, "S9_P_MAP_05", MAP_EXIT, "S9_P_MAP_01_03");
         StageManager::setDoorID(9, "S9_J_MAP_01", MAP_EXIT, "EXIT");
 

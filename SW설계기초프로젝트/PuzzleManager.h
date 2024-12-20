@@ -72,8 +72,16 @@ public:
         puzzles[id]->setPuzzleSceneLoop(type, key, loop);
     }
 
+    static void setPuzzleSceneDetail(string id, int key, int type, const char* filename) {
+        puzzles[id]->setPuzzleSceneDetail(type, key, filename);
+    }
+
     static void setPuzzleSceneDialog(string id, int key, int type, string cmd) {
         puzzles[id]->setPuzzleSceneDialog(type, key, cmd);
+    }
+
+    static void setPuzzleSceneVKSPACE(string id, int key) {
+        puzzles[id]->setPuzzleSceneVKSPACE(key);
     }
 
     static void setPuzzleSceneAction(string id, int key, int type, string cmd, ActionType command, int dt) {
