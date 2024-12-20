@@ -778,6 +778,7 @@ private:
         //S4_SC4.setClearedPuzzle("S9_P_MAP_");
         //S4_SC5
 
+        S4_SC5.setRenderCharacter("Sister");
         S4_SC5.setScreen("src\\scene\\S4_SC5\\S4_SC5_ (1).PNG");
         S4_SC5.setDelay("Sister", 70);
         S4_SC5.setAction("Sister", ACTION_MOVE_X, -2, 5);
@@ -871,13 +872,13 @@ private:
 
 
         //히로가 둘이서 존재가 가능해요?!?!??!?!?
-        S5_SC3.removeRenderCharacter("Hero");
+        S5_SC3.removeRenderCharacter("Hero");   
         S5_SC3.removeRenderCharacter("Sister");
 
         S5_SC3.setRenderHood("Hood", false);
         //S5_SC3.setCharacterPositionX("Hood", 50);
         //S5_SC3.setCharacterPosition("Hood", 50, -1); //처음에는 히로로 그려져야함
-        S5_SC3.setCharacterPosition("Hood", 50, 0); //처음에는 히로로 그려져야함
+        S5_SC3.setCharacterPosition("Hood", 50, 120); //처음에는 히로로 그려져야함
         S5_SC3.setRenderCharacter("Hood");
         S5_SC3.setDialog("S5_SC3_DL_01");
         S5_SC3.setDialog("S5_SC3_DL_02");

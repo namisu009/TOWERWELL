@@ -29,7 +29,8 @@ void RenderManager::addObject(GameObject* object) {
 }
 
 void RenderManager::removeObject(GameObject* object) {
-    objectMap.erase(object->getId());
+    if (objectMap.find(object->getId()) != objectMap.end())
+        objectMap.erase(object->getId());
 }
 
 void RenderManager::addPuzzle(Puzzle* puzzle) {
