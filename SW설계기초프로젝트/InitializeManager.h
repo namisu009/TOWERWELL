@@ -625,12 +625,11 @@ private:
 
 
         S0_SC3.setDetail("src\\scene\\S0_SC3\\S0_Title.png");
+        S0_SC3.setCharacterStartPosition("Hero", 50);
         S0_SC3.setDelay("Hero", 4000);
         S0_SC3.setDetail("");
-
         S0_SC3.setDelay("Hero", 3000);
-
-        S0_SC3.setCharacterStartPosition("Hero", 50);
+        
         S0_SC3.setDialog("S0_SC3_DL_06");
         S0_SC3.setDialog("S0_SC3_DL_07");
         S0_SC3.setDialog("S0_SC3_DL_08");
