@@ -217,7 +217,7 @@ private:
         //S1_SC1 퍼즐1층 씬 (석판을 보기전)
         GameObjectManager::createObject("Dialog", "S1_SC1_DL_01", "리안: 분위기가 심상치가 않네... 마을에서 못 보던 물건들도 많고 말이야.");
         GameObjectManager::createObject("Dialog", "S1_SC1_DL_02", "리안: 여기 이거 봐! 뭔가 적혀있어!");
-        GameObjectManager::createObject("Dialog", "S1_SC1_DL_03", " * 벽에 걸려있는 그림과 상호작용하려면 F 키를 눌러보세요. * ");
+        GameObjectManager::createObject("Dialog", "S1_SC1_DL_03", " * 벽에 걸려있는 그림과 상호작용하려면 스페이스 바를 눌러보세요. * ");
 
 
         S1_SC1.setAction("Sister", ACTION_MOVE_X, 6, 15);
@@ -312,7 +312,7 @@ private:
         {
             string s = "src\\scene\\S2_SC2\\S2_SC2_";
             if (i < 10) s += "0";
-            s += to_string(i) +".png";
+            s += to_string(i) + ".png";
             S2_SC2.setScreen(s.c_str());
         }
 
@@ -377,14 +377,14 @@ private:
         {
             string str = "src\\scene\\S3_SC2\\S3_SC2_";
             if (i < 10) str += "0";
-            str+=to_string(i)+".png";
+            str += to_string(i) + ".png";
             S3_SC2.setScreen(str.c_str());
         }
 
 
         S3_SC2.setDialog("S3_SC2_DL_03");
 
-        
+
 
 
         //S3_SC3
@@ -739,7 +739,7 @@ private:
         GameObjectManager::createObject("Dialog", "S4_SC3_DL_02", "표지를 펼치자 웃고있는 여성의 사진이 떨어진다.");
         GameObjectManager::createObject("Dialog", "S4_SC3_DL_03", "... 얼른 서두르자.");
         //딜레이 처리
-  
+
         S4_SC3.setDialog("S4_SC3_DL_01");
         S4_SC3.setDialog("S4_SC3_DL_02");
         S4_SC3.setDetail("src\\scene\\S4_SC3\\S4_SC3_DT_00.png");
@@ -918,7 +918,7 @@ private:
 
 
         //히로가 둘이서 존재가 가능해요?!?!??!?!?
-        S5_SC3.removeRenderCharacter("Hero");   
+        S5_SC3.removeRenderCharacter("Hero");
         //S5_SC3.removeRenderCharacter("Sister");
 
         S5_SC3.setRenderHood("Hood", false);
@@ -1508,7 +1508,7 @@ private:
         StageManager::setPuzzleId(9, "S9_P_MAP_01_02", PUZZLE_OBJ_01, "S9_M1_PZ_02");
         StageManager::setPuzzleId(9, "S9_P_MAP_04", PUZZLE_OBJ_02, "S9_M1_PZ_04");
         StageManager::setPuzzleId(9, "S9_P_MAP_01_03", PUZZLE_OBJ_01, "S9_M1_PZ_03");
-        
+
 
 
         StageManager::setDoorID(9, "S9_P_MAP_01", MAP_DOOR_01, "S9_P_MAP_02");
