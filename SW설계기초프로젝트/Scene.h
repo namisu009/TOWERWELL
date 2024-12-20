@@ -6,7 +6,7 @@
 #include "Command.h"
 #include "GameObjectManager.h"
 #include "RenderManager.h"
-
+#include "StageManager.h"
 #include <thread>
 
 class Puzzle; // 전방 선언
@@ -150,6 +150,23 @@ public:
 			if (x >= 0)
 				cmd.getObject()->setX(x);
 			});
+		commands.push(cmd);
+	}
+
+	void setCharacterStartPosition(string key, string map, int x) {
+		Command cmd;
+
+		cmd.setObject(GameObjectManager::getCharacter(key));
+		cmd.setAction([cmd, key, map, x]() mutable {
+			int ix = MapManager::getMap(map)->getInitX();
+			int iy = MapManager::getMap(map)->getInitY();
+			GameObjectManager::getCharacter(key)->SetStartPosition(ix, iy);
+			GameObjectManager::getCharacter(key)->setX(x);
+
+
+		});
+	
+
 		commands.push(cmd);
 	}
 	void setCharacterPosition(string key, int x, int y) {

@@ -165,8 +165,10 @@ private:
 
 
         S0_SC1.setRenderCharacter("Sister");
-        S0_SC1.setCharacterPosition("Sister", 310, 0);
-        S0_SC1.setCharacterPosition("Hero", 50, 0);
+
+        
+        S0_SC1.setCharacterStartPosition("Sister", "S0_P_MAP_01", 310);
+        S0_SC1.setCharacterStartPosition("Hero", "S0_P_MAP_01", 50);
 
         S0_SC1.setDetail("src\\scene\\S0_SC1\\S0_SC1_00.png");
         S0_SC1.setDelay("Sister", 1000);
@@ -342,7 +344,6 @@ private:
 
         S3_SC1.setCarry("Hero", false); //내리기
         S3_SC1.setDeath("Sister", false);
-        //내가 업어줄게 대사
         S3_SC1.setRenderCharacter("Sister");
 
         S3_SC1.setDetail("src\\scene\\STAGE3.png");
@@ -457,10 +458,10 @@ private:
         S5_SC1.setAction("Hero", ACTION_MOVE_X, 1);
         S5_SC1.setAction("Sister", ACTION_MOVE_X, 1);
 
-        S5_SC1.setCharacterPosition("Sister", 70, 0);
-        S5_SC1.setCharacterPosition("Hero", 50, 0);
+        S5_SC1.setCharacterStartPosition("Sister", "S5_P_MAP_01", 70);
+        S5_SC1.setCharacterStartPosition("Hero", "S5_P_MAP_01", 50);
 
-        //내가 업어줄게 대사`
+
         S5_SC1.setRenderCharacter("Sister");
 
         S5_SC1.setDialog("S5_SC1_DL_01");
@@ -475,7 +476,8 @@ private:
         S5_SC1.setDialog("S5_SC1_DL_04");
         S5_SC1.setDelay("Sister", 300);
 
-        S5_SC1.setCharacterPosition("Hood", 300, 0);
+        S5_SC1.setCharacterStartPosition("Hood", "S5_P_MAP_01", 300);
+        //S5_SC1.setCharacterPosition("Hood", 300, 0);
         S5_SC1.setAction("Hood", ACTION_MOVE_X, -1);
         S5_SC1.setRenderCharacter("Hood");
         S5_SC1.setDelay("Sister", 600);
@@ -513,7 +515,8 @@ private:
         S5_SC1.setDialog("S5_SC1_DL_08");
         S5_SC1.setDelay("Sister", 300);
 
-        S5_SC1.setCharacterPosition("Hood", 180, 0);
+        S5_SC1.setCharacterStartPosition("Hood", "S5_P_MAP_01", 180);
+        //S5_SC1.setCharacterPosition("Hood", 180, 0);
         S5_SC1.setDetail("");
         S5_SC1.setDelay("Sister", 500);
         S5_SC1.setAction("Hood", ACTION_MOVE_X, 3, 6);
@@ -924,7 +927,8 @@ private:
         S5_SC3.setRenderHood("Hood", false);
         //S5_SC3.setCharacterPositionX("Hood", 50);
         //S5_SC3.setCharacterPosition("Hood", 50, -1); //처음에는 히로로 그려져야함
-        S5_SC3.setCharacterPosition("Hood", 50, 120); //처음에는 히로로 그려져야함
+        S5_SC3.setCharacterStartPosition("Hood", "S10_P_MAP_01", 50); //처음에는 히로로 그려져야함
+
         S5_SC3.setRenderCharacter("Hood");
         S5_SC3.setDialog("S5_SC3_DL_01");
         S5_SC3.setDialog("S5_SC3_DL_02");
@@ -945,8 +949,8 @@ private:
         S5_SC3.setRenderCharacter("Hero");
         S5_SC3.setRenderCharacter("Sister");
 
-        S5_SC3.setCharacterPosition("Hero", 24, 0); //처음에는 히로로 그려져야함
-        S5_SC3.setCharacterPosition("Sister", 26, 0); //처음에는 히로로 그려져야함
+        S5_SC3.setCharacterStartPosition("Hero", "S10_P_MAP_01", 24); //처음에는 히로로 그려져야함
+        S5_SC3.setCharacterStartPosition("Sister", "S10_P_MAP_01", 26); //처음에는 히로로 그려져야함
 
         /*
         S5_SC1.setDialog("S5_SC1_DL_01");
