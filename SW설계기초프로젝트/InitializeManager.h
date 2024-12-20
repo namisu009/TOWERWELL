@@ -522,6 +522,7 @@ private:
         S5_SC1.setAction("Hood", ACTION_MOVE_X, 3, 6);
         S5_SC1.setAction("Hood", ACTION_MOVE_Y, -5, 8);
         S5_SC1.setAction("Hood", ACTION_MOVE_Y, 5, 4);
+        S5_SC1.setAction("Hood", ACTION_MOVE_Y, 0);
         S5_SC1.removeRenderCharacter("Hood"); //여기까지 후드 칼찌
         // 여기에 여동생 죽은 모션 넣기 *어케하는지 까먹음 ㅎㅎ;;;;;;;
 
@@ -698,6 +699,7 @@ private:
         S2_SC3.setAction("Hero", ACTION_MOVE_X, -3, 10);
         S2_SC3.setAction("Hero", ACTION_MOVE_Y, -10, 3);
         S2_SC3.setAction("Hero", ACTION_MOVE_Y, 7, 3);
+        S5_SC1.setAction("Hero", ACTION_MOVE_Y, 0);
         S2_SC3.setAction("Hero", ACTION_MOVE_X, 1);
         S2_SC3.setDelay("Hero", 700);
         S2_SC3.setDialog("S2_SC3_DL_06");

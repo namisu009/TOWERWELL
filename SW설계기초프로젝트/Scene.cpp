@@ -251,7 +251,7 @@ void Scene::display() {
 
             cmd.getAction()();
             Sleep(10);
-        }
+        }   
         else if (cmd.getType() == TYPE_DIALOG) {
             RenderManager::setRenderDialog((Dialog*)cmd.getObject());
             clearInputBuffer();
