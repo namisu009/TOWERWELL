@@ -18,7 +18,7 @@ class Character : public GameObject
     bool isDeath = false;
     bool isCarry = false;
     bool isHood = true;
-    float jumpStrength = -11.0f; // 점프 강도
+    float jumpStrength = -12.5f; // 점프 강도
     float dashStrength = 12.0f;
 
     int dash_counter;

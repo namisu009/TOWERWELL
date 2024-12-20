@@ -217,7 +217,7 @@ private:
         //S1_SC1 퍼즐1층 씬 (석판을 보기전)
         GameObjectManager::createObject("Dialog", "S1_SC1_DL_01", "리안: 분위기가 심상치가 않네... 마을에서 못 보던 물건들도 많고 말이야.");
         GameObjectManager::createObject("Dialog", "S1_SC1_DL_02", "리안: 여기 이거 봐! 뭔가 적혀있어!");
-        GameObjectManager::createObject("Dialog", "S1_SC1_DL_03", " * 벽에 걸려있는 그림과 상호작용하려면 F 키를 눌러보세요. * ");
+        GameObjectManager::createObject("Dialog", "S1_SC1_DL_03", " * 벽에 걸려있는 그림과 상호작용하려면 스페이스 바를 눌러보세요. * ");
 
 
         S1_SC1.setAction("Sister", ACTION_MOVE_X, 6, 15);
@@ -570,15 +570,8 @@ private:
         GameObjectManager::createObject("Dialog", "S0_SC3_DL_09", "히로: 리안을 구하려면 서둘러야 해. 내가 먼저 탑으로 들어가야 해.");
 
 
-
         S0_SC3.setDetail("src\\scene\\S0_SC3\\S0_blank.png");
         S0_SC3.removeRenderCharacter("Sister");
-        S0_SC3.setDelay("Hero", 1500);
-
-
-        S0_SC3.setCarry("Hero", false); //내리기
-        S0_SC3.setDeath("Sister", true);
-        S0_SC3.setAction("Hero", ACTION_MOVE_X, 1);
 
         // 우물 안에서 고통받는 주인공이 나왔으면 좋겠어요.
         S0_SC3.setDetail("src\\scene\\S0_SC3\\S0_SC3_hero_drowning_01.png");
