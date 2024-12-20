@@ -29,6 +29,7 @@ https://github.com/namisu009/TOWERWELL/blob/real/%EC%B2%98%EC%9D%8C%EC%8B%A4%ED%
 
 ## (2) 필수 설정
 
+
 위의 요소들을 다운받고 코드를 푸시받을 때, Branches에서 "real" branch를 풀 받으면 됩니다.
 풀을 실행한 후, 
 https://github.com/namisu009/TOWERWELL/blob/real/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202024-12-20%20084739.png
@@ -36,7 +37,7 @@ https://github.com/namisu009/TOWERWELL/blob/real/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%
 
 이후 TOWERWELL 파일로 들어가 Debug파일의 SW설계기초프로젝트.exe. 파일을 우클릭하여
 속성을 누릅니다.
-호환성 탭에서 "관리자 권한으로 이 프로그램 실행 탭을 활성화 시키고, 다시 프로그램을 실행합니다.
+호환성 탭에서 "관리자 권한으로 이 프로그램 실행" 탭을 활성화 시키고, 다시 프로그램을 실행합니다.
 
 이후 콘솔창의 테두리를 우클릭 후 속성탭을 누릅니다.
 
@@ -48,9 +49,16 @@ https://github.com/namisu009/TOWERWELL/blob/real/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%
 # 2.How to play
 
 비극탑은 퍼즐맵과 플랫포머형 점프맵이 어우러진 노벨형 게임입니다.
+
 탑의 분위기와 스토리의 반전에 몸을 맡기고 재밌게 플레이 하시길 바랍니다!
 
-
+    기본적인 조작키
+    ![Uploading arrow.jpg…]()
+    ![arrow](https://github.com/user-attachments/assets/97fd143b-0977-4199-81d6-dc1182c3acb0)
+    위 방향키 : 점프
+    좌우 방향키 : 좌우 이동
+    스페이스바 : 대시, 퍼즐 및 오브젝트 상호작용
+    F키 : 벽 타기
 
 # 3.역할 및 작업 분담
 
