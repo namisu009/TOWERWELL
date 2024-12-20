@@ -640,6 +640,7 @@ private:
         GameObjectManager::createObject("Dialog", "S1_SC5_DL_02", "탑의 1층... 일단 얼른 움직이자.");
         GameObjectManager::createObject("Dialog", "S1_SC5_DL_03", "빛나는 것을 한시라도 빨리 찾아서 우물로 가야해.");
 
+        S1_SC5.setCharacterStartPosition("Hero", 50);
         S1_SC5.setDetail("src\\scene\\STAGE5.png");
         S1_SC5.setDelay("Hero", 3000);
         S1_SC5.setDetail("");
