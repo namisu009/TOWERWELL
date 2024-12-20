@@ -85,21 +85,34 @@ C++
 
  # 8. 명명 규칙 (Name Convention)
    헤더 파일 및 클래스 : PascalCase (Ex. GameObjectManager.h, Class SceneManager ...
+
+   
    함수 : camelCase (Ex. addScene(string id, Scene scene), setCompletedSceneDialog(~,~); ...)
+
+   
    소스파일 (src) : snake_case (Ex. S7_M3_PZ_01_02.png, S8_M1_PZ_DT_02_01.png .. )
 
    소스파일의 각 단어의 뜻은 다음과 같이 명명하여 직관적으로 표현 (x는 숫자를 의미한다.)
    Sx: stage x
+
    SCx: scene x
+   
    PZ(x): puzzle room or xth puzzle itself
+   
    JP: jump room
+   
    DL_xx_xx: xxth scene xxth dialog
+   
    DPZxx: xxth dummy puzzle ifself
+   
    Mx: Stage x h map
+   
    DT: 디테일 씬 (화면 전체 표시되는 그림 or 게임 화면에 출력되는 obj)
 
   ex) S7_M2_PZ_02 : 스테이지 7의 두번째 퍼즐맵의 두번째 obj
+  
       S7_M2_PZ1_DL_00_01 : 스테이지 7의 두번째 방의 첫번째 퍼즐에 0번째 씬의 첫번째 대사
+      
       S1_M1_PZ_DT_01 : 스테이지 1의 첫번째 방의 퍼즐의 디테일 씬 01
 
 
