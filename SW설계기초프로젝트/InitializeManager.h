@@ -371,8 +371,8 @@ private:
         S3_SC2.setDialog("S3_SC2_DL_01");
         S3_SC2.setDialog("S3_SC2_DL_02");
 
-        S3_SC2.setAction("Sister", ACTION_MOVE_X, 5);
-        S3_SC2.setDelay("Sister", 100);
+        //S3_SC2.setAction("Sister", ACTION_MOVE_X, 5);
+        //S3_SC2.setDelay("Sister", 100);
 
         for (int i = 1; i <= 60; i++)
         {
