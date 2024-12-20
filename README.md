@@ -1,5 +1,7 @@
 # 0. 소프트웨어설계기초 2분반 1조 비극탑
 
+![main_page_01](https://github.com/user-attachments/assets/41c82b67-d227-4ae1-aca7-6a9b96ff7115)
+
 
 # 1. 🛠️초기 세팅
 
@@ -30,7 +32,9 @@ https://www.microsoft.com/en-us/download/details.aspx?id=26999 
 
 위의 요소들을 다운받고 코드를 푸시받을 때, Branches에서 "real" branch를 풀 받으면 됩니다.
 풀을 실행한 후, 
-https://github.com/namisu009/TOWERWELL/blob/real/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202024-12-20%20084739.png
+
+![스크린샷 2024-12-20 221430](https://github.com/user-attachments/assets/1de52f48-4646-40ff-bc38-7f1f9d690a48)
+
 좌측 상단에서 위 사진과 같게 설정을 바꾸시고 한번 프로그램을 실행합니다.
 
 이후 TOWERWELL 파일로 들어가 Debug파일의 SW설계기초프로젝트.exe. 파일을 우클릭하여
@@ -39,7 +43,11 @@ https://github.com/namisu009/TOWERWELL/blob/real/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%
 
 이후 콘솔창의 테두리를 우클릭 후 속성탭을 누릅니다.
 
-https://github.com/namisu009/TOWERWELL/blob/real/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202024-12-20%20085209.png
+![스크린샷 2024-12-20 221637](https://github.com/user-attachments/assets/fd90ed3c-0f6d-425d-aece-a1b3c476e71c)
+
+
+![스크린샷 2024-12-20 221626](https://github.com/user-attachments/assets/ef0f33db-2aed-4039-9c42-c3f37257adc8)
+
 
 위 사진과 같게 세팅을 하면 필수 설정은 마무리됩니다!
 
