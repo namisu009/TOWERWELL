@@ -53,7 +53,7 @@ https://github.com/namisu009/TOWERWELL/blob/real/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%
 탑의 분위기와 스토리의 반전에 몸을 맡기고 재밌게 플레이 하시길 바랍니다!
 
     기본적인 조작키
-    ![Uploading arrow.jpg…]()
+    
     ![arrow](https://github.com/user-attachments/assets/97fd143b-0977-4199-81d6-dc1182c3acb0)
     위 방향키 : 점프
     좌우 방향키 : 좌우 이동
