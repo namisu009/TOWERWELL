@@ -257,21 +257,13 @@ private:
         S1_SC3.setAction("Sister", ACTION_MOVE_X, 3, 6);
         //S1_SC3 얼음 작렬
         S1_SC3.setScreen("src\\scene\\S1_SC3\\S1_SC3_01.png");
-        S1_SC3.setDelay("Sister", 70);
         S1_SC3.setScreen("src\\scene\\S1_SC3\\S1_SC3_02.png");
-        S1_SC3.setDelay("Sister", 70);
         S1_SC3.setScreen("src\\scene\\S1_SC3\\S1_SC3_03.png");
-        S1_SC3.setDelay("Sister", 70);
         S1_SC3.setScreen("src\\scene\\S1_SC3\\S1_SC3_04.png");
-        S1_SC3.setDelay("Sister", 70);
         S1_SC3.setScreen("src\\scene\\S1_SC3\\S1_SC3_05.png");
-        S1_SC3.setDelay("Sister", 70);
         S1_SC3.setScreen("src\\scene\\S1_SC3\\S1_SC3_06.png");
-        S1_SC3.setDelay("Sister", 70);
         S1_SC3.setScreen("src\\scene\\S1_SC3\\S1_SC3_07.png");
-        S1_SC3.setDelay("Sister", 70);
         S1_SC3.setScreen("src\\scene\\S1_SC3\\S1_SC3_08.png");
-        S1_SC3.setDelay("Sister", 70);
 
         S1_SC3.setDialog("S1_SC3_DL_03");
         S1_SC3.setDialog("S1_SC3_DL_04");
@@ -465,16 +457,16 @@ private:
         S5_SC1.setRenderCharacter("Sister");
 
         S5_SC1.setDialog("S5_SC1_DL_01");
-        S5_SC1.setDelay("Sister", 300);
+        //S5_SC1.setDelay("Sister", 300);
         S5_SC1.setDialog("S5_SC1_DL_02");
-        S5_SC1.setDelay("Sister", 300);
+        //S5_SC1.setDelay("Sister", 300);
         S5_SC1.setAction("Sister", ACTION_MOVE_X, 3, 30);
         S5_SC1.setAction("Hero", ACTION_MOVE_X, 3, 30);
 
         S5_SC1.setDialog("S5_SC1_DL_03");
-        S5_SC1.setDelay("Sister", 300);
+        //S5_SC1.setDelay("Sister", 300);
         S5_SC1.setDialog("S5_SC1_DL_04");
-        S5_SC1.setDelay("Sister", 300);
+        //S5_SC1.setDelay("Sister", 300);
 
         S5_SC1.setCharacterStartPosition("Hood", 300);
         //S5_SC1.setCharacterPosition("Hood", 300, 0);
@@ -482,38 +474,38 @@ private:
         S5_SC1.setRenderCharacter("Hood");
         S5_SC1.setDelay("Sister", 600);
         S5_SC1.setDialog("S5_SC1_DL_05");
-        S5_SC1.setDelay("Sister", 300);
+        //S5_SC1.setDelay("Sister", 300);
         S5_SC1.setDialog("S5_SC1_DL_06");
-        S5_SC1.setDelay("Sister", 300);
+        //S5_SC1.setDelay("Sister", 300);
 
         S5_SC1.setDetail("src\\scene\\S5_SC1\\S5_blank.png");
-        S5_SC1.setDelay("Sister", 700);
+        //S5_SC1.setDelay("Sister", 700);
         S5_SC1.setAction("Hood", ACTION_MOVE_X, -40);
         S5_SC1.setDetail("");
         S5_SC1.setDelay("Sister", 1000);
         S5_SC1.setDialog("S5_SC1_DL_40");
-        S5_SC1.setDelay("Sister", 700);
+        //S5_SC1.setDelay("Sister", 700);
         S5_SC1.setDetail("src\\scene\\S5_SC1\\S5_blank.png");
-        S5_SC1.setDelay("Sister", 700);
+        //S5_SC1.setDelay("Sister", 700);
         S5_SC1.setAction("Hood", ACTION_MOVE_X, -40);
         S5_SC1.setDetail("");
         S5_SC1.setDelay("Sister", 1000);
         S5_SC1.setDialog("S5_SC1_DL_41");
-        S5_SC1.setDelay("Sister", 700);
+        //S5_SC1.setDelay("Sister", 700);
         S5_SC1.setDetail("src\\scene\\S5_SC1\\S5_blank.png");
-        S5_SC1.setDelay("Sister", 700);
+        //S5_SC1.setDelay("Sister", 700);
         S5_SC1.setAction("Hood", ACTION_MOVE_X, -50);
         S5_SC1.setDetail("");
         S5_SC1.setDelay("Sister", 1000);
         S5_SC1.setDialog("S5_SC1_DL_42");
-        S5_SC1.setDelay("Sister", 700);
+        //S5_SC1.setDelay("Sister", 700);
         S5_SC1.setDetail("src\\scene\\S5_SC1\\S5_SC1.png"); // 상당히 깨짐
-        S5_SC1.setDelay("Sister", 700);
+        //S5_SC1.setDelay("Sister", 700);
         S5_SC1.setDeath("Sister", true);
         S5_SC1.setDialog("S5_SC1_DL_07");
-        S5_SC1.setDelay("Sister", 300);
+        //S5_SC1.setDelay("Sister", 300);
         S5_SC1.setDialog("S5_SC1_DL_08");
-        S5_SC1.setDelay("Sister", 300);
+        //S5_SC1.setDelay("Sister", 300);
 
         S5_SC1.setCharacterStartPosition("Hood", 180);
         //S5_SC1.setCharacterPosition("Hood", 180, 0);
@@ -522,37 +514,36 @@ private:
         S5_SC1.setAction("Hood", ACTION_MOVE_X, 3, 6);
         S5_SC1.setAction("Hood", ACTION_MOVE_Y, -5, 8);
         S5_SC1.setAction("Hood", ACTION_MOVE_Y, 5, 4);
-        S5_SC1.setAction("Hood", ACTION_MOVE_Y, 0);
         S5_SC1.removeRenderCharacter("Hood"); //여기까지 후드 칼찌
         // 여기에 여동생 죽은 모션 넣기 *어케하는지 까먹음 ㅎㅎ;;;;;;;
 
         S5_SC1.setDialog("S5_SC1_DL_09");
-        S5_SC1.setDelay("Sister", 300);
+        //S5_SC1.setDelay("Sister", 300);
 
         S5_SC1.setDetail("src\\scene\\S5_SC1\\herosister_dead.png");
         S5_SC1.setDelay("Sister", 1500);
         S5_SC1.setDialog("S5_SC1_DL_10");
         S5_SC1.setDetail("");
-        S5_SC1.setDelay("Sister", 300);
+        //S5_SC1.setDelay("Sister", 300);
         S5_SC1.setDialog("S5_SC1_DL_11");
-        S5_SC1.setDelay("Sister", 300);
+        //S5_SC1.setDelay("Sister", 300);
         S5_SC1.setDialog("S5_SC1_DL_12");
-        S5_SC1.setDelay("Sister", 300);
+        //S5_SC1.setDelay("Sister", 300);
         S5_SC1.setDialog("S5_SC1_DL_13");
-        S5_SC1.setDelay("Sister", 300);
+        //S5_SC1.setDelay("Sister", 300);
         S5_SC1.setDetail("src\\scene\\S5_SC1\\S5_sad_hero_vs_well.png");
         S5_SC1.setDialog("S5_SC1_DL_14");
-        S5_SC1.setDelay("Sister", 300);
+        //S5_SC1.setDelay("Sister", 300);
         S5_SC1.setDialog("S5_SC1_DL_15");
-        S5_SC1.setDelay("Sister", 300);
+        //S5_SC1.setDelay("Sister", 300);
         S5_SC1.setDialog("S5_SC1_DL_16");
-        S5_SC1.setDelay("Sister", 300);
+        //S5_SC1.setDelay("Sister", 300);
         S5_SC1.setDialog("S5_SC1_DL_17");
-        S5_SC1.setDelay("Sister", 300);
+        //S5_SC1.setDelay("Sister", 300);
         S5_SC1.setDialog("S5_SC1_DL_18");
-        S5_SC1.setDelay("Sister", 300);
+        //S5_SC1.setDelay("Sister", 300);
         S5_SC1.setDialog("S5_SC1_DL_19");
-        S5_SC1.setDelay("Sister", 300);
+        //S5_SC1.setDelay("Sister", 300);
         S5_SC1.setDetail("src\\scene\\S5_SC1\\S5_sad_hero_vs_well_02.png");
         S5_SC1.setDetail("src\\scene\\S5_SC1\\S5_sad_hero_vs_well_03.png");
         S5_SC1.setDetail("src\\scene\\S5_SC1\\S5_sad_hero_vs_well_04.png");
@@ -571,12 +562,11 @@ private:
         S5_SC1.setDetail("src\\scene\\S5_SC1\\S5_sad_hero_vs_well_17.png");
         S5_SC1.setDetail("src\\scene\\S5_SC1\\S5_sad_hero_vs_well_18.png");
         S5_SC1.setDialog("S5_SC1_DL_20");
-        S5_SC1.setDelay("Sister", 300);
+        //S5_SC1.setDelay("Sister", 300);
         S5_SC1.setDialog("S5_SC1_DL_21");
-        S5_SC1.setDelay("Sister", 300);
+        //S5_SC1.setDelay("Sister", 300);
         S5_SC1.setDetail("");
-
-
+        
 
         //이거 마지막 씬에 우물이 나옴.
         //새로운 맵을 그려서 밑에 빛이 있고 거기에 상호작용하면 다음맵.
@@ -596,8 +586,10 @@ private:
         GameObjectManager::createObject("Dialog", "S0_SC3_DL_09", "히로: 리안을 구하려면 서둘러야 해. 내가 먼저 탑으로 들어가야 해.");
 
 
-        S0_SC3.setDetail("src\\scene\\S0_SC3\\S0_blank.png");
         S0_SC3.removeRenderCharacter("Sister");
+
+        S0_SC3.setDetail("src\\scene\\S0_SC3\\S0_blank.png");
+        
 
         // 우물 안에서 고통받는 주인공이 나왔으면 좋겠어요.
         S0_SC3.setDetail("src\\scene\\S0_SC3\\S0_SC3_hero_drowning_01.png");
@@ -699,7 +691,6 @@ private:
         S2_SC3.setAction("Hero", ACTION_MOVE_X, -3, 10);
         S2_SC3.setAction("Hero", ACTION_MOVE_Y, -10, 3);
         S2_SC3.setAction("Hero", ACTION_MOVE_Y, 7, 3);
-        S5_SC1.setAction("Hero", ACTION_MOVE_Y, 0);
         S2_SC3.setAction("Hero", ACTION_MOVE_X, 1);
         S2_SC3.setDelay("Hero", 700);
         S2_SC3.setDialog("S2_SC3_DL_06");
