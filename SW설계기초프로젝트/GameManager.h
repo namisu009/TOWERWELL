@@ -97,6 +97,15 @@ public:
         sisterCharacter = GameObjectManager::getCharacter("Sister");
         currentMap = StageManager::getCurrentStage()->getCurrentMap();
 
+        GameObjectManager::getCharacter("Hero")->setDx(0);
+        GameObjectManager::getCharacter("Hero")->setDy(0);
+
+        GameObjectManager::getCharacter("Sister")->setDx(0);
+        GameObjectManager::getCharacter("Sister")->setDy(0);
+
+        GameObjectManager::getCharacter("Hood")->setDx(0);
+        GameObjectManager::getCharacter("Hood")->setDy(0);
+
         playerCharacter->SetStartPosition(currentMap->getInitX(), currentMap->getInitY());
         sisterCharacter->SetStartPosition(currentMap->getInitX() - 0, currentMap->getInitY());
         RenderManager::ScreenInit();
